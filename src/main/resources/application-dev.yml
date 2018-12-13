@@ -1,0 +1,18 @@
+dms:
+  constants:
+    document-root: root
+    static-images: pic
+
+spring:
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  jooq:
+    sql-dialect: h2
+  resources:
+    static-locations: ["classpath:/META-INF/resources/","classpath:/resources/","classpath:/static/","classpath:/public/","file://${user.dir}/${dms.constants.document-root}/${dms.constants.static-images}"]
+
+server:
+  port: 8080

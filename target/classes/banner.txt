@@ -1,0 +1,9 @@
+
+  ${AnsiColor.GREEN}   █████     ${AnsiColor.RED}   ██            ██     ██████
+  ${AnsiColor.GREEN}   █        █   ${AnsiColor.RED}   █  █         █ █     █
+  ${AnsiColor.GREEN}   █        █   ${AnsiColor.RED}   █    █     █   █     ██████
+  ${AnsiColor.GREEN}   █        █   ${AnsiColor.RED}   █      █  █    █               █
+  ${AnsiColor.GREEN}   █████     ${AnsiColor.RED}   █        █      █     ██████
+
+${AnsiColor.BRIGHT_BLUE}:: DMS 🤓  :: Running Spring Boot ${spring-boot.version} ::
+:: https://github.com/zbeboy/DMS ::${AnsiColor.DEFAULT}

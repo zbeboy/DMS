@@ -1,0 +1,16 @@
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:h2:file:${user.dir}/h2sql/dms;USER=sa;PASSWORD=123456;init=create schema if not exists dms\;set schema dms
+    username: sa
+    driver-class-name: org.h2.Driver
+    password: 123456
+
+---
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:h2:file:${user.dir}/h2sql/dms;USER=sa;PASSWORD=123456;init=create schema if not exists dms\;set schema dms
+    username: sa
+    password: 123456
+    driver-class-name: org.h2.Driver

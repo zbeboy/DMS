@@ -1,0 +1,17 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "top.zbeboy.dms.config.DMSProperties",
+      "name": "isy",
+      "type": "top.zbeboy.dms.config.DMSProperties"
+    },
+    {
+      "sourceType": "top.zbeboy.dms.config.DMSProperties",
+      "name": "isy.constants",
+      "sourceMethod": "getConstants()",
+      "type": "top.zbeboy.dms.config.DMSProperties$Constants"
+    }
+  ],
+  "properties": []
+}
