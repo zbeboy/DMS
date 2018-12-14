@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @version 1.0
  * @since 1.0
  */
-@ConfigurationProperties(prefix = "isy", ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "dms", ignoreUnknownFields = false)
 public class DMSProperties {
 
     private Constants constants = new Constants();

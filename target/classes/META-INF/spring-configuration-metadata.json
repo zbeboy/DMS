@@ -3,15 +3,26 @@
   "groups": [
     {
       "sourceType": "top.zbeboy.dms.config.DMSProperties",
-      "name": "isy",
+      "name": "dms",
       "type": "top.zbeboy.dms.config.DMSProperties"
     },
     {
       "sourceType": "top.zbeboy.dms.config.DMSProperties",
-      "name": "isy.constants",
+      "name": "dms.constants",
       "sourceMethod": "getConstants()",
       "type": "top.zbeboy.dms.config.DMSProperties$Constants"
     }
   ],
-  "properties": []
+  "properties": [
+    {
+      "sourceType": "top.zbeboy.dms.config.DMSProperties$Constants",
+      "name": "dms.constants.document-root",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "top.zbeboy.dms.config.DMSProperties$Constants",
+      "name": "dms.constants.static-images",
+      "type": "java.lang.String"
+    }
+  ]
 }
