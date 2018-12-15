@@ -20,7 +20,6 @@ CREATE TABLE users (
     account_non_expired BOOLEAN NOT NULL,
     credentials_non_expired BOOLEAN NOT NULL,
     account_non_locked BOOLEAN NOT NULL,
-	  agree_protocol BOOLEAN NOT NULL,
     users_type_id INT NOT NULL,
     real_name VARCHAR(30),
     avatar VARCHAR(64),
@@ -159,15 +158,15 @@ CREATE TABLE system_operator_log(
 );
 
 INSERT INTO files(file_id, file_size, content_type, original_file_name, new_name, relative_path, ext) VALUES (
-'1000',4213,'image/jpg','avatar','avatar','images/avatar.jpg','jpg'
+'1000',4213,'image/jpg','avatar','avatar','img/avatar.jpg','jpg'
 );
 INSERT INTO users_type (users_type_name) VALUES ('系统');
 INSERT INTO users_type (users_type_name) VALUES ('学生');
 INSERT INTO users_type (users_type_name) VALUES ('教职工');
 
-INSERT INTO users (username, password, enabled, account_non_expired, credentials_non_expired, account_non_locked,agree_protocol,
+INSERT INTO users (username, password, enabled, account_non_expired, credentials_non_expired, account_non_locked,
                    users_type_id, real_name, avatar, join_date)
-VALUES ('zbeboy', '$2a$10$HKXHRhnhlC1aZQ4hukD0S.zYep/T5A7FULBo7S2UrJsqQCThUxdo2', 1, 1, 1, 1, 1, 1, '赵银', '1000', '2016-08-18');
+VALUES ('zbeboy', '$2a$10$HKXHRhnhlC1aZQ4hukD0S.zYep/T5A7FULBo7S2UrJsqQCThUxdo2', 1, 1, 1, 1, 1, '赵银', '1000', '2016-08-18');
 
 INSERT INTO authorities (username, authority) VALUES ('zbeboy', 'ROLE_SYSTEM');
 

@@ -60,7 +60,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests().antMatchers("/css/**", "/js/**", "/fonts/**", "/images/**", "/plugin/**", "/files/**", "/webjars/**", "/webjarsjs/**").permitAll()
+                .headers()
+                // allow same origin to frame our site to support iframe SockJS
+                .frameOptions().sameOrigin()
+                .and()
+                .authorizeRequests().antMatchers("/css/**", "/js/**", "/fonts/**", "/img/**", "/plugin/**", "/files/**", "/webjars/**", "/webjarsjs/**").permitAll()
                 .and().formLogin().loginPage("/login")
                 .successHandler(this.ajaxAuthenticationSuccessHandler)
                 .failureHandler(this.ajaxAuthenticationFailureHandler)
@@ -68,8 +72,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().logout().logoutSuccessUrl("/")
                 .permitAll().invalidateHttpSession(true)
                 .and().rememberMe().alwaysRemember(true).tokenValiditySeconds(2419200).tokenRepository(jdbcTokenRepository())
-                .and().authorizeRequests().antMatchers("/special/channel/**").hasAnyRole("SYSTEM", "ADMIN") // 特别通道 跨controller调用共同方法使用
-                .and().authorizeRequests().antMatchers("/user/**").authenticated()
+                .and().authorizeRequests().antMatchers("/web/**").authenticated()
                 .and().authorizeRequests().antMatchers("/anyone/**").permitAll()
                 .and().addFilterBefore(new SecurityLoginFilter(), UsernamePasswordAuthenticationFilter.class);
     }

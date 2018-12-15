@@ -1,7 +1,9 @@
 package top.zbeboy.dms.service.system;
 
+import org.springframework.security.core.GrantedAuthority;
 import top.zbeboy.dms.domain.dms.tables.pojos.Authorities;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface AuthoritiesService {
@@ -21,4 +23,11 @@ public interface AuthoritiesService {
      * @return true or false
      */
     Boolean isAnonymousAuthenticated();
+
+    /**
+     * 从当前用户信息中获取权限
+     *
+     * @return 权限集合
+     */
+    StringBuilder getAuthorities();
 }

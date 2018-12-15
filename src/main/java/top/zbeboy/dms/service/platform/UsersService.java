@@ -13,6 +13,13 @@ public interface UsersService {
     Users findByUsername(String username);
 
     /**
+     * 从session中获取用户完整信息
+     *
+     * @return session中的用户信息
+     */
+    Users getUserFromSession();
+
+    /**
      * 保存
      *
      * @param users 数据

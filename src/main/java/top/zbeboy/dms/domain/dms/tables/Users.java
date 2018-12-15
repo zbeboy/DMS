@@ -40,7 +40,7 @@ import top.zbeboy.dms.domain.dms.tables.records.UsersRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-    private static final long serialVersionUID = 1891927205;
+    private static final long serialVersionUID = 595646759;
 
     /**
      * The reference instance of <code>DMS.USERS</code>
@@ -84,11 +84,6 @@ public class Users extends TableImpl<UsersRecord> {
      * The column <code>DMS.USERS.ACCOUNT_NON_LOCKED</code>.
      */
     public final TableField<UsersRecord, Boolean> ACCOUNT_NON_LOCKED = createField("ACCOUNT_NON_LOCKED", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
-
-    /**
-     * The column <code>DMS.USERS.AGREE_PROTOCOL</code>.
-     */
-    public final TableField<UsersRecord, Boolean> AGREE_PROTOCOL = createField("AGREE_PROTOCOL", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>DMS.USERS.USERS_TYPE_ID</code>.

@@ -55,4 +55,19 @@ public class AjaxAuthenticationCode {
     账号已被注销
      */
     public static final int USERNAME_IS_ENABLES = 10;
+
+    /*
+    账号过期
+     */
+    public static final int USERNAME_ACCOUNT_NON_EXPIRED = 11;
+
+    /*
+    账号是否凭证过期
+     */
+    public static final int USERNAME_CREDENTIALS_NON_EXPIRED = 12;
+
+    /*
+    账号是否被锁
+     */
+    public static final int USERNAME_ACCOUNT_NON_LOCKED = 13;
 }

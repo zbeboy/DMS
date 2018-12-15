@@ -105,13 +105,6 @@ public class UsersDao extends DAOImpl<UsersRecord, top.zbeboy.dms.domain.dms.tab
     }
 
     /**
-     * Fetch records that have <code>AGREE_PROTOCOL IN (values)</code>
-     */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Users> fetchByAgreeProtocol(Boolean... values) {
-        return fetch(Users.USERS.AGREE_PROTOCOL, values);
-    }
-
-    /**
      * Fetch records that have <code>USERS_TYPE_ID IN (values)</code>
      */
     public List<top.zbeboy.dms.domain.dms.tables.pojos.Users> fetchByUsersTypeId(Integer... values) {

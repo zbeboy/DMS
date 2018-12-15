@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users implements Serializable {
 
-    private static final long serialVersionUID = 1241251274;
+    private static final long serialVersionUID = -612637910;
 
     private String  username;
     private String  password;
@@ -33,7 +33,6 @@ public class Users implements Serializable {
     private Boolean accountNonExpired;
     private Boolean credentialsNonExpired;
     private Boolean accountNonLocked;
-    private Boolean agreeProtocol;
     private Integer usersTypeId;
     private String  realName;
     private String  avatar;
@@ -48,7 +47,6 @@ public class Users implements Serializable {
         this.accountNonExpired = value.accountNonExpired;
         this.credentialsNonExpired = value.credentialsNonExpired;
         this.accountNonLocked = value.accountNonLocked;
-        this.agreeProtocol = value.agreeProtocol;
         this.usersTypeId = value.usersTypeId;
         this.realName = value.realName;
         this.avatar = value.avatar;
@@ -62,7 +60,6 @@ public class Users implements Serializable {
         Boolean accountNonExpired,
         Boolean credentialsNonExpired,
         Boolean accountNonLocked,
-        Boolean agreeProtocol,
         Integer usersTypeId,
         String  realName,
         String  avatar,
@@ -74,7 +71,6 @@ public class Users implements Serializable {
         this.accountNonExpired = accountNonExpired;
         this.credentialsNonExpired = credentialsNonExpired;
         this.accountNonLocked = accountNonLocked;
-        this.agreeProtocol = agreeProtocol;
         this.usersTypeId = usersTypeId;
         this.realName = realName;
         this.avatar = avatar;
@@ -138,15 +134,6 @@ public class Users implements Serializable {
     }
 
     @NotNull
-    public Boolean getAgreeProtocol() {
-        return this.agreeProtocol;
-    }
-
-    public void setAgreeProtocol(Boolean agreeProtocol) {
-        this.agreeProtocol = agreeProtocol;
-    }
-
-    @NotNull
     public Integer getUsersTypeId() {
         return this.usersTypeId;
     }
@@ -191,7 +178,6 @@ public class Users implements Serializable {
         sb.append(", ").append(accountNonExpired);
         sb.append(", ").append(credentialsNonExpired);
         sb.append(", ").append(accountNonLocked);
-        sb.append(", ").append(agreeProtocol);
         sb.append(", ").append(usersTypeId);
         sb.append(", ").append(realName);
         sb.append(", ").append(avatar);

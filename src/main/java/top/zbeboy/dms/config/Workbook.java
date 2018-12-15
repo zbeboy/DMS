@@ -21,12 +21,6 @@ public final class Workbook {
     public static final String SPRING_PROFILE_PRODUCTION = "prod";
 
     /*
-    注册类型
-     */
-    public static final String REGISTER_STUDENT = "student";
-    public static final String REGISTER_STAFF = "staff";
-
-    /*
     静态配置参数
      */
     public enum SystemConfigure {
@@ -49,4 +43,18 @@ public final class Workbook {
     public static final String SYSTEM_USERS_TYPE = "系统";
     public static final String STUDENT_USERS_TYPE = "学生";
     public static final String STAFF_USERS_TYPE = "教职工";
+
+    /*
+    系统角色
+     */
+    // 系统管理员
+    public static final String ROLE_SYSTEM = "ROLE_SYSTEM";
+    // 学院团委
+    public static final String ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE = "ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE";
+    // 学生工作部
+    public static final String ROLE_COLLEGE_WORK_DEPARTMENT = "ROLE_COLLEGE_WORK_DEPARTMENT";
+    // 系部辅导员
+    public static final String ROLE_DEPARTMENT_INSTRUCTOR = "ROLE_DEPARTMENT_INSTRUCTOR";
+    // 班主任
+    public static final String ROLE_HEADMASTER = "ROLE_HEADMASTER";
 }

@@ -1,21 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" class="pos-relative">
-<head th:include="header :: no-metas-header(~{::title},~{::link})">
-    <title>ERROR</title>
-    <!-- vendor css -->
-    <link rel="stylesheet" href="css/ionicons.css" th:href="@{/webjars/ionicons/css/ionicons.min.css}" />
-
-    <!-- Bracket CSS -->
-    <link rel="stylesheet" href="css/bracket.css" th:href="@{/plugin/bracket/css/bracket.min.css}" />
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: no-metas-link-header(~{::title})">
+    <title>错误</title>
 </head>
-<body>
 
-<div class="ht-100v d-flex align-items-center justify-content-center">
-    <div class="wd-lg-70p wd-xl-50p tx-center pd-x-40">
-        <h1 class="tx-100 tx-xs-140 tx-normal tx-inverse tx-roboto mg-b-0" th:text="${status}"></h1>
-        <h5 class="tx-xs-24 tx-normal tx-info mg-b-30 lh-5" th:text="${message}"></h5>
-    </div>
-</div><!-- ht-100v -->
-
+<body class="gray-bg">
+    <div class="middle-box text-center animated fadeInDown">
+        <h1>404</h1>
+        <h3 class="font-bold">抱歉，页面丢失了~</h3>
+        </div>
 </body>
 </html>

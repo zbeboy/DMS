@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header(~{::meta},~{::title},~{::link})">
+    <!-- csrf -->
+    <meta name="_csrf" content="" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
+    <title>登录-决策系统</title>
+    <link href="css/login/login.min.css" rel="stylesheet" th:href="@{/css/login/login.min.css}" />
+    <link href="css/login/login.css" rel="stylesheet" th:href="@{/css/login/login.css}" />
+    <!--<script>
+        if(window.top!==window.self){window.top.location=window.location};
+    </script>-->
+</head>
+
+<body class="signin">
+    <div class="signinpanel">
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="signin-info">
+                    <div class="logopanel m-b">
+                        <h1>欢迎登陆</h1>
+                    </div>
+                    <div class="m-b"></div>
+                    <h3>城市学院学生综合素质培养决策系统</h3>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <form method="post" id="loginFrom">
+                    <h2 class="no-margins">登录：</h2>
+                    <input type="text" class="form-control uname" placeholder="用户名" id="username" />
+                    <div class="text-danger" id="username_error"></div>
+                    <input type="password" class="form-control pword m-b" placeholder="密码" id="password" />
+                    <div class="text-danger" id="password_error"></div>
+                    <div id="error_msg"></div>
+                    <button class="btn btn-success btn-block" type="button" id="login">登录</button><br/>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery/jquery.min.js " th:src="@{/js/jquery/jquery.min.js}"></script>
+    <script th:inline="javascript">
+        var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+    </script>
+    <script src="js/util/csrf.js" th:src="@{/js/util/csrf.js}"></script>
+    <script src="js/login/login.js" th:src="@{/js/login/login.js}"></script>
+</body>
+</html>
