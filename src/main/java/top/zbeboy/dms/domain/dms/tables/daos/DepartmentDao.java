@@ -81,4 +81,11 @@ public class DepartmentDao extends DAOImpl<DepartmentRecord, top.zbeboy.dms.doma
     public List<top.zbeboy.dms.domain.dms.tables.pojos.Department> fetchByCollegeId(Integer... values) {
         return fetch(Department.DEPARTMENT.COLLEGE_ID, values);
     }
+
+    /**
+     * Fetch records that have <code>DEPARTMENT_IS_DEL IN (values)</code>
+     */
+    public List<top.zbeboy.dms.domain.dms.tables.pojos.Department> fetchByDepartmentIsDel(Boolean... values) {
+        return fetch(Department.DEPARTMENT.DEPARTMENT_IS_DEL, values);
+    }
 }

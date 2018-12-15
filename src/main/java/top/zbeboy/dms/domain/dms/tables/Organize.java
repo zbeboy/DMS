@@ -40,7 +40,7 @@ import top.zbeboy.dms.domain.dms.tables.records.OrganizeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Organize extends TableImpl<OrganizeRecord> {
 
-    private static final long serialVersionUID = 539045608;
+    private static final long serialVersionUID = -50538524;
 
     /**
      * The reference instance of <code>DMS.ORGANIZE</code>
@@ -69,6 +69,11 @@ public class Organize extends TableImpl<OrganizeRecord> {
      * The column <code>DMS.ORGANIZE.GRADE_ID</code>.
      */
     public final TableField<OrganizeRecord, Integer> GRADE_ID = createField("GRADE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>DMS.ORGANIZE.ORGANIZE_IS_DEL</code>.
+     */
+    public final TableField<OrganizeRecord, Boolean> ORGANIZE_IS_DEL = createField("ORGANIZE_IS_DEL", org.jooq.impl.SQLDataType.BOOLEAN, this, "");
 
     /**
      * Create a <code>DMS.ORGANIZE</code> table reference

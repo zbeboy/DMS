@@ -40,7 +40,7 @@ import top.zbeboy.dms.domain.dms.tables.records.ScienceRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Science extends TableImpl<ScienceRecord> {
 
-    private static final long serialVersionUID = 1550772227;
+    private static final long serialVersionUID = -1195341252;
 
     /**
      * The reference instance of <code>DMS.SCIENCE</code>
@@ -69,6 +69,11 @@ public class Science extends TableImpl<ScienceRecord> {
      * The column <code>DMS.SCIENCE.DEPARTMENT_ID</code>.
      */
     public final TableField<ScienceRecord, Integer> DEPARTMENT_ID = createField("DEPARTMENT_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>DMS.SCIENCE.SCIENCE_IS_DEL</code>.
+     */
+    public final TableField<ScienceRecord, Boolean> SCIENCE_IS_DEL = createField("SCIENCE_IS_DEL", org.jooq.impl.SQLDataType.BOOLEAN, this, "");
 
     /**
      * Create a <code>DMS.SCIENCE</code> table reference

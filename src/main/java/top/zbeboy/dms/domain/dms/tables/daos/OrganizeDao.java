@@ -81,4 +81,11 @@ public class OrganizeDao extends DAOImpl<OrganizeRecord, top.zbeboy.dms.domain.d
     public List<top.zbeboy.dms.domain.dms.tables.pojos.Organize> fetchByGradeId(Integer... values) {
         return fetch(Organize.ORGANIZE.GRADE_ID, values);
     }
+
+    /**
+     * Fetch records that have <code>ORGANIZE_IS_DEL IN (values)</code>
+     */
+    public List<top.zbeboy.dms.domain.dms.tables.pojos.Organize> fetchByOrganizeIsDel(Boolean... values) {
+        return fetch(Organize.ORGANIZE.ORGANIZE_IS_DEL, values);
+    }
 }

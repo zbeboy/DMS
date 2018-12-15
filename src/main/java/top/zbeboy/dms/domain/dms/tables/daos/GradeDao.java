@@ -81,4 +81,11 @@ public class GradeDao extends DAOImpl<GradeRecord, top.zbeboy.dms.domain.dms.tab
     public List<top.zbeboy.dms.domain.dms.tables.pojos.Grade> fetchByScienceId(Integer... values) {
         return fetch(Grade.GRADE.SCIENCE_ID, values);
     }
+
+    /**
+     * Fetch records that have <code>GRADE_IS_DEL IN (values)</code>
+     */
+    public List<top.zbeboy.dms.domain.dms.tables.pojos.Grade> fetchByGradeIsDel(Boolean... values) {
+        return fetch(Grade.GRADE.GRADE_IS_DEL, values);
+    }
 }

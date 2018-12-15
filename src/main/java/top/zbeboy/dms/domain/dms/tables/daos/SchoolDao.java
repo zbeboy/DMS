@@ -74,4 +74,11 @@ public class SchoolDao extends DAOImpl<SchoolRecord, top.zbeboy.dms.domain.dms.t
     public List<top.zbeboy.dms.domain.dms.tables.pojos.School> fetchBySchoolName(String... values) {
         return fetch(School.SCHOOL.SCHOOL_NAME, values);
     }
+
+    /**
+     * Fetch records that have <code>SCHOOL_IS_DEL IN (values)</code>
+     */
+    public List<top.zbeboy.dms.domain.dms.tables.pojos.School> fetchBySchoolIsDel(Boolean... values) {
+        return fetch(School.SCHOOL.SCHOOL_IS_DEL, values);
+    }
 }

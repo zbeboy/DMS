@@ -24,11 +24,12 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Organize implements Serializable {
 
-    private static final long serialVersionUID = -407869095;
+    private static final long serialVersionUID = -1935081497;
 
     private Integer organizeId;
     private String  organizeName;
     private Integer gradeId;
+    private Boolean organizeIsDel;
 
     public Organize() {}
 
@@ -36,16 +37,19 @@ public class Organize implements Serializable {
         this.organizeId = value.organizeId;
         this.organizeName = value.organizeName;
         this.gradeId = value.gradeId;
+        this.organizeIsDel = value.organizeIsDel;
     }
 
     public Organize(
         Integer organizeId,
         String  organizeName,
-        Integer gradeId
+        Integer gradeId,
+        Boolean organizeIsDel
     ) {
         this.organizeId = organizeId;
         this.organizeName = organizeName;
         this.gradeId = gradeId;
+        this.organizeIsDel = organizeIsDel;
     }
 
     public Integer getOrganizeId() {
@@ -75,6 +79,14 @@ public class Organize implements Serializable {
         this.gradeId = gradeId;
     }
 
+    public Boolean getOrganizeIsDel() {
+        return this.organizeIsDel;
+    }
+
+    public void setOrganizeIsDel(Boolean organizeIsDel) {
+        this.organizeIsDel = organizeIsDel;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Organize (");
@@ -82,6 +94,7 @@ public class Organize implements Serializable {
         sb.append(organizeId);
         sb.append(", ").append(organizeName);
         sb.append(", ").append(gradeId);
+        sb.append(", ").append(organizeIsDel);
 
         sb.append(")");
         return sb.toString();

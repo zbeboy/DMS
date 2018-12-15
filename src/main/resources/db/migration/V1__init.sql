@@ -47,7 +47,8 @@ CREATE TABLE persistent_logins (
 
 CREATE TABLE school (
     school_id INT AUTO_INCREMENT PRIMARY KEY,
-    school_name VARCHAR(200) NOT NULL
+    school_name VARCHAR(200) NOT NULL,
+    school_is_del BOOLEAN
 );
 
 CREATE TABLE college (
@@ -55,6 +56,7 @@ CREATE TABLE college (
     college_name VARCHAR(200) NOT NULL,
     college_address VARCHAR(500) NOT NULL,
     school_id INT NOT NULL,
+    college_is_del  BOOLEAN,
     FOREIGN KEY (school_id)
         REFERENCES school (school_id)
 );
@@ -63,6 +65,7 @@ CREATE TABLE department (
     department_id INT AUTO_INCREMENT PRIMARY KEY,
     department_name VARCHAR(200) NOT NULL,
     college_id INT NOT NULL,
+    department_is_del BOOLEAN,
     FOREIGN KEY (college_id)
         REFERENCES college (college_id)
 );
@@ -71,6 +74,7 @@ CREATE TABLE science (
     science_id INT AUTO_INCREMENT PRIMARY KEY,
     science_name VARCHAR(200) NOT NULL,
     department_id INT NOT NULL,
+    science_is_del BOOLEAN,
     FOREIGN KEY (department_id)
         REFERENCES department (department_id)
 );
@@ -79,6 +83,7 @@ CREATE TABLE grade (
     grade_id INT AUTO_INCREMENT PRIMARY KEY,
     grade VARCHAR(5),
     science_id INT NOT NULL,
+    grade_is_del BOOLEAN,
     FOREIGN KEY (science_id)
         REFERENCES science (science_id)
 );
@@ -87,6 +92,7 @@ CREATE TABLE organize (
     organize_id INT AUTO_INCREMENT PRIMARY KEY,
     organize_name VARCHAR(200) NOT NULL,
     grade_id INT NOT NULL,
+    organize_is_del BOOLEAN,
     FOREIGN KEY (grade_id)
         REFERENCES grade (grade_id)
 );

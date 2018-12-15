@@ -24,11 +24,12 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Science implements Serializable {
 
-    private static final long serialVersionUID = -1237372046;
+    private static final long serialVersionUID = -328355447;
 
     private Integer scienceId;
     private String  scienceName;
     private Integer departmentId;
+    private Boolean scienceIsDel;
 
     public Science() {}
 
@@ -36,16 +37,19 @@ public class Science implements Serializable {
         this.scienceId = value.scienceId;
         this.scienceName = value.scienceName;
         this.departmentId = value.departmentId;
+        this.scienceIsDel = value.scienceIsDel;
     }
 
     public Science(
         Integer scienceId,
         String  scienceName,
-        Integer departmentId
+        Integer departmentId,
+        Boolean scienceIsDel
     ) {
         this.scienceId = scienceId;
         this.scienceName = scienceName;
         this.departmentId = departmentId;
+        this.scienceIsDel = scienceIsDel;
     }
 
     public Integer getScienceId() {
@@ -75,6 +79,14 @@ public class Science implements Serializable {
         this.departmentId = departmentId;
     }
 
+    public Boolean getScienceIsDel() {
+        return this.scienceIsDel;
+    }
+
+    public void setScienceIsDel(Boolean scienceIsDel) {
+        this.scienceIsDel = scienceIsDel;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Science (");
@@ -82,6 +94,7 @@ public class Science implements Serializable {
         sb.append(scienceId);
         sb.append(", ").append(scienceName);
         sb.append(", ").append(departmentId);
+        sb.append(", ").append(scienceIsDel);
 
         sb.append(")");
         return sb.toString();

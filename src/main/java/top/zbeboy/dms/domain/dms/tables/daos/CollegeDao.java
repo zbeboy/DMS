@@ -88,4 +88,11 @@ public class CollegeDao extends DAOImpl<CollegeRecord, top.zbeboy.dms.domain.dms
     public List<top.zbeboy.dms.domain.dms.tables.pojos.College> fetchBySchoolId(Integer... values) {
         return fetch(College.COLLEGE.SCHOOL_ID, values);
     }
+
+    /**
+     * Fetch records that have <code>COLLEGE_IS_DEL IN (values)</code>
+     */
+    public List<top.zbeboy.dms.domain.dms.tables.pojos.College> fetchByCollegeIsDel(Boolean... values) {
+        return fetch(College.COLLEGE.COLLEGE_IS_DEL, values);
+    }
 }

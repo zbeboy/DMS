@@ -24,24 +24,28 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class School implements Serializable {
 
-    private static final long serialVersionUID = 118899607;
+    private static final long serialVersionUID = 1499313142;
 
     private Integer schoolId;
     private String  schoolName;
+    private Boolean schoolIsDel;
 
     public School() {}
 
     public School(School value) {
         this.schoolId = value.schoolId;
         this.schoolName = value.schoolName;
+        this.schoolIsDel = value.schoolIsDel;
     }
 
     public School(
         Integer schoolId,
-        String  schoolName
+        String  schoolName,
+        Boolean schoolIsDel
     ) {
         this.schoolId = schoolId;
         this.schoolName = schoolName;
+        this.schoolIsDel = schoolIsDel;
     }
 
     public Integer getSchoolId() {
@@ -62,12 +66,21 @@ public class School implements Serializable {
         this.schoolName = schoolName;
     }
 
+    public Boolean getSchoolIsDel() {
+        return this.schoolIsDel;
+    }
+
+    public void setSchoolIsDel(Boolean schoolIsDel) {
+        this.schoolIsDel = schoolIsDel;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("School (");
 
         sb.append(schoolId);
         sb.append(", ").append(schoolName);
+        sb.append(", ").append(schoolIsDel);
 
         sb.append(")");
         return sb.toString();

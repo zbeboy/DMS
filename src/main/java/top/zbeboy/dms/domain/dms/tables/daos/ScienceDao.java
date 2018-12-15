@@ -81,4 +81,11 @@ public class ScienceDao extends DAOImpl<ScienceRecord, top.zbeboy.dms.domain.dms
     public List<top.zbeboy.dms.domain.dms.tables.pojos.Science> fetchByDepartmentId(Integer... values) {
         return fetch(Science.SCIENCE.DEPARTMENT_ID, values);
     }
+
+    /**
+     * Fetch records that have <code>SCIENCE_IS_DEL IN (values)</code>
+     */
+    public List<top.zbeboy.dms.domain.dms.tables.pojos.Science> fetchByScienceIsDel(Boolean... values) {
+        return fetch(Science.SCIENCE.SCIENCE_IS_DEL, values);
+    }
 }

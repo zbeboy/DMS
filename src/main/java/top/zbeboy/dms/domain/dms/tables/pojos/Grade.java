@@ -24,11 +24,12 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Grade implements Serializable {
 
-    private static final long serialVersionUID = -206537524;
+    private static final long serialVersionUID = 477680040;
 
     private Integer gradeId;
     private String  grade;
     private Integer scienceId;
+    private Boolean gradeIsDel;
 
     public Grade() {}
 
@@ -36,16 +37,19 @@ public class Grade implements Serializable {
         this.gradeId = value.gradeId;
         this.grade = value.grade;
         this.scienceId = value.scienceId;
+        this.gradeIsDel = value.gradeIsDel;
     }
 
     public Grade(
         Integer gradeId,
         String  grade,
-        Integer scienceId
+        Integer scienceId,
+        Boolean gradeIsDel
     ) {
         this.gradeId = gradeId;
         this.grade = grade;
         this.scienceId = scienceId;
+        this.gradeIsDel = gradeIsDel;
     }
 
     public Integer getGradeId() {
@@ -74,6 +78,14 @@ public class Grade implements Serializable {
         this.scienceId = scienceId;
     }
 
+    public Boolean getGradeIsDel() {
+        return this.gradeIsDel;
+    }
+
+    public void setGradeIsDel(Boolean gradeIsDel) {
+        this.gradeIsDel = gradeIsDel;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Grade (");
@@ -81,6 +93,7 @@ public class Grade implements Serializable {
         sb.append(gradeId);
         sb.append(", ").append(grade);
         sb.append(", ").append(scienceId);
+        sb.append(", ").append(gradeIsDel);
 
         sb.append(")");
         return sb.toString();

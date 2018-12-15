@@ -24,12 +24,13 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class College implements Serializable {
 
-    private static final long serialVersionUID = -1938760089;
+    private static final long serialVersionUID = -870842973;
 
     private Integer collegeId;
     private String  collegeName;
     private String  collegeAddress;
     private Integer schoolId;
+    private Boolean collegeIsDel;
 
     public College() {}
 
@@ -38,18 +39,21 @@ public class College implements Serializable {
         this.collegeName = value.collegeName;
         this.collegeAddress = value.collegeAddress;
         this.schoolId = value.schoolId;
+        this.collegeIsDel = value.collegeIsDel;
     }
 
     public College(
         Integer collegeId,
         String  collegeName,
         String  collegeAddress,
-        Integer schoolId
+        Integer schoolId,
+        Boolean collegeIsDel
     ) {
         this.collegeId = collegeId;
         this.collegeName = collegeName;
         this.collegeAddress = collegeAddress;
         this.schoolId = schoolId;
+        this.collegeIsDel = collegeIsDel;
     }
 
     public Integer getCollegeId() {
@@ -89,6 +93,14 @@ public class College implements Serializable {
         this.schoolId = schoolId;
     }
 
+    public Boolean getCollegeIsDel() {
+        return this.collegeIsDel;
+    }
+
+    public void setCollegeIsDel(Boolean collegeIsDel) {
+        this.collegeIsDel = collegeIsDel;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("College (");
@@ -97,6 +109,7 @@ public class College implements Serializable {
         sb.append(", ").append(collegeName);
         sb.append(", ").append(collegeAddress);
         sb.append(", ").append(schoolId);
+        sb.append(", ").append(collegeIsDel);
 
         sb.append(")");
         return sb.toString();

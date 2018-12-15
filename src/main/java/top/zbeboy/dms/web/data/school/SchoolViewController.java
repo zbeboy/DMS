@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class SchoolViewController {
 
     /**
-     * 登录页
+     * 学校数据页
      *
-     * @return 登录页.
+     * @return 学校数据页.
      */
     @GetMapping(value = "/web/menu/data/school")
-    public String login() {
+    public String school() {
         return "data_v1";
     }
 }

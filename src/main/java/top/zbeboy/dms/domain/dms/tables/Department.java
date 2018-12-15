@@ -40,7 +40,7 @@ import top.zbeboy.dms.domain.dms.tables.records.DepartmentRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Department extends TableImpl<DepartmentRecord> {
 
-    private static final long serialVersionUID = -641492785;
+    private static final long serialVersionUID = -76021758;
 
     /**
      * The reference instance of <code>DMS.DEPARTMENT</code>
@@ -69,6 +69,11 @@ public class Department extends TableImpl<DepartmentRecord> {
      * The column <code>DMS.DEPARTMENT.COLLEGE_ID</code>.
      */
     public final TableField<DepartmentRecord, Integer> COLLEGE_ID = createField("COLLEGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>DMS.DEPARTMENT.DEPARTMENT_IS_DEL</code>.
+     */
+    public final TableField<DepartmentRecord, Boolean> DEPARTMENT_IS_DEL = createField("DEPARTMENT_IS_DEL", org.jooq.impl.SQLDataType.BOOLEAN, this, "");
 
     /**
      * Create a <code>DMS.DEPARTMENT</code> table reference

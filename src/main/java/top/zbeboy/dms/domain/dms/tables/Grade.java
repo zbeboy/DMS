@@ -40,7 +40,7 @@ import top.zbeboy.dms.domain.dms.tables.records.GradeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Grade extends TableImpl<GradeRecord> {
 
-    private static final long serialVersionUID = -1937079306;
+    private static final long serialVersionUID = 257723964;
 
     /**
      * The reference instance of <code>DMS.GRADE</code>
@@ -69,6 +69,11 @@ public class Grade extends TableImpl<GradeRecord> {
      * The column <code>DMS.GRADE.SCIENCE_ID</code>.
      */
     public final TableField<GradeRecord, Integer> SCIENCE_ID = createField("SCIENCE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>DMS.GRADE.GRADE_IS_DEL</code>.
+     */
+    public final TableField<GradeRecord, Boolean> GRADE_IS_DEL = createField("GRADE_IS_DEL", org.jooq.impl.SQLDataType.BOOLEAN, this, "");
 
     /**
      * Create a <code>DMS.GRADE</code> table reference
