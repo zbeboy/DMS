@@ -35,12 +35,11 @@
                 </button>
             </div>
             <table data-height="400" data-mobile-responsive="true" data-toggle="table" data-show-refresh="true"
-                   data-show-columns="true" data-sort-name="articleDateStr" data-show-toggle="true"
-                   data-sort-order="desc"
+                   data-show-columns="true" data-sort-name="schoolName" data-show-toggle="true"
+                   data-sort-order="asc"
                    data-locale="zh-CN" id="dataTable" style="table-layout:fixed;">
                 <thead>
                 <tr>
-                    <th data-field="id" data-checkbox="true"></th>
                     <th data-field="schoolName">学校</th>
                     <th data-field="schoolIsDel">状态</th>
                     <th data-formatter="operation">操作</th>
@@ -57,8 +56,7 @@
     <div class="btn-group" role="group">
         {{#each func}}
         <button type="button" class="btn btn-{{this.type}} btn-sm {{this.css}}" data-id="{{this.id}}"
-                data-article="{{this.article}}" data-article-sno="{{this.articleSn}}"
-                data-menu-order-way="{{this.orderWay}}">
+                data-school="{{this.school}}">
             {{this.name}}
         </button>
         {{/each}}

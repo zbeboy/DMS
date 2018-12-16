@@ -58,7 +58,25 @@ dataTable.bootstrapTable('destroy')
 var template = Handlebars.compile($("#operator_button").html());
 
 function operation(value, row, index, field) {
-    return "";
+    var context = {
+        func: [
+            {
+                "name": "编辑",
+                "css": "edit",
+                "type": "primary",
+                "id": row.schoolId,
+                "school": row.schoolName
+            },
+            {
+                "name": "删除",
+                "css": "del",
+                "type": "danger",
+                "id": row.schoolId,
+                "school": row.schoolName
+            }
+        ]
+    };
+    return template(context);
 }
 
 /*

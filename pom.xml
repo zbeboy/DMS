@@ -38,6 +38,7 @@
         <javax.inject.version>1</javax.inject.version>
         <fastJson.version>1.2.51</fastJson.version>
 
+        <commons-lang3.version>3.7</commons-lang3.version>
         <commons-io.verson>2.6</commons-io.verson>
     </properties>
 
@@ -211,6 +212,13 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.verson}</version>
+        </dependency>
+
+        <!-- apache common-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
         </dependency>
     </dependencies>
 
