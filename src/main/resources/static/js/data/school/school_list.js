@@ -7,7 +7,12 @@
 */
 function getAjaxUrl() {
     return {
-        schools: '/web/data/school/data'
+        schools: web_path + '/web/data/school/data',
+        check_add_school: web_path + '/web/data/school/check/add/name',
+        check_update_school: web_path + '/web/data/school/check/update/name',
+        save: web_path + '/web/data/school/save',
+        update: web_path + '/web/data/school/update',
+        status: web_path + '/web/data/school/status'
     };
 }
 
@@ -32,7 +37,7 @@ var dataTable = $('#dataTable');
 dataTable.bootstrapTable('destroy')
     .bootstrapTable({
         method: "get",  //使用get请求到服务器获取数据
-        url: web_path + getAjaxUrl().schools, //获取数据的Servlet地址
+        url: getAjaxUrl().schools, //获取数据的Servlet地址
         pagination: true, //启动分页
         pageSize: 10,  //每页显示的记录数
         pageNumber: 1, //当前第几页
@@ -54,6 +59,14 @@ dataTable.bootstrapTable('destroy')
         }
     });
 
+function formatterSchoolIsDel(value, row, index, field) {
+    var v = "已删除";
+    if (!value) {
+        v = "正常";
+    }
+    return v;
+}
+
 // 预编译模板
 var template = Handlebars.compile($("#operator_button").html());
 
@@ -68,9 +81,9 @@ function operation(value, row, index, field) {
                 "school": row.schoolName
             },
             {
-                "name": "删除",
-                "css": "del",
-                "type": "danger",
+                "name": row.schoolIsDel ? "恢复" : "删除",
+                "css": row.schoolIsDel ? "recovery" : "del",
+                "type": row.schoolIsDel ? "warning" : "danger",
                 "id": row.schoolId,
                 "school": row.schoolName
             }
@@ -105,6 +118,155 @@ function refreshTable() {
     });
 }
 
+/**
+ * 检验成功
+ * @param errorMsgId
+ */
+function validSuccessDom(errorMsgId) {
+    $(errorMsgId).addClass('hidden').text('');
+}
+
+/**
+ * 检验失败
+ * @param errorMsgId
+ * @param msg
+ */
+function validErrorDom(errorMsgId, msg) {
+    $(errorMsgId).removeClass('hidden').text(msg);
+}
+
+var add_param_id = {
+    schoolName: '#addSchoolName'
+};
+
+var add_param = {
+    schoolName: ''
+};
+
+var add_error_id = {
+    schoolName: "#add_school_name_error"
+};
+
+function initAddParam() {
+    add_param.schoolName = $(add_param_id.schoolName).val();
+}
+
+function addSchool() {
+    initAddParam();
+    checkAddSchoolName();
+}
+
+function checkAddSchoolName() {
+    var schoolName = add_param.schoolName;
+    if (schoolName !== '') {
+        $.post(getAjaxUrl().check_add_school, {schoolName: schoolName}, function (data) {
+            if (data.state) {
+                validSuccessDom(add_error_id.schoolName);
+                sendAddAjax();
+            } else {
+                validErrorDom(add_error_id.schoolName, data.msg);
+            }
+        });
+    } else {
+        validErrorDom(add_error_id.schoolName, '学校名不能为空');
+    }
+}
+
+function sendAddAjax() {
+    $.post(getAjaxUrl().save, add_param, function (data) {
+        if (data.state) {
+            $(add_param_id.schoolName).val('');
+            $('#addModal').modal('hide');
+            refreshTable();
+        } else {
+            validErrorDom(add_error_id.schoolName, data.msg);
+        }
+    })
+}
+
+var edit_param_id = {
+    schoolId: '#editSchoolId',
+    schoolName: '#editSchoolName'
+};
+
+var edit_param = {
+    schoolId: '',
+    schoolName: ''
+};
+
+var edit_error_id = {
+    schoolName: "#edit_school_name_error"
+};
+
+function initEditParam() {
+    edit_param.schoolId = $(edit_param_id.schoolId).val();
+    edit_param.schoolName = $(edit_param_id.schoolName).val();
+}
+
+function editSchool() {
+    initEditParam();
+    checkEditSchoolName();
+}
+
+function checkEditSchoolName() {
+    var schoolName = edit_param.schoolName;
+    var schoolId = edit_param.schoolId;
+    if (schoolName !== '') {
+        $.post(getAjaxUrl().check_update_school, edit_param, function (data) {
+            if (data.state) {
+                validSuccessDom(edit_error_id.schoolName);
+                sendEditAjax();
+            } else {
+                validErrorDom(edit_error_id.schoolName, data.msg);
+            }
+        });
+    } else {
+        validErrorDom(edit_error_id.schoolName, '学校名不能为空');
+    }
+}
+
+function sendEditAjax() {
+    $.post(getAjaxUrl().update, edit_param, function (data) {
+        if (data.state) {
+            $(edit_param_id.schoolName).val('');
+            $('#editModal').modal('hide');
+            refreshTable();
+        } else {
+            validErrorDom(edit_error_id.schoolName, data.msg);
+        }
+    })
+}
+
+function delOrRecover(id, name, isDel, message) {
+    var msg;
+    msg = Messenger().post({
+        message: "确定" + message + "学校 '" + name + "'  吗?",
+        actions: {
+            retry: {
+                label: '确定',
+                phrase: 'Retrying TIME',
+                action: function () {
+                    msg.cancel();
+                    $.post(getAjaxUrl().status, {schoolId: id, schoolIsDel: isDel}, function (data) {
+                        refreshTable();
+                        Messenger().post({
+                            message: data.msg,
+                            type: data.state ? 'info' : 'error',
+                            showCloseButton: true
+                        });
+                    });
+                }
+            },
+            cancel: {
+                label: '取消',
+                action: function () {
+                    return msg.cancel();
+                }
+            }
+        }
+    });
+}
+
 $(document).ready(function () {
     /*
     init message.
@@ -126,6 +288,29 @@ $(document).ready(function () {
     });
 
     $('#add').click(function () {
-        window.location.href = web_path + getAjaxUrl().add;
+        $('#addModal').modal('show');
+    });
+
+    $('#addSave').click(function () {
+        addSchool();
+    });
+
+    dataTable.delegate('.edit', "click", function () {
+        $(edit_param_id.schoolName).val($(this).attr('data-school'));
+        $(edit_param_id.schoolId).val($(this).attr('data-id'));
+        validSuccessDom(edit_error_id.schoolName);
+        $('#editModal').modal('show');
+    });
+
+    $('#editSave').click(function () {
+        editSchool();
+    });
+
+    dataTable.delegate('.del', "click", function () {
+        delOrRecover($(this).attr('data-id'), $(this).attr('data-school'), true, '删除');
+    });
+
+    dataTable.delegate('.recovery', "click", function () {
+        delOrRecover($(this).attr('data-id'), $(this).attr('data-school'), false, '恢复');
     });
 });

@@ -34,14 +34,14 @@
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                 </button>
             </div>
-            <table data-height="400" data-mobile-responsive="true" data-toggle="table" data-show-refresh="true"
+            <table data-mobile-responsive="true" data-toggle="table" data-show-refresh="true"
                    data-show-columns="true" data-sort-name="schoolName" data-show-toggle="true"
                    data-sort-order="asc"
                    data-locale="zh-CN" id="dataTable" style="table-layout:fixed;">
                 <thead>
                 <tr>
                     <th data-field="schoolName">学校</th>
-                    <th data-field="schoolIsDel">状态</th>
+                    <th data-field="schoolIsDel" data-formatter="formatterSchoolIsDel">状态</th>
                     <th data-formatter="operation">操作</th>
                 </tr>
                 </thead>
@@ -50,6 +50,58 @@
     </div>
     <!-- End Example Events -->
 </div>
+
+<!-- 添加Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addModalLabel">添加学校</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="addSchoolName">学校</label>
+                        <input class="form-control" id="addSchoolName" placeholder="学校">
+                        <div class="text-danger" id="add_school_name_error"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="addSave">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="editModalLabel">编辑学校</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="addSchoolName">学校</label>
+                        <input class="form-control" id="editSchoolName" placeholder="学校">
+                        <div class="text-danger" id="edit_school_name_error"></div>
+                        <input type="hidden" id="editSchoolId" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="editSave">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 <!--定义操作列按钮模板-->
 <script id="operator_button" type="text/x-handlebars-template">
@@ -77,5 +129,6 @@
 <script th:inline="javascript">
     var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
 </script>
+<script src="js/util/csrf.js" th:src="@{/js/util/csrf.js}"></script>
 <script src="js/data/school/school_list.js" th:src="@{/js/data/school/school_list.js}"></script>
 </html>

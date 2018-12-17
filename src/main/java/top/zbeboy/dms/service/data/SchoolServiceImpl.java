@@ -8,10 +8,17 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
+import top.zbeboy.dms.domain.dms.tables.daos.SchoolDao;
+import top.zbeboy.dms.domain.dms.tables.pojos.School;
+import top.zbeboy.dms.domain.dms.tables.records.SchoolRecord;
 import top.zbeboy.dms.service.plugin.BootstrapTablesPlugin;
 import top.zbeboy.dms.service.util.SQLQueryUtils;
 import top.zbeboy.dms.web.bean.data.school.SchoolBean;
 import top.zbeboy.dms.web.util.BootstrapTableUtils;
+
+import javax.annotation.Resource;
+
+import java.util.List;
 
 import static top.zbeboy.dms.domain.dms.Tables.SCHOOL;
 
@@ -21,9 +28,29 @@ public class SchoolServiceImpl extends BootstrapTablesPlugin<SchoolBean> impleme
 
     private final DSLContext create;
 
+    @Resource
+    private SchoolDao schoolDao;
+
     @Autowired
     SchoolServiceImpl(DSLContext dslContext) {
         create = dslContext;
+    }
+
+    @Override
+    public School findBySchoolId(int schoolId) {
+        return schoolDao.findById(schoolId);
+    }
+
+    @Override
+    public List<School> findBySchoolName(String schoolName) {
+        return schoolDao.fetchBySchoolName(schoolName);
+    }
+
+    @Override
+    public Result<SchoolRecord> findBySchoolNameNeSchoolId(int schoolId, String schoolName) {
+        return create.selectFrom(SCHOOL)
+                .where(SCHOOL.SCHOOL_NAME.eq(schoolName).and(SCHOOL.SCHOOL_ID.ne(schoolId)))
+                .fetch();
     }
 
     @Override
@@ -34,6 +61,17 @@ public class SchoolServiceImpl extends BootstrapTablesPlugin<SchoolBean> impleme
     @Override
     public int countByCondition(BootstrapTableUtils<SchoolBean> bootstrapTableUtils) {
         return statisticsWithCondition(bootstrapTableUtils, create, SCHOOL);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void save(School school) {
+        schoolDao.insert(school);
+    }
+
+    @Override
+    public void update(School school) {
+        schoolDao.update(school);
     }
 
     /**
