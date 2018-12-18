@@ -42,6 +42,11 @@ public class SchoolServiceImpl extends BootstrapTablesPlugin<SchoolBean> impleme
     }
 
     @Override
+    public List<School> findBySchoolIsDel(boolean schoolIsDel) {
+        return schoolDao.fetchBySchoolIsDel(schoolIsDel);
+    }
+
+    @Override
     public List<School> findBySchoolName(String schoolName) {
         return schoolDao.fetchBySchoolName(schoolName);
     }

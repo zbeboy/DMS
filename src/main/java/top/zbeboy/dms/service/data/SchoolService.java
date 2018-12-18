@@ -20,6 +20,14 @@ public interface SchoolService {
     School findBySchoolId(int schoolId);
 
     /**
+     * 根据学校状查询
+     *
+     * @param schoolIsDel 状态
+     * @return 数据
+     */
+    List<School> findBySchoolIsDel(boolean schoolIsDel);
+
+    /**
      * 根据学校名查询
      *
      * @param schoolName 学校名

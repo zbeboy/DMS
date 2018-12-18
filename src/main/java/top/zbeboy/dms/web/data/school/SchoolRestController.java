@@ -49,6 +49,19 @@ public class SchoolRestController {
     }
 
     /**
+     * 列表数据
+     *
+     * @return 数据
+     */
+    @GetMapping(value = "/web/data/school/all")
+    public ResponseEntity<Map<String, Object>> schoolAll() {
+        AjaxUtils ajaxUtils = AjaxUtils.of();
+        List<School> schools = schoolService.findBySchoolIsDel(false);
+        ajaxUtils.success().msg("获取数据成功").put("schools", schools);
+        return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
+    }
+
+    /**
      * 检验学校名
      *
      * @param schoolName 学校名
