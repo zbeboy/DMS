@@ -254,7 +254,7 @@ var edit_param = {
 
 var edit_error_id = {
     schoolId: '#edit_school_id_error',
-    collegeName: '#edit_school_name_error',
+    collegeName: '#edit_college_name_error',
     collegeAddress: '#edit_college_address_error'
 };
 
