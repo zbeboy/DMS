@@ -27,6 +27,15 @@ public interface CollegeService {
     Result<CollegeRecord> findBySchoolIdAndCollegeName(int schoolId, String collegeName);
 
     /**
+     * 查询学校下的院
+     *
+     * @param collegeIsDel 状态
+     * @param schoolId     学校id
+     * @return 数据
+     */
+    Result<CollegeRecord> findByCollegeIsDelAndSchoolId(boolean collegeIsDel, int schoolId);
+
+    /**
      * 根据院名和学校id查询(不等于院id)
      *
      * @param collegeId   院id

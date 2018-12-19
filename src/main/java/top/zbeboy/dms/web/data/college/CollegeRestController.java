@@ -49,6 +49,23 @@ public class CollegeRestController {
     }
 
     /**
+     * 列表数据
+     *
+     * @return 数据
+     */
+    @GetMapping(value = "/web/data/college/all")
+    public ResponseEntity<Map<String, Object>> collegeAll(@RequestParam("schoolId") int schoolId) {
+        AjaxUtils ajaxUtils = AjaxUtils.of();
+        Result<CollegeRecord> records = collegeService.findByCollegeIsDelAndSchoolId(false, schoolId);
+        List<CollegeBean> colleges = new ArrayList<>();
+        if (!ObjectUtils.isEmpty(records) && records.isNotEmpty()) {
+            colleges = records.into(CollegeBean.class);
+        }
+        ajaxUtils.success().msg("获取数据成功").put("colleges", colleges);
+        return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
+    }
+
+    /**
      * 数据
      *
      * @return 数据
