@@ -1,15 +1,17 @@
 ﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>专业数据</title>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header(~{::meta},~{::title},~{::link})">
+    <!-- csrf -->
+    <meta name="_csrf" content="" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
+    <title>专业数据-决策系统</title>
 
-    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
-    <link href="css/font/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
-    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
-    <link href="css/animate/animate.min.css" rel="stylesheet">
-    <link href="css/style/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"
+          th:href="@{/css/plugins/bootstrap-table/bootstrap-table.min.css}">
+    <link href="plugin/messenger/css/messenger.css" rel="stylesheet" th:href="@{/plugin/messenger/css/messenger.css}"/>
+    <link href="plugin/messenger/css/messenger-theme-air.css" rel="stylesheet"
+          th:href="@{/plugin/messenger/css/messenger-theme-air.css}"/>
 
 </head>
 
@@ -20,24 +22,45 @@
         <h3 class="example-title">专业数据</h3>
         <hr/>
         <div class="example">
-            <div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
-                <button type="button" class="btn btn-outline btn-default">
-                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-                </button>
-                <button type="button" class="btn btn-outline btn-default">
-                    <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+            <form class="form-inline text-center">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="schoolName"
+                           placeholder="学校">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="collegeName"
+                           placeholder="院">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="departmentName"
+                           placeholder="系">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="scienceName"
+                           placeholder="专业">
+                </div>
+            </form>
+            <div class="text-center" style="padding: 10px;">
+                <button type="button" id="search" class="btn btn-default">搜索</button>
+                <button type="button" id="reset_search" class="btn btn-default">重置</button>
+            </div>
+            <div id="toolbar" class="btn-group">
+                <button id="add" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                 </button>
             </div>
-            <table id="exampleTableEvents" data-height="400" data-mobile-responsive="true">
+            <table data-mobile-responsive="true" data-toggle="table" data-show-refresh="true"
+                   data-show-columns="true" data-sort-name="collegeName" data-show-toggle="true"
+                   data-sort-order="asc"
+                   data-locale="zh-CN" id="dataTable" style="table-layout:fixed;">
                 <thead>
                 <tr>
-                    <th data-field="state" data-checkbox="true"></th>
-                    <th data-field="id">学校</th>
-                    <th data-field="id">院</th>
-                    <th data-field="id">系</th>
-                    <th data-field="id">专业</th>
-                    <th data-field="state">状态</th>
-                    <th data-field="operation">操作</th>
+                    <th data-field="schoolName">学校</th>
+                    <th data-field="collegeName">院</th>
+                    <th data-field="departmentName">系</th>
+                    <th data-field="scienceName">专业</th>
+                    <th data-field="scienceIsDel" data-formatter="formatterScienceIsDel">状态</th>
+                    <th data-formatter="operation">操作</th>
                 </tr>
                 </thead>
             </table>
@@ -46,10 +69,32 @@
     <!-- End Example Events -->
 </div>
 </body>
-<script src="js/jquery/jquery.min.js?v=2.1.4"></script>
-<script src="js/bootstrap/bootstrap.min.js?v=3.3.6"></script>
-<script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
-<script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-<script src="js/demo/bootstrap-table-demo.min.js"></script>
+<!--定义操作列按钮模板-->
+<script id="operator_button" type="text/x-handlebars-template">
+    <div class="btn-group" role="group">
+        {{#each func}}
+        <button type="button" class="btn btn-{{this.type}} btn-sm {{this.css}}" data-id="{{this.id}}"
+                data-department="{{this.department}}">
+            {{this.name}}
+        </button>
+        {{/each}}
+    </div>
+</script>
+<script src="js/jquery/jquery.min.js?v=2.1.4" th:src="@{/js/jquery/jquery.min.js}"></script>
+<script src="js/bootstrap/bootstrap.min.js?v=3.3.6" th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+<script src="js/plugins/bootstrap-table/bootstrap-table.min.js"
+        th:src="@{/js/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
+<script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"
+        th:src="@{/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+<script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"
+        th:src="@{/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+<script src="plugin/messenger/js/messenger.js"
+        th:src="@{/plugin/messenger/js/messenger.js}"></script>
+<script src="plugin/handlebars/handlebars.js"
+        th:src="@{/plugin/handlebars/handlebars.js}"></script>
+<script th:inline="javascript">
+    var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+</script>
+<script src="js/util/csrf.js" th:src="@{/js/util/csrf.js}"></script>
+<script th:src="@{/js/data/science/science_list.js}"></script>
 </html>
