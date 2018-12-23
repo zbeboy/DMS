@@ -1,0 +1,37 @@
+.login-panel{
+    height:auto;
+    background:url(/img/bg_slide.jpg) no-repeat center fixed;
+    -webkit-background-size:cover;
+    -moz-background-size:cover;
+    -o-background-size:cover;
+    background-size:cover;
+    color:rgba(255,255,255,.80);
+}
+.transparent_box{
+    width:100%;
+    height:100%;
+    position:fixed;
+    top :0px;
+    background-color:#000;
+    opacity:0.5;
+    text-align:center
+}
+a{
+    color: #1ab394;
+    font-size: 30px;
+    text-align: center;
+    letter-spacing: 10px;
+    position: absolute;
+    width: 100%;
+    font-family:"Times New Roman", Times, serif;
+
+}
+a:hover{
+    color: rgba(255, 255, 255, 255);
+}
+p{
+    color: rgb(224, 255, 225);
+    font-family:"Times New Roman", Times, serif;
+    text-align: center;
+    font-size: 40px;
+}

@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: no-metas-header(~{::title},~{::link})">
+    <title>首页-决策系统</title>
+
+    <link href="css/index/index.css" rel="stylesheet" th:href="@{/css/index/index.css}">
 </head>
-<body>
-测试
+
+<body class="login-panel">
+<p>城市学院决策系统</p>
+<div class="transparent_box"></div>
+<a class="text-center" href="../login/login.html" th:href="@{/login}">马上登录</a>
 </body>
 </html>
