@@ -51,7 +51,7 @@ public class DepartmentRestController {
      * @return 数据
      */
     @PostMapping(value = "/web/data/department/one")
-    public ResponseEntity<Map<String, Object>> college(@RequestParam("departmentId") int departmentId) {
+    public ResponseEntity<Map<String, Object>> department(@RequestParam("departmentId") int departmentId) {
         AjaxUtils ajaxUtils = AjaxUtils.of();
         Optional<Record> record = departmentService.findByDepartmentIdRelation(departmentId);
         DepartmentBean department = new DepartmentBean();
