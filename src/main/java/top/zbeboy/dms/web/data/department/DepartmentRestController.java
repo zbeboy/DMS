@@ -118,7 +118,7 @@ public class DepartmentRestController {
         String name = StringUtils.trimWhitespace(departmentName);
         Department department = new Department();
         department.setCollegeId(collegeId);
-        department.setDepartmentName(departmentName);
+        department.setDepartmentName(name);
         departmentService.save(department);
         return new ResponseEntity<>(ajaxUtils.success().msg("保存成功").send(), HttpStatus.OK);
     }
