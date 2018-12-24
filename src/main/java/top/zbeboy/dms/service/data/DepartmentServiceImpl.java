@@ -51,6 +51,13 @@ public class DepartmentServiceImpl extends BootstrapTablesPlugin<DepartmentBean>
     }
 
     @Override
+    public Result<DepartmentRecord> findByDepartmentIsDelAndCollegeId(boolean departmentIsDel, int collegeId) {
+        return create.selectFrom(DEPARTMENT)
+                .where(DEPARTMENT.COLLEGE_ID.eq(collegeId).and(DEPARTMENT.DEPARTMENT_IS_DEL.eq(departmentIsDel)))
+                .fetch();
+    }
+
+    @Override
     public Result<DepartmentRecord> findByCollegeIdAndDepartmentName(int collegeId, String departmentName) {
         return create.selectFrom(DEPARTMENT)
                 .where(DEPARTMENT.COLLEGE_ID.eq(collegeId).and(DEPARTMENT.DEPARTMENT_NAME.eq(departmentName)))

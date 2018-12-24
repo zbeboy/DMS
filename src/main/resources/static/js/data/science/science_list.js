@@ -9,13 +9,14 @@ function getAjaxUrl() {
     return {
         schools: web_path + '/web/data/school/all',
         colleges: web_path + '/web/data/college/all',
-        departments: web_path + '/web/data/department/data',
-        department: web_path + '/web/data/department/one',
-        check_add_department: web_path + '/web/data/department/check/add/name',
-        check_update_department: web_path + '/web/data/department/check/update/name',
-        save: web_path + '/web/data/department/save',
-        update: web_path + '/web/data/department/update',
-        status: web_path + '/web/data/department/status'
+        departments: web_path + '/web/data/department/all',
+        sciences: web_path + '/web/data/science/data',
+        science: web_path + '/web/data/science/one',
+        check_add_science: web_path + '/web/data/science/check/add/name',
+        check_update_science: web_path + '/web/data/science/check/update/name',
+        save: web_path + '/web/data/science/save',
+        update: web_path + '/web/data/science/update',
+        status: web_path + '/web/data/science/status'
     };
 }
 
@@ -26,7 +27,8 @@ function getParamId() {
     return {
         schoolName: '#schoolName',
         collegeName: '#collegeName',
-        departmentName: '#departmentName'
+        departmentName: '#departmentName',
+        scienceName: '#scienceName'
     };
 }
 
@@ -36,7 +38,8 @@ function getParamId() {
 var param = {
     schoolName: '',
     collegeName: '',
-    departmentName: ''
+    departmentName: '',
+    scienceName: ''
 };
 
 var dataTable = $('#dataTable');
@@ -44,7 +47,7 @@ var dataTable = $('#dataTable');
 dataTable.bootstrapTable('destroy')
     .bootstrapTable({
         method: "get",  //使用get请求到服务器获取数据
-        url: getAjaxUrl().departments, //获取数据的Servlet地址
+        url: getAjaxUrl().sciences, //获取数据的Servlet地址
         pagination: true, //启动分页
         pageSize: 10,  //每页显示的记录数
         pageNumber: 1, //当前第几页
@@ -66,7 +69,7 @@ dataTable.bootstrapTable('destroy')
         }
     });
 
-function formatterDepartmentIsDel(value, row, index, field) {
+function formatterScienceIsDel(value, row, index, field) {
     var v = "已删除";
     if (!value) {
         v = "正常";
@@ -84,15 +87,15 @@ function operation(value, row, index, field) {
                 "name": "编辑",
                 "css": "edit",
                 "type": "primary",
-                "id": row.departmentId,
-                "department": row.departmentName
+                "id": row.scienceId,
+                "science": row.scienceName
             },
             {
-                "name": row.departmentIsDel ? "恢复" : "删除",
-                "css": row.departmentIsDel ? "recovery" : "del",
-                "type": row.departmentIsDel ? "warning" : "danger",
-                "id": row.departmentId,
-                "department": row.departmentName
+                "name": row.scienceIsDel ? "恢复" : "删除",
+                "css": row.scienceIsDel ? "recovery" : "del",
+                "type": row.scienceIsDel ? "warning" : "danger",
+                "id": row.scienceId,
+                "science": row.scienceName
             }
         ]
     };
@@ -106,6 +109,7 @@ function initParam() {
     param.schoolName = $(getParamId().schoolName).val();
     param.collegeName = $(getParamId().collegeName).val();
     param.departmentName = $(getParamId().departmentName).val();
+    param.scienceName = $(getParamId().scienceName).val();
 }
 
 /*
@@ -115,6 +119,7 @@ function cleanParam() {
     $(getParamId().schoolName).val('');
     $(getParamId().collegeName).val('');
     $(getParamId().departmentName).val('');
+    $(getParamId().scienceName).val('');
 }
 
 /*
@@ -175,6 +180,7 @@ function initColleges(schoolId, targetId, collegeId) {
     } else {
         $(targetId).html('<option value="">请选择院</option>');
     }
+
 }
 
 function collegesData(data, targetId, collegeId) {
@@ -183,41 +189,74 @@ function collegesData(data, targetId, collegeId) {
         $(targetId).append('<option value="' + n.collegeId + '">' + n.collegeName + '</option>');
     });
 
-    if(Number(collegeId) > 0) {
+    if (Number(collegeId) > 0) {
         $(targetId).val(collegeId);
+    }
+}
+
+function initDepartments(collegeId, targetId, departmentId) {
+    if (Number(collegeId) > 0) {
+        $.get(getAjaxUrl().departments, {collegeId: collegeId},
+            function (data) {
+                departmentsData(data, targetId, departmentId);
+            }
+        );
+    } else {
+        $(targetId).html('<option value="">请选择系</option>');
+    }
+}
+
+function departmentsData(data, targetId, departmentId) {
+    $(targetId).html('<option value="">请选择系</option>');
+    $.each(data.departments, function (i, n) {
+        $(targetId).append('<option value="' + n.departmentId + '">' + n.departmentName + '</option>');
+    });
+
+    if (Number(departmentId) > 0) {
+        $(targetId).val(departmentId);
     }
 }
 
 var add_param_id = {
     schoolId: '#addSchoolId',
     collegeId: '#addCollegeId',
-    departmentName: '#addDepartmentName'
+    departmentId: '#addDepartmentId',
+    scienceName: '#addScienceName'
 };
 
 var add_param = {
     schoolId: '',
     collegeId: '',
-    departmentName: ''
+    departmentId: '',
+    scienceName: ''
 };
 
 var add_error_id = {
     schoolId: "#add_school_id_error",
     collegeId: '#add_college_id_error',
-    departmentName: '#add_department_name_error'
+    departmentId: '#add_department_id_error',
+    scienceName: '#add_science_name_error'
 };
 
 function initAddParam() {
     add_param.schoolId = $(add_param_id.schoolId).val();
     add_param.collegeId = $(add_param_id.collegeId).val();
-    add_param.departmentName = $(add_param_id.departmentName).val();
+    add_param.departmentId = $(add_param_id.departmentId).val();
+    add_param.scienceName = $(add_param_id.scienceName).val();
 }
 
 $(add_param_id.schoolId).change(function () {
     var schoolId = $(this).val();
     initColleges(schoolId, add_param_id.collegeId, 0);
+    initDepartments(0, add_param_id.departmentId, 0);
 });
 
-function addDepartment() {
+$(add_param_id.collegeId).change(function () {
+    var collegeId = $(this).val();
+    initDepartments(collegeId, add_param_id.departmentId, 0);
+});
+
+function addScience() {
     initAddParam();
     checkAddSchoolId();
 }
@@ -236,81 +275,97 @@ function checkAddCollegeId() {
     var collegeId = add_param.collegeId;
     if (Number(collegeId) !== 0) {
         validSuccessDom(add_error_id.collegeId);
-        checkAddDepartmentName();
+        checkAddDepartmentId();
     } else {
         validErrorDom(add_error_id.collegeId, '请选择院');
     }
 }
 
-function checkAddDepartmentName() {
-    var collegeId = add_param.collegeId;
-    var departmentName = add_param.departmentName;
-    if (departmentName !== '') {
-        $.post(getAjaxUrl().check_add_department, {
-            collegeId: collegeId,
-            departmentName: departmentName
+function checkAddDepartmentId() {
+    var departmentId = add_param.departmentId;
+    if (Number(departmentId) !== 0) {
+        validSuccessDom(add_error_id.departmentId);
+        checkAddScienceName();
+    } else {
+        validErrorDom(add_error_id.departmentId, '请选择系');
+    }
+}
+
+function checkAddScienceName() {
+    var departmentId = add_param.departmentId;
+    var scienceName = add_param.scienceName;
+    if (scienceName !== '') {
+        $.post(getAjaxUrl().check_add_science, {
+            departmentId: departmentId,
+            scienceName: scienceName
         }, function (data) {
             if (data.state) {
-                validSuccessDom(add_error_id.departmentName);
+                validSuccessDom(add_error_id.scienceName);
                 sendAddAjax();
             } else {
-                validErrorDom(add_error_id.departmentName, data.msg);
+                validErrorDom(add_error_id.scienceName, data.msg);
             }
         });
     } else {
-        validErrorDom(add_error_id.departmentName, '系名不能为空');
+        validErrorDom(add_error_id.scienceName, '专业名不能为空');
     }
 }
 
 function sendAddAjax() {
     $.post(getAjaxUrl().save, add_param, function (data) {
         if (data.state) {
-            $(add_param_id.departmentName).val('');
+            $(add_param_id.scienceName).val('');
             $('#addModal').modal('hide');
             refreshTable();
         } else {
-            validErrorDom(add_error_id.departmentName, data.msg);
+            validErrorDom(add_error_id.scienceName, data.msg);
         }
     })
 }
 
 var edit_param_id = {
-    departmentId: '#editDepartmentId',
+    scienceId: '#editScienceId',
     schoolId: '#editSchoolId',
     collegeId: '#editCollegeId',
-    departmentName: '#editDepartmentName'
+    departmentId: '#editDepartmentId',
+    scienceName: '#editScienceName'
 };
 
 var edit_param = {
-    departmentId: '',
+    scienceId: '',
     collegeId: '',
     schoolId: '',
-    departmentName: ''
+    departmentId: '',
+    scienceName: ''
 };
 
 var edit_error_id = {
     schoolId: '#edit_school_id_error',
     collegeId: '#edit_college_id_error',
-    departmentName: '#edit_department_name_error'
+    departmentId: '#edit_department_id_error',
+    scienceName: '#edit_science_name_error'
 };
 
 function initEditParam() {
-    edit_param.departmentId = $(edit_param_id.departmentId).val();
+    edit_param.scienceId = $(edit_param_id.scienceId).val();
     edit_param.schoolId = $(edit_param_id.schoolId).val();
     edit_param.collegeId = $(edit_param_id.collegeId).val();
-    edit_param.departmentName = $(edit_param_id.departmentName).val();
+    edit_param.departmentId = $(edit_param_id.departmentId).val();
+    edit_param.scienceName = $(edit_param_id.scienceName).val();
 }
 
 $(edit_param_id.schoolId).change(function () {
     var schoolId = $(this).val();
-    if (Number(schoolId) > 0) {
-        initColleges(schoolId, edit_param_id.collegeId, 0);
-    } else {
-        $(edit_param_id.collegeId).html('<option value="">请选择院</option>');
-    }
+    initColleges(schoolId, edit_param_id.collegeId, 0);
+    initDepartments(0, edit_param_id.departmentId, 0);
 });
 
-function editDepartment() {
+$(edit_param_id.collegeId).change(function () {
+    var collegeId = $(this).val();
+    initDepartments(collegeId, edit_param_id.departmentId, 0);
+});
+
+function editScience() {
     initEditParam();
     checkEditSchoolId();
 }
@@ -329,31 +384,41 @@ function checkEditCollegeId() {
     var collegeId = edit_param.collegeId;
     if (Number(collegeId) !== 0) {
         validSuccessDom(edit_error_id.collegeId);
-        checkEditDepartmentName();
+        checkEditDepartmentId();
     } else {
         validErrorDom(edit_error_id.collegeId, '请选择院');
     }
 }
 
-function checkEditDepartmentName() {
+function checkEditDepartmentId() {
     var departmentId = edit_param.departmentId;
-    var collegeId = edit_param.collegeId;
-    var departmentName = edit_param.departmentName;
-    if (departmentName !== '') {
-        $.post(getAjaxUrl().check_update_department, {
+    if (Number(departmentId) !== 0) {
+        validSuccessDom(edit_error_id.departmentId);
+        checkEditScienceName();
+    } else {
+        validErrorDom(edit_error_id.departmentId, '请选择系');
+    }
+}
+
+function checkEditScienceName() {
+    var scienceId = edit_param.scienceId;
+    var departmentId = edit_param.departmentId;
+    var scienceName = edit_param.scienceName;
+    if (scienceName !== '') {
+        $.post(getAjaxUrl().check_update_science, {
+            scienceId: scienceId,
             departmentId: departmentId,
-            collegeId: collegeId,
-            departmentName: departmentName
+            scienceName: scienceName
         }, function (data) {
             if (data.state) {
-                validSuccessDom(edit_error_id.departmentName);
+                validSuccessDom(edit_error_id.scienceName);
                 sendEditAjax();
             } else {
-                validErrorDom(edit_error_id.departmentName, data.msg);
+                validErrorDom(edit_error_id.scienceName, data.msg);
             }
         });
     } else {
-        validErrorDom(add_error_id.departmentName, '系名不能为空');
+        validErrorDom(add_error_id.scienceName, '专业名不能为空');
     }
 }
 
@@ -363,7 +428,7 @@ function sendEditAjax() {
             $('#editModal').modal('hide');
             refreshTable();
         } else {
-            validErrorDom(edit_error_id.departmentName, data.msg);
+            validErrorDom(edit_error_id.scienceName, data.msg);
         }
     })
 }
@@ -371,14 +436,14 @@ function sendEditAjax() {
 function delOrRecover(id, name, isDel, message) {
     var msg;
     msg = Messenger().post({
-        message: "确定" + message + "系 '" + name + "'  吗?",
+        message: "确定" + message + "专业 '" + name + "'  吗?",
         actions: {
             retry: {
                 label: '确定',
                 phrase: 'Retrying TIME',
                 action: function () {
                     msg.cancel();
-                    $.post(getAjaxUrl().status, {departmentId: id, departmentIsDel: isDel}, function (data) {
+                    $.post(getAjaxUrl().status, {scienceId: id, scienceIsDel: isDel}, function (data) {
                         refreshTable();
                         Messenger().post({
                             message: data.msg,
@@ -423,33 +488,35 @@ $(document).ready(function () {
     });
 
     $('#addSave').click(function () {
-        addDepartment();
+        addScience();
     });
 
     dataTable.delegate('.edit', "click", function () {
-        var departmentId = $(this).attr('data-id');
-        $.post(getAjaxUrl().department, {departmentId: departmentId}, function (data) {
-            $(edit_param_id.departmentId).val(data.department.departmentId);
-            $(edit_param_id.schoolId).val(data.department.schoolId);
-            initColleges(data.department.schoolId, edit_param_id.collegeId, data.department.collegeId);
-            $(edit_param_id.departmentName).val(data.department.departmentName);
+        var scienceId = $(this).attr('data-id');
+        $.post(getAjaxUrl().science, {scienceId: scienceId}, function (data) {
+            $(edit_param_id.scienceId).val(data.science.scienceId);
+            $(edit_param_id.schoolId).val(data.science.schoolId);
+            initColleges(data.science.schoolId, edit_param_id.collegeId, data.science.collegeId);
+            initDepartments(data.science.collegeId, edit_param_id.departmentId, data.science.departmentId);
+            $(edit_param_id.scienceName).val(data.science.scienceName);
             validSuccessDom(edit_error_id.schoolId);
             validSuccessDom(edit_error_id.collegeId);
-            validSuccessDom(edit_error_id.departmentName);
+            validSuccessDom(edit_error_id.departmentId);
+            validSuccessDom(edit_error_id.scienceName);
             $('#editModal').modal('show');
         });
 
     });
 
     $('#editSave').click(function () {
-        editDepartment();
+        editScience();
     });
 
     dataTable.delegate('.del', "click", function () {
-        delOrRecover($(this).attr('data-id'), $(this).attr('data-department'), true, '删除');
+        delOrRecover($(this).attr('data-id'), $(this).attr('data-science'), true, '删除');
     });
 
     dataTable.delegate('.recovery', "click", function () {
-        delOrRecover($(this).attr('data-id'), $(this).attr('data-department'), false, '恢复');
+        delOrRecover($(this).attr('data-id'), $(this).attr('data-science'), false, '恢复');
     });
 });

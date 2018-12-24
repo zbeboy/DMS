@@ -28,6 +28,15 @@ public interface DepartmentService {
     Optional<Record> findByDepartmentIdRelation(int departmentId);
 
     /**
+     * 查询院下的系
+     *
+     * @param departmentIsDel 状态
+     * @param collegeId       院id
+     * @return 数据
+     */
+    Result<DepartmentRecord> findByDepartmentIsDelAndCollegeId(boolean departmentIsDel, int collegeId);
+
+    /**
      * 根据系名和院id查询
      *
      * @param collegeId      院id

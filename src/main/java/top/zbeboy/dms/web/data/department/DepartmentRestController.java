@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.zbeboy.dms.domain.dms.tables.pojos.Department;
+import top.zbeboy.dms.domain.dms.tables.records.CollegeRecord;
 import top.zbeboy.dms.domain.dms.tables.records.DepartmentRecord;
 import top.zbeboy.dms.service.data.DepartmentService;
+import top.zbeboy.dms.web.bean.data.college.CollegeBean;
 import top.zbeboy.dms.web.bean.data.department.DepartmentBean;
 import top.zbeboy.dms.web.util.AjaxUtils;
 import top.zbeboy.dms.web.util.BootstrapTableUtils;
@@ -43,6 +45,23 @@ public class DepartmentRestController {
         bootstrapTableUtils.setTotal(departmentService.countByCondition(bootstrapTableUtils));
         bootstrapTableUtils.setRows(departments);
         return bootstrapTableUtils;
+    }
+
+    /**
+     * 列表数据
+     *
+     * @return 数据
+     */
+    @GetMapping(value = "/web/data/department/all")
+    public ResponseEntity<Map<String, Object>> departmentAll(@RequestParam("collegeId") int collegeId) {
+        AjaxUtils ajaxUtils = AjaxUtils.of();
+        Result<DepartmentRecord> records = departmentService.findByDepartmentIsDelAndCollegeId(false, collegeId);
+        List<DepartmentBean> departments = new ArrayList<>();
+        if (!ObjectUtils.isEmpty(records) && records.isNotEmpty()) {
+            departments = records.into(DepartmentBean.class);
+        }
+        ajaxUtils.success().msg("获取数据成功").put("departments", departments);
+        return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
     }
 
     /**
