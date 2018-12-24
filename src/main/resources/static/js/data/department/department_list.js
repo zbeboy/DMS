@@ -258,7 +258,7 @@ function checkAddDepartmentName() {
             }
         });
     } else {
-        validErrorDom(add_error_id.collegeName, '系名不能为空');
+        validErrorDom(add_error_id.departmentName, '系名不能为空');
     }
 }
 
