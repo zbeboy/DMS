@@ -12,7 +12,7 @@ public class DepartmentViewController {
      * @return 系数据页.
      */
     @GetMapping(value = "/web/menu/data/department")
-    public String school() {
+    public String department() {
         return "data_v3";
     }
 }

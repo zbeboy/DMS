@@ -12,7 +12,7 @@ public class CollegeViewController {
      * @return 院数据页.
      */
     @GetMapping(value = "/web/menu/data/college")
-    public String school() {
+    public String college() {
         return "data_v2";
     }
 }

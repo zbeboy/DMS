@@ -12,7 +12,7 @@ public class ScienceViewController {
      * @return 专业数据页.
      */
     @GetMapping(value = "/web/menu/data/science")
-    public String school() {
+    public String science() {
         return "data_v4";
     }
 }
