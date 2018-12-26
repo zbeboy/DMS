@@ -28,6 +28,15 @@ public interface ScienceService {
     Optional<Record> findByScienceIdRelation(int scienceId);
 
     /**
+     * 查询系下的专业
+     *
+     * @param scienceIsDel 状态
+     * @param departmentId 系id
+     * @return 数据
+     */
+    Result<ScienceRecord> findByScienceIsDelAndDepartmentId(boolean scienceIsDel, int departmentId);
+
+    /**
      * 根据专业名和系id查询
      *
      * @param departmentId 系id

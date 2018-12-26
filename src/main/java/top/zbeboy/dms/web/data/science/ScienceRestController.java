@@ -46,6 +46,23 @@ public class ScienceRestController {
     }
 
     /**
+     * 列表数据
+     *
+     * @return 数据
+     */
+    @GetMapping(value = "/web/data/science/all")
+    public ResponseEntity<Map<String, Object>> scienceAll(@RequestParam("departmentId") int departmentId) {
+        AjaxUtils ajaxUtils = AjaxUtils.of();
+        Result<ScienceRecord> records = scienceService.findByScienceIsDelAndDepartmentId(false, departmentId);
+        List<ScienceBean> sciences = new ArrayList<>();
+        if (!ObjectUtils.isEmpty(records) && records.isNotEmpty()) {
+            sciences = records.into(ScienceBean.class);
+        }
+        ajaxUtils.success().msg("获取数据成功").put("sciences", sciences);
+        return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
+    }
+
+    /**
      * 数据
      *
      * @return 数据
