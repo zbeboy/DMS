@@ -79,6 +79,15 @@
                 <button id="add" type="button" class="btn btn-default">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                 </button>
+                <button id="import" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-save" aria-hidden="true"></span>导入
+                </button>
+                <button id="importTemplate" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>导入模板
+                </button>
+                <button id="export" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-open" aria-hidden="true"></span>导出
+                </button>
             </div>
             <table data-mobile-responsive="true" data-toggle="table" data-show-refresh="true"
                    data-show-columns="true" data-sort-name="studentNumber" data-show-toggle="true"
@@ -190,7 +199,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title" id="editModalLabel">编辑学生</h4>
             </div>
             <div class="modal-body">
@@ -234,8 +244,8 @@
                     <div class="form-group">
                         <input class="form-control" id="editRealName" placeholder="姓名">
                         <div class="text-danger" id="edit_real_name_error"></div>
-                        <input type="hidden" id="username" />
-                        <input type="hidden" id="studentId" />
+                        <input type="hidden" id="username"/>
+                        <input type="hidden" id="studentId"/>
                     </div>
                     <div class="form-group">
                         <input class="form-control" id="editStudentNumber" placeholder="学号">
@@ -263,6 +273,41 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="editSave">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 角色Modal -->
+<div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="authModalLabel">选择角色</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="">
+                                角色一
+                            </label>
+                        </div>
+                        <div class="checkbox disabled">
+                            <label>
+                                <input type="checkbox" value="">
+                                角色二
+                            </label>
+                        </div>
+                        <div class="text-danger" id="edit_auth_error"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="authSave">保存</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             </div>
         </div>
