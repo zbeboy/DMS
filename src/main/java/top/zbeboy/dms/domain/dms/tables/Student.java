@@ -4,7 +4,6 @@
 package top.zbeboy.dms.domain.dms.tables;
 
 
-import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,7 +40,7 @@ import top.zbeboy.dms.domain.dms.tables.records.StudentRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Student extends TableImpl<StudentRecord> {
 
-    private static final long serialVersionUID = -35430644;
+    private static final long serialVersionUID = -1715114209;
 
     /**
      * The reference instance of <code>DMS.STUDENT</code>
@@ -67,44 +66,14 @@ public class Student extends TableImpl<StudentRecord> {
     public final TableField<StudentRecord, String> STUDENT_NUMBER = createField("STUDENT_NUMBER", org.jooq.impl.SQLDataType.VARCHAR(20).nullable(false), this, "");
 
     /**
-     * The column <code>DMS.STUDENT.BIRTHDAY</code>.
-     */
-    public final TableField<StudentRecord, Date> BIRTHDAY = createField("BIRTHDAY", org.jooq.impl.SQLDataType.DATE, this, "");
-
-    /**
      * The column <code>DMS.STUDENT.SEX</code>.
      */
     public final TableField<StudentRecord, String> SEX = createField("SEX", org.jooq.impl.SQLDataType.VARCHAR(2), this, "");
 
     /**
-     * The column <code>DMS.STUDENT.FAMILY_RESIDENCE</code>.
-     */
-    public final TableField<StudentRecord, String> FAMILY_RESIDENCE = createField("FAMILY_RESIDENCE", org.jooq.impl.SQLDataType.VARCHAR(200), this, "");
-
-    /**
      * The column <code>DMS.STUDENT.POLITICAL_LANDSCAPE_ID</code>.
      */
     public final TableField<StudentRecord, Integer> POLITICAL_LANDSCAPE_ID = createField("POLITICAL_LANDSCAPE_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
-
-    /**
-     * The column <code>DMS.STUDENT.NATION_ID</code>.
-     */
-    public final TableField<StudentRecord, Integer> NATION_ID = createField("NATION_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
-
-    /**
-     * The column <code>DMS.STUDENT.DORMITORY_NUMBER</code>.
-     */
-    public final TableField<StudentRecord, String> DORMITORY_NUMBER = createField("DORMITORY_NUMBER", org.jooq.impl.SQLDataType.VARCHAR(15), this, "");
-
-    /**
-     * The column <code>DMS.STUDENT.PARENT_NAME</code>.
-     */
-    public final TableField<StudentRecord, String> PARENT_NAME = createField("PARENT_NAME", org.jooq.impl.SQLDataType.VARCHAR(10), this, "");
-
-    /**
-     * The column <code>DMS.STUDENT.PARENT_CONTACT_PHONE</code>.
-     */
-    public final TableField<StudentRecord, String> PARENT_CONTACT_PHONE = createField("PARENT_CONTACT_PHONE", org.jooq.impl.SQLDataType.VARCHAR(15), this, "");
 
     /**
      * The column <code>DMS.STUDENT.PLACE_ORIGIN</code>.

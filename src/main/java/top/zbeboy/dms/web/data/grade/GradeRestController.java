@@ -136,6 +136,7 @@ public class GradeRestController {
         Grade gradeData = new Grade();
         gradeData.setScienceId(scienceId);
         gradeData.setGrade(name);
+        gradeData.setGradeIsDel(false);
         gradeService.save(gradeData);
         return new ResponseEntity<>(ajaxUtils.success().msg("保存成功").send(), HttpStatus.OK);
     }

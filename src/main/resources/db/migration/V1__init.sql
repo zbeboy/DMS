@@ -102,27 +102,11 @@ CREATE TABLE political_landscape (
     political_landscape_name VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE nation (
-    nation_id INT AUTO_INCREMENT PRIMARY KEY,
-    nation_name VARCHAR(30) NOT NULL
-);
-
-CREATE TABLE academic_title (
-    academic_title_id INT AUTO_INCREMENT PRIMARY KEY,
-    academic_title_name VARCHAR(30) NOT NULL
-);
-
 CREATE TABLE student (
     student_id INT AUTO_INCREMENT PRIMARY KEY,
     student_number VARCHAR(20) UNIQUE NOT NULL,
-    birthday DATE,
     sex VARCHAR(2),
-    family_residence VARCHAR(200),
     political_landscape_id INT,
-    nation_id INT,
-    dormitory_number VARCHAR(15),
-    parent_name VARCHAR(10),
-    parent_contact_phone VARCHAR(15),
     place_origin VARCHAR(200),
     organize_id INT NOT NULL,
     username VARCHAR(64) NOT NULL,
@@ -135,13 +119,8 @@ CREATE TABLE student (
 CREATE TABLE staff (
     staff_id INT AUTO_INCREMENT PRIMARY KEY,
     staff_number VARCHAR(20) UNIQUE NOT NULL,
-    birthday DATE,
     sex VARCHAR(2),
-    family_residence VARCHAR(200),
     political_landscape_id INT,
-    nation_id INT,
-    post VARCHAR(50),
-    academic_title_id INT,
     department_id INT NOT NULL,
     username VARCHAR(64) NOT NULL,
     FOREIGN KEY (department_id)
@@ -189,75 +168,3 @@ INSERT INTO political_landscape (political_landscape_name) VALUES ('致公党党
 INSERT INTO political_landscape (political_landscape_name) VALUES ('九三学社社员');
 INSERT INTO political_landscape (political_landscape_name) VALUES ('台盟盟员');
 INSERT INTO political_landscape (political_landscape_name) VALUES ('无党派民主人士');
-
-INSERT INTO nation (nation_name) VALUES ('汉族');
-INSERT INTO nation (nation_name) VALUES ('蒙古族');
-INSERT INTO nation (nation_name) VALUES ('回族');
-INSERT INTO nation (nation_name) VALUES ('藏族');
-INSERT INTO nation (nation_name) VALUES ('维吾尔族');
-INSERT INTO nation (nation_name) VALUES ('苗族');
-INSERT INTO nation (nation_name) VALUES ('彝族');
-INSERT INTO nation (nation_name) VALUES ('壮族');
-INSERT INTO nation (nation_name) VALUES ('布依族');
-INSERT INTO nation (nation_name) VALUES ('朝鲜族');
-INSERT INTO nation (nation_name) VALUES ('满族');
-INSERT INTO nation (nation_name) VALUES ('侗族');
-INSERT INTO nation (nation_name) VALUES ('瑶族');
-INSERT INTO nation (nation_name) VALUES ('白族');
-INSERT INTO nation (nation_name) VALUES ('土家族');
-INSERT INTO nation (nation_name) VALUES ('哈尼族');
-INSERT INTO nation (nation_name) VALUES ('哈萨克族');
-INSERT INTO nation (nation_name) VALUES ('傣族');
-INSERT INTO nation (nation_name) VALUES ('黎族');
-INSERT INTO nation (nation_name) VALUES ('傈僳族');
-INSERT INTO nation (nation_name) VALUES ('佤族');
-INSERT INTO nation (nation_name) VALUES ('畲族');
-INSERT INTO nation (nation_name) VALUES ('高山族');
-INSERT INTO nation (nation_name) VALUES ('拉祜族');
-INSERT INTO nation (nation_name) VALUES ('水族');
-INSERT INTO nation (nation_name) VALUES ('东乡族');
-INSERT INTO nation (nation_name) VALUES ('纳西族');
-INSERT INTO nation (nation_name) VALUES ('景颇族');
-INSERT INTO nation (nation_name) VALUES ('柯尔克孜族');
-INSERT INTO nation (nation_name) VALUES ('土族');
-INSERT INTO nation (nation_name) VALUES ('达斡尔族');
-INSERT INTO nation (nation_name) VALUES ('仫佬族');
-INSERT INTO nation (nation_name) VALUES ('羌族');
-INSERT INTO nation (nation_name) VALUES ('布朗族');
-INSERT INTO nation (nation_name) VALUES ('撒拉族');
-INSERT INTO nation (nation_name) VALUES ('毛难族');
-INSERT INTO nation (nation_name) VALUES ('仡佬族');
-INSERT INTO nation (nation_name) VALUES ('锡伯族');
-INSERT INTO nation (nation_name) VALUES ('阿昌族');
-INSERT INTO nation (nation_name) VALUES ('普米族');
-INSERT INTO nation (nation_name) VALUES ('塔吉克族');
-INSERT INTO nation (nation_name) VALUES ('怒族');
-INSERT INTO nation (nation_name) VALUES ('乌孜别克族');
-INSERT INTO nation (nation_name) VALUES ('俄罗斯族');
-INSERT INTO nation (nation_name) VALUES ('鄂温克族');
-INSERT INTO nation (nation_name) VALUES ('崩龙族');
-INSERT INTO nation (nation_name) VALUES ('保安族');
-INSERT INTO nation (nation_name) VALUES ('裕固族');
-INSERT INTO nation (nation_name) VALUES ('京族');
-INSERT INTO nation (nation_name) VALUES ('塔塔尔族');
-INSERT INTO nation (nation_name) VALUES ('独龙族');
-INSERT INTO nation (nation_name) VALUES ('鄂伦春族');
-INSERT INTO nation (nation_name) VALUES ('赫哲族');
-INSERT INTO nation (nation_name) VALUES ('门巴族');
-INSERT INTO nation (nation_name) VALUES ('珞巴族');
-INSERT INTO nation (nation_name) VALUES ('基诺族');
-
-INSERT INTO academic_title (academic_title_name) VALUES ('讲师');
-INSERT INTO academic_title (academic_title_name) VALUES ('副教授');
-INSERT INTO academic_title (academic_title_name) VALUES ('教授');
-INSERT INTO academic_title (academic_title_name) VALUES ('助教');
-INSERT INTO academic_title (academic_title_name) VALUES ('工程师');
-INSERT INTO academic_title (academic_title_name) VALUES ('高级工程师');
-INSERT INTO academic_title (academic_title_name) VALUES ('教授级高级工程师');
-INSERT INTO academic_title (academic_title_name) VALUES ('助理工程师');
-INSERT INTO academic_title (academic_title_name) VALUES ('实验师');
-INSERT INTO academic_title (academic_title_name) VALUES ('助理实验师');
-INSERT INTO academic_title (academic_title_name) VALUES ('高级实验师');
-INSERT INTO academic_title (academic_title_name) VALUES ('副研究员');
-INSERT INTO academic_title (academic_title_name) VALUES ('研究员');
-INSERT INTO academic_title (academic_title_name) VALUES ('助理研究员');

@@ -4,7 +4,6 @@
 package top.zbeboy.dms.domain.dms.tables.daos;
 
 
-import java.sql.Date;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -84,13 +83,6 @@ public class StudentDao extends DAOImpl<StudentRecord, top.zbeboy.dms.domain.dms
     }
 
     /**
-     * Fetch records that have <code>BIRTHDAY IN (values)</code>
-     */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Student> fetchByBirthday(Date... values) {
-        return fetch(Student.STUDENT.BIRTHDAY, values);
-    }
-
-    /**
      * Fetch records that have <code>SEX IN (values)</code>
      */
     public List<top.zbeboy.dms.domain.dms.tables.pojos.Student> fetchBySex(String... values) {
@@ -98,45 +90,10 @@ public class StudentDao extends DAOImpl<StudentRecord, top.zbeboy.dms.domain.dms
     }
 
     /**
-     * Fetch records that have <code>FAMILY_RESIDENCE IN (values)</code>
-     */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Student> fetchByFamilyResidence(String... values) {
-        return fetch(Student.STUDENT.FAMILY_RESIDENCE, values);
-    }
-
-    /**
      * Fetch records that have <code>POLITICAL_LANDSCAPE_ID IN (values)</code>
      */
     public List<top.zbeboy.dms.domain.dms.tables.pojos.Student> fetchByPoliticalLandscapeId(Integer... values) {
         return fetch(Student.STUDENT.POLITICAL_LANDSCAPE_ID, values);
-    }
-
-    /**
-     * Fetch records that have <code>NATION_ID IN (values)</code>
-     */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Student> fetchByNationId(Integer... values) {
-        return fetch(Student.STUDENT.NATION_ID, values);
-    }
-
-    /**
-     * Fetch records that have <code>DORMITORY_NUMBER IN (values)</code>
-     */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Student> fetchByDormitoryNumber(String... values) {
-        return fetch(Student.STUDENT.DORMITORY_NUMBER, values);
-    }
-
-    /**
-     * Fetch records that have <code>PARENT_NAME IN (values)</code>
-     */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Student> fetchByParentName(String... values) {
-        return fetch(Student.STUDENT.PARENT_NAME, values);
-    }
-
-    /**
-     * Fetch records that have <code>PARENT_CONTACT_PHONE IN (values)</code>
-     */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Student> fetchByParentContactPhone(String... values) {
-        return fetch(Student.STUDENT.PARENT_CONTACT_PHONE, values);
     }
 
     /**

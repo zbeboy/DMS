@@ -137,6 +137,7 @@ public class CollegeRestController {
         college.setSchoolId(schoolId);
         college.setCollegeName(name);
         college.setCollegeAddress(collegeAddress);
+        college.setCollegeIsDel(false);
         collegeService.save(college);
         return new ResponseEntity<>(ajaxUtils.success().msg("保存成功").send(), HttpStatus.OK);
     }

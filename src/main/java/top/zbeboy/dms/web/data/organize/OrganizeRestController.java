@@ -136,6 +136,7 @@ public class OrganizeRestController {
         Organize organize = new Organize();
         organize.setGradeId(gradeId);
         organize.setOrganizeName(name);
+        organize.setOrganizeIsDel(false);
         organizeService.save(organize);
         return new ResponseEntity<>(ajaxUtils.success().msg("保存成功").send(), HttpStatus.OK);
     }

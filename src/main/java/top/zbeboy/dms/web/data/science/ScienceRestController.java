@@ -136,6 +136,7 @@ public class ScienceRestController {
         Science science = new Science();
         science.setDepartmentId(departmentId);
         science.setScienceName(name);
+        science.setScienceIsDel(false);
         scienceService.save(science);
         return new ResponseEntity<>(ajaxUtils.success().msg("保存成功").send(), HttpStatus.OK);
     }

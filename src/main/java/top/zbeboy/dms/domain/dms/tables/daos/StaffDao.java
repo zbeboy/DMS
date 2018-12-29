@@ -4,7 +4,6 @@
 package top.zbeboy.dms.domain.dms.tables.daos;
 
 
-import java.sql.Date;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -84,13 +83,6 @@ public class StaffDao extends DAOImpl<StaffRecord, top.zbeboy.dms.domain.dms.tab
     }
 
     /**
-     * Fetch records that have <code>BIRTHDAY IN (values)</code>
-     */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Staff> fetchByBirthday(Date... values) {
-        return fetch(Staff.STAFF.BIRTHDAY, values);
-    }
-
-    /**
      * Fetch records that have <code>SEX IN (values)</code>
      */
     public List<top.zbeboy.dms.domain.dms.tables.pojos.Staff> fetchBySex(String... values) {
@@ -98,38 +90,10 @@ public class StaffDao extends DAOImpl<StaffRecord, top.zbeboy.dms.domain.dms.tab
     }
 
     /**
-     * Fetch records that have <code>FAMILY_RESIDENCE IN (values)</code>
-     */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Staff> fetchByFamilyResidence(String... values) {
-        return fetch(Staff.STAFF.FAMILY_RESIDENCE, values);
-    }
-
-    /**
      * Fetch records that have <code>POLITICAL_LANDSCAPE_ID IN (values)</code>
      */
     public List<top.zbeboy.dms.domain.dms.tables.pojos.Staff> fetchByPoliticalLandscapeId(Integer... values) {
         return fetch(Staff.STAFF.POLITICAL_LANDSCAPE_ID, values);
-    }
-
-    /**
-     * Fetch records that have <code>NATION_ID IN (values)</code>
-     */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Staff> fetchByNationId(Integer... values) {
-        return fetch(Staff.STAFF.NATION_ID, values);
-    }
-
-    /**
-     * Fetch records that have <code>POST IN (values)</code>
-     */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Staff> fetchByPost(String... values) {
-        return fetch(Staff.STAFF.POST, values);
-    }
-
-    /**
-     * Fetch records that have <code>ACADEMIC_TITLE_ID IN (values)</code>
-     */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Staff> fetchByAcademicTitleId(Integer... values) {
-        return fetch(Staff.STAFF.ACADEMIC_TITLE_ID, values);
     }
 
     /**

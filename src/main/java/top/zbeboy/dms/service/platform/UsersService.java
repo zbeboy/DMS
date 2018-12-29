@@ -25,4 +25,11 @@ public interface UsersService {
      * @param users 数据
      */
     void save(Users users);
+
+    /**
+     * 更新
+     *
+     * @param users 数据
+     */
+    void update(Users users);
 }

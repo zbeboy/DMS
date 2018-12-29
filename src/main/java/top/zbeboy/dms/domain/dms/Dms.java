@@ -15,13 +15,11 @@ import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 
 import top.zbeboy.dms.domain.DefaultCatalog;
-import top.zbeboy.dms.domain.dms.tables.AcademicTitle;
 import top.zbeboy.dms.domain.dms.tables.Authorities;
 import top.zbeboy.dms.domain.dms.tables.College;
 import top.zbeboy.dms.domain.dms.tables.Department;
 import top.zbeboy.dms.domain.dms.tables.Files;
 import top.zbeboy.dms.domain.dms.tables.Grade;
-import top.zbeboy.dms.domain.dms.tables.Nation;
 import top.zbeboy.dms.domain.dms.tables.Organize;
 import top.zbeboy.dms.domain.dms.tables.PersistentLogins;
 import top.zbeboy.dms.domain.dms.tables.PoliticalLandscape;
@@ -48,17 +46,12 @@ import top.zbeboy.dms.domain.dms.tables.UsersType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Dms extends SchemaImpl {
 
-    private static final long serialVersionUID = 1705490543;
+    private static final long serialVersionUID = 528843369;
 
     /**
      * The reference instance of <code>DMS</code>
      */
     public static final Dms DMS = new Dms();
-
-    /**
-     * The table <code>DMS.ACADEMIC_TITLE</code>.
-     */
-    public final AcademicTitle ACADEMIC_TITLE = top.zbeboy.dms.domain.dms.tables.AcademicTitle.ACADEMIC_TITLE;
 
     /**
      * The table <code>DMS.AUTHORITIES</code>.
@@ -84,11 +77,6 @@ public class Dms extends SchemaImpl {
      * The table <code>DMS.GRADE</code>.
      */
     public final Grade GRADE = top.zbeboy.dms.domain.dms.tables.Grade.GRADE;
-
-    /**
-     * The table <code>DMS.NATION</code>.
-     */
-    public final Nation NATION = top.zbeboy.dms.domain.dms.tables.Nation.NATION;
 
     /**
      * The table <code>DMS.ORGANIZE</code>.
@@ -170,13 +158,11 @@ public class Dms extends SchemaImpl {
 
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
-            AcademicTitle.ACADEMIC_TITLE,
             Authorities.AUTHORITIES,
             College.COLLEGE,
             Department.DEPARTMENT,
             Files.FILES,
             Grade.GRADE,
-            Nation.NATION,
             Organize.ORGANIZE,
             PersistentLogins.PERSISTENT_LOGINS,
             PoliticalLandscape.POLITICAL_LANDSCAPE,

@@ -6,13 +6,11 @@ package top.zbeboy.dms.domain.dms;
 
 import javax.annotation.Generated;
 
-import top.zbeboy.dms.domain.dms.tables.AcademicTitle;
 import top.zbeboy.dms.domain.dms.tables.Authorities;
 import top.zbeboy.dms.domain.dms.tables.College;
 import top.zbeboy.dms.domain.dms.tables.Department;
 import top.zbeboy.dms.domain.dms.tables.Files;
 import top.zbeboy.dms.domain.dms.tables.Grade;
-import top.zbeboy.dms.domain.dms.tables.Nation;
 import top.zbeboy.dms.domain.dms.tables.Organize;
 import top.zbeboy.dms.domain.dms.tables.PersistentLogins;
 import top.zbeboy.dms.domain.dms.tables.PoliticalLandscape;
@@ -40,11 +38,6 @@ import top.zbeboy.dms.domain.dms.tables.UsersType;
 public class Tables {
 
     /**
-     * The table <code>DMS.ACADEMIC_TITLE</code>.
-     */
-    public static final AcademicTitle ACADEMIC_TITLE = top.zbeboy.dms.domain.dms.tables.AcademicTitle.ACADEMIC_TITLE;
-
-    /**
      * The table <code>DMS.AUTHORITIES</code>.
      */
     public static final Authorities AUTHORITIES = top.zbeboy.dms.domain.dms.tables.Authorities.AUTHORITIES;
@@ -68,11 +61,6 @@ public class Tables {
      * The table <code>DMS.GRADE</code>.
      */
     public static final Grade GRADE = top.zbeboy.dms.domain.dms.tables.Grade.GRADE;
-
-    /**
-     * The table <code>DMS.NATION</code>.
-     */
-    public static final Nation NATION = top.zbeboy.dms.domain.dms.tables.Nation.NATION;
 
     /**
      * The table <code>DMS.ORGANIZE</code>.

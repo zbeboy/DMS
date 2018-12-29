@@ -136,6 +136,7 @@ public class DepartmentRestController {
         Department department = new Department();
         department.setCollegeId(collegeId);
         department.setDepartmentName(name);
+        department.setDepartmentIsDel(false);
         departmentService.save(department);
         return new ResponseEntity<>(ajaxUtils.success().msg("保存成功").send(), HttpStatus.OK);
     }

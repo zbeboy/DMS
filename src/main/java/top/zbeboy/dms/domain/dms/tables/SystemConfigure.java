@@ -38,7 +38,7 @@ import top.zbeboy.dms.domain.dms.tables.records.SystemConfigureRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SystemConfigure extends TableImpl<SystemConfigureRecord> {
 
-    private static final long serialVersionUID = -134759383;
+    private static final long serialVersionUID = -284652551;
 
     /**
      * The reference instance of <code>DMS.SYSTEM_CONFIGURE</code>
@@ -105,7 +105,7 @@ public class SystemConfigure extends TableImpl<SystemConfigureRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.PRIMARY_KEY_D6);
+        return Arrays.<Index>asList(Indexes.PRIMARY_KEY_D);
     }
 
     /**
@@ -113,7 +113,7 @@ public class SystemConfigure extends TableImpl<SystemConfigureRecord> {
      */
     @Override
     public UniqueKey<SystemConfigureRecord> getPrimaryKey() {
-        return Keys.CONSTRAINT_D6;
+        return Keys.CONSTRAINT_D;
     }
 
     /**
@@ -121,7 +121,7 @@ public class SystemConfigure extends TableImpl<SystemConfigureRecord> {
      */
     @Override
     public List<UniqueKey<SystemConfigureRecord>> getKeys() {
-        return Arrays.<UniqueKey<SystemConfigureRecord>>asList(Keys.CONSTRAINT_D6);
+        return Arrays.<UniqueKey<SystemConfigureRecord>>asList(Keys.CONSTRAINT_D);
     }
 
     /**

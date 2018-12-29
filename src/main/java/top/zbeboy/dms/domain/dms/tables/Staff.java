@@ -4,7 +4,6 @@
 package top.zbeboy.dms.domain.dms.tables;
 
 
-import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,7 +40,7 @@ import top.zbeboy.dms.domain.dms.tables.records.StaffRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Staff extends TableImpl<StaffRecord> {
 
-    private static final long serialVersionUID = -764797781;
+    private static final long serialVersionUID = -1081508555;
 
     /**
      * The reference instance of <code>DMS.STAFF</code>
@@ -67,39 +66,14 @@ public class Staff extends TableImpl<StaffRecord> {
     public final TableField<StaffRecord, String> STAFF_NUMBER = createField("STAFF_NUMBER", org.jooq.impl.SQLDataType.VARCHAR(20).nullable(false), this, "");
 
     /**
-     * The column <code>DMS.STAFF.BIRTHDAY</code>.
-     */
-    public final TableField<StaffRecord, Date> BIRTHDAY = createField("BIRTHDAY", org.jooq.impl.SQLDataType.DATE, this, "");
-
-    /**
      * The column <code>DMS.STAFF.SEX</code>.
      */
     public final TableField<StaffRecord, String> SEX = createField("SEX", org.jooq.impl.SQLDataType.VARCHAR(2), this, "");
 
     /**
-     * The column <code>DMS.STAFF.FAMILY_RESIDENCE</code>.
-     */
-    public final TableField<StaffRecord, String> FAMILY_RESIDENCE = createField("FAMILY_RESIDENCE", org.jooq.impl.SQLDataType.VARCHAR(200), this, "");
-
-    /**
      * The column <code>DMS.STAFF.POLITICAL_LANDSCAPE_ID</code>.
      */
     public final TableField<StaffRecord, Integer> POLITICAL_LANDSCAPE_ID = createField("POLITICAL_LANDSCAPE_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
-
-    /**
-     * The column <code>DMS.STAFF.NATION_ID</code>.
-     */
-    public final TableField<StaffRecord, Integer> NATION_ID = createField("NATION_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
-
-    /**
-     * The column <code>DMS.STAFF.POST</code>.
-     */
-    public final TableField<StaffRecord, String> POST = createField("POST", org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
-
-    /**
-     * The column <code>DMS.STAFF.ACADEMIC_TITLE_ID</code>.
-     */
-    public final TableField<StaffRecord, Integer> ACADEMIC_TITLE_ID = createField("ACADEMIC_TITLE_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>DMS.STAFF.DEPARTMENT_ID</code>.

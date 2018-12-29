@@ -39,4 +39,9 @@ public class UsersServiceImpl implements UsersService {
     public void save(Users users) {
         usersDao.insert(users);
     }
+
+    @Override
+    public void update(Users users) {
+        usersDao.update(users);
+    }
 }

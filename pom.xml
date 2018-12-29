@@ -40,6 +40,7 @@
 
         <commons-lang3.version>3.7</commons-lang3.version>
         <commons-io.verson>2.6</commons-io.verson>
+        <vavr.version>0.9.2</vavr.version>
     </properties>
 
     <!-- Add typical dependencies for a web application -->
@@ -220,6 +221,12 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr</artifactId>
+            <version>${vavr.version}</version>
+        </dependency>
     </dependencies>
 
     <profiles>
@@ -257,7 +264,9 @@
                         <configuration>
                             <jdbc>
                                 <driver>org.h2.Driver</driver>
-                                <url>jdbc:h2:file:${basedir}/h2sql/dms;USER=sa;PASSWORD=123456;init=create schema if not exists dms\;set schema dms</url>
+                                <url>jdbc:h2:file:${basedir}/h2sql/dms;USER=sa;PASSWORD=123456;init=create schema if not
+                                    exists dms\;set schema dms
+                                </url>
                                 <user>sa</user>
                                 <password>123456</password>
                             </jdbc>

@@ -11,13 +11,11 @@ import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.Internal;
 
-import top.zbeboy.dms.domain.dms.tables.AcademicTitle;
 import top.zbeboy.dms.domain.dms.tables.Authorities;
 import top.zbeboy.dms.domain.dms.tables.College;
 import top.zbeboy.dms.domain.dms.tables.Department;
 import top.zbeboy.dms.domain.dms.tables.Files;
 import top.zbeboy.dms.domain.dms.tables.Grade;
-import top.zbeboy.dms.domain.dms.tables.Nation;
 import top.zbeboy.dms.domain.dms.tables.Organize;
 import top.zbeboy.dms.domain.dms.tables.PersistentLogins;
 import top.zbeboy.dms.domain.dms.tables.PoliticalLandscape;
@@ -29,13 +27,11 @@ import top.zbeboy.dms.domain.dms.tables.SystemConfigure;
 import top.zbeboy.dms.domain.dms.tables.SystemOperatorLog;
 import top.zbeboy.dms.domain.dms.tables.Users;
 import top.zbeboy.dms.domain.dms.tables.UsersType;
-import top.zbeboy.dms.domain.dms.tables.records.AcademicTitleRecord;
 import top.zbeboy.dms.domain.dms.tables.records.AuthoritiesRecord;
 import top.zbeboy.dms.domain.dms.tables.records.CollegeRecord;
 import top.zbeboy.dms.domain.dms.tables.records.DepartmentRecord;
 import top.zbeboy.dms.domain.dms.tables.records.FilesRecord;
 import top.zbeboy.dms.domain.dms.tables.records.GradeRecord;
-import top.zbeboy.dms.domain.dms.tables.records.NationRecord;
 import top.zbeboy.dms.domain.dms.tables.records.OrganizeRecord;
 import top.zbeboy.dms.domain.dms.tables.records.PersistentLoginsRecord;
 import top.zbeboy.dms.domain.dms.tables.records.PoliticalLandscapeRecord;
@@ -67,11 +63,9 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
-    public static final Identity<AcademicTitleRecord, Integer> IDENTITY_ACADEMIC_TITLE = Identities0.IDENTITY_ACADEMIC_TITLE;
     public static final Identity<CollegeRecord, Integer> IDENTITY_COLLEGE = Identities0.IDENTITY_COLLEGE;
     public static final Identity<DepartmentRecord, Integer> IDENTITY_DEPARTMENT = Identities0.IDENTITY_DEPARTMENT;
     public static final Identity<GradeRecord, Integer> IDENTITY_GRADE = Identities0.IDENTITY_GRADE;
-    public static final Identity<NationRecord, Integer> IDENTITY_NATION = Identities0.IDENTITY_NATION;
     public static final Identity<OrganizeRecord, Integer> IDENTITY_ORGANIZE = Identities0.IDENTITY_ORGANIZE;
     public static final Identity<PoliticalLandscapeRecord, Integer> IDENTITY_POLITICAL_LANDSCAPE = Identities0.IDENTITY_POLITICAL_LANDSCAPE;
     public static final Identity<SchoolRecord, Integer> IDENTITY_SCHOOL = Identities0.IDENTITY_SCHOOL;
@@ -84,13 +78,11 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final UniqueKey<AcademicTitleRecord> CONSTRAINT_D = UniqueKeys0.CONSTRAINT_D;
     public static final UniqueKey<AuthoritiesRecord> CONSTRAINT_AB = UniqueKeys0.CONSTRAINT_AB;
     public static final UniqueKey<CollegeRecord> CONSTRAINT_6 = UniqueKeys0.CONSTRAINT_6;
     public static final UniqueKey<DepartmentRecord> CONSTRAINT_4F = UniqueKeys0.CONSTRAINT_4F;
     public static final UniqueKey<FilesRecord> CONSTRAINT_3 = UniqueKeys0.CONSTRAINT_3;
     public static final UniqueKey<GradeRecord> CONSTRAINT_40 = UniqueKeys0.CONSTRAINT_40;
-    public static final UniqueKey<NationRecord> CONSTRAINT_8 = UniqueKeys0.CONSTRAINT_8;
     public static final UniqueKey<OrganizeRecord> CONSTRAINT_7 = UniqueKeys0.CONSTRAINT_7;
     public static final UniqueKey<PersistentLoginsRecord> CONSTRAINT_A3 = UniqueKeys0.CONSTRAINT_A3;
     public static final UniqueKey<PoliticalLandscapeRecord> CONSTRAINT_4E = UniqueKeys0.CONSTRAINT_4E;
@@ -100,7 +92,7 @@ public class Keys {
     public static final UniqueKey<StaffRecord> CONSTRAINT_4B8 = UniqueKeys0.CONSTRAINT_4B8;
     public static final UniqueKey<StudentRecord> CONSTRAINT_BA = UniqueKeys0.CONSTRAINT_BA;
     public static final UniqueKey<StudentRecord> CONSTRAINT_BAC = UniqueKeys0.CONSTRAINT_BAC;
-    public static final UniqueKey<SystemConfigureRecord> CONSTRAINT_D6 = UniqueKeys0.CONSTRAINT_D6;
+    public static final UniqueKey<SystemConfigureRecord> CONSTRAINT_D = UniqueKeys0.CONSTRAINT_D;
     public static final UniqueKey<SystemOperatorLogRecord> CONSTRAINT_5 = UniqueKeys0.CONSTRAINT_5;
     public static final UniqueKey<UsersRecord> CONSTRAINT_4 = UniqueKeys0.CONSTRAINT_4;
     public static final UniqueKey<UsersTypeRecord> CONSTRAINT_B = UniqueKeys0.CONSTRAINT_B;
@@ -128,11 +120,9 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     private static class Identities0 {
-        public static Identity<AcademicTitleRecord, Integer> IDENTITY_ACADEMIC_TITLE = Internal.createIdentity(AcademicTitle.ACADEMIC_TITLE, AcademicTitle.ACADEMIC_TITLE.ACADEMIC_TITLE_ID);
         public static Identity<CollegeRecord, Integer> IDENTITY_COLLEGE = Internal.createIdentity(College.COLLEGE, College.COLLEGE.COLLEGE_ID);
         public static Identity<DepartmentRecord, Integer> IDENTITY_DEPARTMENT = Internal.createIdentity(Department.DEPARTMENT, Department.DEPARTMENT.DEPARTMENT_ID);
         public static Identity<GradeRecord, Integer> IDENTITY_GRADE = Internal.createIdentity(Grade.GRADE, Grade.GRADE.GRADE_ID);
-        public static Identity<NationRecord, Integer> IDENTITY_NATION = Internal.createIdentity(Nation.NATION, Nation.NATION.NATION_ID);
         public static Identity<OrganizeRecord, Integer> IDENTITY_ORGANIZE = Internal.createIdentity(Organize.ORGANIZE, Organize.ORGANIZE.ORGANIZE_ID);
         public static Identity<PoliticalLandscapeRecord, Integer> IDENTITY_POLITICAL_LANDSCAPE = Internal.createIdentity(PoliticalLandscape.POLITICAL_LANDSCAPE, PoliticalLandscape.POLITICAL_LANDSCAPE.POLITICAL_LANDSCAPE_ID);
         public static Identity<SchoolRecord, Integer> IDENTITY_SCHOOL = Internal.createIdentity(School.SCHOOL, School.SCHOOL.SCHOOL_ID);
@@ -143,13 +133,11 @@ public class Keys {
     }
 
     private static class UniqueKeys0 {
-        public static final UniqueKey<AcademicTitleRecord> CONSTRAINT_D = Internal.createUniqueKey(AcademicTitle.ACADEMIC_TITLE, "CONSTRAINT_D", AcademicTitle.ACADEMIC_TITLE.ACADEMIC_TITLE_ID);
         public static final UniqueKey<AuthoritiesRecord> CONSTRAINT_AB = Internal.createUniqueKey(Authorities.AUTHORITIES, "CONSTRAINT_AB", Authorities.AUTHORITIES.USERNAME, Authorities.AUTHORITIES.AUTHORITY);
         public static final UniqueKey<CollegeRecord> CONSTRAINT_6 = Internal.createUniqueKey(College.COLLEGE, "CONSTRAINT_6", College.COLLEGE.COLLEGE_ID);
         public static final UniqueKey<DepartmentRecord> CONSTRAINT_4F = Internal.createUniqueKey(Department.DEPARTMENT, "CONSTRAINT_4F", Department.DEPARTMENT.DEPARTMENT_ID);
         public static final UniqueKey<FilesRecord> CONSTRAINT_3 = Internal.createUniqueKey(Files.FILES, "CONSTRAINT_3", Files.FILES.FILE_ID);
         public static final UniqueKey<GradeRecord> CONSTRAINT_40 = Internal.createUniqueKey(Grade.GRADE, "CONSTRAINT_40", Grade.GRADE.GRADE_ID);
-        public static final UniqueKey<NationRecord> CONSTRAINT_8 = Internal.createUniqueKey(Nation.NATION, "CONSTRAINT_8", Nation.NATION.NATION_ID);
         public static final UniqueKey<OrganizeRecord> CONSTRAINT_7 = Internal.createUniqueKey(Organize.ORGANIZE, "CONSTRAINT_7", Organize.ORGANIZE.ORGANIZE_ID);
         public static final UniqueKey<PersistentLoginsRecord> CONSTRAINT_A3 = Internal.createUniqueKey(PersistentLogins.PERSISTENT_LOGINS, "CONSTRAINT_A3", PersistentLogins.PERSISTENT_LOGINS.SERIES);
         public static final UniqueKey<PoliticalLandscapeRecord> CONSTRAINT_4E = Internal.createUniqueKey(PoliticalLandscape.POLITICAL_LANDSCAPE, "CONSTRAINT_4E", PoliticalLandscape.POLITICAL_LANDSCAPE.POLITICAL_LANDSCAPE_ID);
@@ -159,7 +147,7 @@ public class Keys {
         public static final UniqueKey<StaffRecord> CONSTRAINT_4B8 = Internal.createUniqueKey(Staff.STAFF, "CONSTRAINT_4B8", Staff.STAFF.STAFF_NUMBER);
         public static final UniqueKey<StudentRecord> CONSTRAINT_BA = Internal.createUniqueKey(Student.STUDENT, "CONSTRAINT_BA", Student.STUDENT.STUDENT_ID);
         public static final UniqueKey<StudentRecord> CONSTRAINT_BAC = Internal.createUniqueKey(Student.STUDENT, "CONSTRAINT_BAC", Student.STUDENT.STUDENT_NUMBER);
-        public static final UniqueKey<SystemConfigureRecord> CONSTRAINT_D6 = Internal.createUniqueKey(SystemConfigure.SYSTEM_CONFIGURE, "CONSTRAINT_D6", SystemConfigure.SYSTEM_CONFIGURE.DATA_KEY);
+        public static final UniqueKey<SystemConfigureRecord> CONSTRAINT_D = Internal.createUniqueKey(SystemConfigure.SYSTEM_CONFIGURE, "CONSTRAINT_D", SystemConfigure.SYSTEM_CONFIGURE.DATA_KEY);
         public static final UniqueKey<SystemOperatorLogRecord> CONSTRAINT_5 = Internal.createUniqueKey(SystemOperatorLog.SYSTEM_OPERATOR_LOG, "CONSTRAINT_5", SystemOperatorLog.SYSTEM_OPERATOR_LOG.LOG_ID);
         public static final UniqueKey<UsersRecord> CONSTRAINT_4 = Internal.createUniqueKey(Users.USERS, "CONSTRAINT_4", Users.USERS.USERNAME);
         public static final UniqueKey<UsersTypeRecord> CONSTRAINT_B = Internal.createUniqueKey(UsersType.USERS_TYPE, "CONSTRAINT_B", UsersType.USERS_TYPE.USERS_TYPE_ID);
