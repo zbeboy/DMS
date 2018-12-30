@@ -288,23 +288,10 @@
                 <h4 class="modal-title" id="authModalLabel">选择角色</h4>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="">
-                                角色一
-                            </label>
-                        </div>
-                        <div class="checkbox disabled">
-                            <label>
-                                <input type="checkbox" value="">
-                                角色二
-                            </label>
-                        </div>
-                        <div class="text-danger" id="edit_auth_error"></div>
-                    </div>
+                <form id="roleData">
+                    <input type="hidden" name="username" id="authUsername"/>
                 </form>
+                <div class="text-danger" id="edit_auth_error"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="authSave">保存</button>
@@ -322,6 +309,20 @@
                 data-student="{{this.student}}">
             {{this.name}}
         </button>
+        {{/each}}
+    </div>
+</script>
+<script id="role_template" type="text/x-handlebars-template">
+    <div class="btn-group" role="group">
+        {{#each roles}}
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="{{roleId}}" name="role">
+                    {{roleName}}
+                </label>
+            </div>
+        </div>
         {{/each}}
     </div>
 </script>

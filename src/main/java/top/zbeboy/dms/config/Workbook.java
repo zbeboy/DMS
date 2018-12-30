@@ -59,6 +59,10 @@ public final class Workbook {
     public static final String ROLE_DEPARTMENT_INSTRUCTOR = "ROLE_DEPARTMENT_INSTRUCTOR";
     // 班主任
     public static final String ROLE_HEADMASTER = "ROLE_HEADMASTER";
+    // 学生
+    public static final String ROLE_STUDENT= "ROLE_STUDENT";
+    // 教职工
+    public static final String ROLE_STAFF= "ROLE_STAFF";
 
     public static final String XLS_FILE = "xls";
     public static final String XLSX_FILE = "xlsx";

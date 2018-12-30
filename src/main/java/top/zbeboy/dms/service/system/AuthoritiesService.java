@@ -1,10 +1,9 @@
 package top.zbeboy.dms.service.system;
 
-import org.springframework.security.core.GrantedAuthority;
 import top.zbeboy.dms.domain.dms.tables.pojos.Authorities;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public interface AuthoritiesService {
 
@@ -30,4 +29,32 @@ public interface AuthoritiesService {
      * @return 权限集合
      */
     StringBuilder getAuthorities();
+
+    /**
+     * 获取权限
+     *
+     * @return 权限名
+     */
+    String getAuthName(String roleId);
+
+    /**
+     * 获取系统所有角色
+     *
+     * @return 所有角色
+     */
+    List<Map<String, String>> getAuthAll();
+
+    /**
+     * 根据账号删除
+     *
+     * @param username 账号
+     */
+    void deleteByUsername(String username);
+
+    /**
+     * 保存
+     *
+     * @param authorities 数据
+     */
+    void save(Authorities authorities);
 }

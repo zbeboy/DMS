@@ -14,6 +14,7 @@ function getAjaxUrl() {
         grades: web_path + '/web/data/grade/all',
         organizes: web_path + '/web/data/organize/all',
         politicalLandscapes: web_path + '/web/data/politicalLandscape/all',
+        roles: web_path + '/web/data/student/roles',
         students: web_path + '/web/data/student/data',
         student: web_path + '/web/data/student/one',
         export: web_path + '/web/data/student/export',
@@ -21,6 +22,7 @@ function getAjaxUrl() {
         check_add_student: web_path + '/web/data/student/check/add/number',
         check_update_student: web_path + '/web/data/student/check/update/number',
         save: web_path + '/web/data/student/save',
+        save_role: web_path + '/web/data/student/role/save',
         update: web_path + '/web/data/student/update',
         status: web_path + '/web/data/student/status'
     };
@@ -189,6 +191,7 @@ init();
 function init() {
     initSchools();
     initPoliticalLandscapes();
+    initRoles();
 }
 
 function initPoliticalLandscapes() {
@@ -202,6 +205,17 @@ function politicalLandscapesData(data) {
         $(add_param_id.politicalLandscapeId).append('<option value="' + n.politicalLandscapeId + '">' + n.politicalLandscapeName + '</option>');
         $(edit_param_id.politicalLandscapeId).append('<option value="' + n.politicalLandscapeId + '">' + n.politicalLandscapeName + '</option>');
     });
+}
+
+function initRoles() {
+    $.get(getAjaxUrl().roles, function (data) {
+        rolesData(data);
+    });
+}
+
+function rolesData(data) {
+    var role_template = Handlebars.compile($("#role_template").html());
+    $('#roleData').append(role_template(data));
 }
 
 function initSchools() {
@@ -761,6 +775,18 @@ function delOrRecover(id, name, isDel, message) {
     });
 }
 
+function authStudent() {
+    $.post(getAjaxUrl().save_role,$('#roleData').serialize(),function (data) {
+        $('#authModal').modal('hide');
+        refreshTable();
+        Messenger().post({
+            message: data.msg,
+            type: data.state ? 'info' : 'error',
+            showCloseButton: true
+        });
+    });
+}
+
 $(document).ready(function () {
     /*
     init message.
@@ -835,11 +861,21 @@ $(document).ready(function () {
         editStudent();
     });
 
+    $('#authSave').click(function () {
+        authStudent();
+    });
+
     dataTable.delegate('.del', "click", function () {
         delOrRecover($(this).attr('data-id'), $(this).attr('data-student'), true, '注销');
     });
 
     dataTable.delegate('.recovery', "click", function () {
         delOrRecover($(this).attr('data-id'), $(this).attr('data-student'), false, '恢复');
+    });
+
+    dataTable.delegate('.auth', "click", function () {
+        var username = $(this).attr('data-id');
+        $('#authUsername').val(username);
+        $('#authModal').modal('show');
     });
 });

@@ -31,6 +31,16 @@ public class AjaxUtils {
         return this;
     }
 
+    public AjaxUtils map(Map<String, Object> map) {
+        this.mapResult = map;
+        return this;
+    }
+
+    public AjaxUtils list(List<Object> list) {
+        this.listResult = list;
+        return this;
+    }
+
     public AjaxUtils put(String attribute, Object value) {
         this.result.put(attribute, value);
         return this;

@@ -74,7 +74,11 @@ public class StudentRestController {
             students = records.into(StudentBean.class);
             students.forEach(studentBean -> {
                 List<Authorities> authorities = authoritiesService.findByUsername(studentBean.getUsername());
-                studentBean.setAuthority(io.vavr.collection.List.of(authorities).mkString(","));
+                List<String> role = new ArrayList<>();
+                authorities.forEach(auth -> {
+                    role.add(authoritiesService.getAuthName(auth.getAuthority()));
+                });
+                studentBean.setAuthority(io.vavr.collection.List.of(role).mkString(","));
             });
         }
         bootstrapTableUtils.setTotal(studentService.countByCondition(bootstrapTableUtils));
@@ -84,7 +88,6 @@ public class StudentRestController {
 
     /**
      * 数据导出
-     *
      */
     @GetMapping(value = "/web/data/student/export")
     public void export(HttpServletRequest request, HttpServletResponse response) {
@@ -104,6 +107,16 @@ public class StudentRestController {
         } catch (IOException e) {
             log.error("Export file error, error is {}", e);
         }
+    }
+
+    /**
+     * 角色数据
+     *
+     * @return 数据
+     */
+    @GetMapping(value = "/web/data/student/roles")
+    public ResponseEntity<Map<String, Object>> roles() {
+        return new ResponseEntity<>(AjaxUtils.of().success().msg("获取数据成功").put("roles", authoritiesService.getAuthAll()).send(), HttpStatus.OK);
     }
 
     /**
@@ -245,5 +258,24 @@ public class StudentRestController {
         users.setEnabled(enabled);
         usersService.update(users);
         return new ResponseEntity<>(ajaxUtils.success().msg("更新成功").send(), HttpStatus.OK);
+    }
+
+    /**
+     * 保存角色
+     *
+     * @param role 数据
+     * @return true or false
+     */
+    @PostMapping(value = "/web/data/student/role/save")
+    public ResponseEntity<Map<String, Object>> roleSave(String[] role, @RequestParam("username") String username) {
+        AjaxUtils ajaxUtils = AjaxUtils.of();
+        authoritiesService.deleteByUsername(username);
+        for (String r : role) {
+            Authorities authorities = new Authorities();
+            authorities.setUsername(username);
+            authorities.setAuthority(r);
+            authoritiesService.save(authorities);
+        }
+        return new ResponseEntity<>(ajaxUtils.success().msg("保存成功").send(), HttpStatus.OK);
     }
 }
