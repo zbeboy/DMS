@@ -44,3 +44,4 @@ buildNumber.properties
 
 /h2sql/
 /root/
+/src/main/resources/static/files/
