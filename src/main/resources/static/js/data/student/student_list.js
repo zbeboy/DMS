@@ -15,6 +15,7 @@ function getAjaxUrl() {
         organizes: web_path + '/web/data/organize/all',
         politicalLandscapes: web_path + '/web/data/politicalLandscape/all',
         roles: web_path + '/web/data/student/roles',
+        auths: web_path + '/web/data/student/auths',
         students: web_path + '/web/data/student/data',
         student: web_path + '/web/data/student/one',
         export: web_path + '/web/data/student/export',
@@ -776,7 +777,7 @@ function delOrRecover(id, name, isDel, message) {
 }
 
 function authStudent() {
-    $.post(getAjaxUrl().save_role,$('#roleData').serialize(),function (data) {
+    $.post(getAjaxUrl().save_role, $('#roleData').serialize(), function (data) {
         $('#authModal').modal('hide');
         refreshTable();
         Messenger().post({
@@ -875,7 +876,23 @@ $(document).ready(function () {
 
     dataTable.delegate('.auth', "click", function () {
         var username = $(this).attr('data-id');
-        $('#authUsername').val(username);
-        $('#authModal').modal('show');
+        $.get(getAjaxUrl().auths, {username: username}, function (data) {
+            $('#authUsername').val(username);
+            $('#authModal').modal('show');
+            Messenger().post({
+                message: data.msg,
+                type: data.state ? 'info' : 'error',
+                showCloseButton: true
+            });
+
+            $.each(data.auths, function (i, n) {
+                var roles = $("input[name='role']");
+                for (var j = 0; j < roles.length; j++) {
+                    if ($(roles[j]).val() === n.authority) {
+                        $(roles[j]).prop("checked", true);
+                    }
+                }
+            });
+        });
     });
 });

@@ -120,6 +120,16 @@ public class StudentRestController {
     }
 
     /**
+     * 权限数据
+     *
+     * @return 数据
+     */
+    @GetMapping(value = "/web/data/student/auths")
+    public ResponseEntity<Map<String, Object>> auths(@RequestParam("username") String username) {
+        return new ResponseEntity<>(AjaxUtils.of().success().msg("获取数据成功").put("auths", authoritiesService.findByUsername(username)).send(), HttpStatus.OK);
+    }
+
+    /**
      * 数据
      *
      * @return 数据
