@@ -174,6 +174,57 @@ public class StudentServiceImpl extends BootstrapTablesPlugin<StudentBean> imple
         return count.value1();
     }
 
+    @Override
+    public Result<Record> export(BootstrapTableUtils<StudentBean> bootstrapTableUtils) {
+        Result<Record> records;
+        Condition a = searchCondition(bootstrapTableUtils);
+        if (ObjectUtils.isEmpty(a)) {
+            SelectJoinStep<Record> selectJoinStep = create.select()
+                    .from(STUDENT)
+                    .join(USERS)
+                    .on(STUDENT.USERNAME.eq(USERS.USERNAME))
+                    .join(POLITICAL_LANDSCAPE)
+                    .on(STUDENT.POLITICAL_LANDSCAPE_ID.eq(POLITICAL_LANDSCAPE.POLITICAL_LANDSCAPE_ID))
+                    .join(ORGANIZE)
+                    .on(STUDENT.ORGANIZE_ID.eq(ORGANIZE.ORGANIZE_ID))
+                    .join(GRADE)
+                    .on(ORGANIZE.GRADE_ID.eq(GRADE.GRADE_ID))
+                    .join(SCIENCE)
+                    .on(GRADE.SCIENCE_ID.eq(SCIENCE.SCIENCE_ID))
+                    .join(DEPARTMENT)
+                    .on(SCIENCE.DEPARTMENT_ID.eq(DEPARTMENT.DEPARTMENT_ID))
+                    .join(COLLEGE)
+                    .on(DEPARTMENT.COLLEGE_ID.eq(COLLEGE.COLLEGE_ID))
+                    .join(SCHOOL)
+                    .on(COLLEGE.SCHOOL_ID.eq(SCHOOL.SCHOOL_ID));
+            sortCondition(bootstrapTableUtils, null, selectJoinStep, JOIN_TYPE);
+            records = selectJoinStep.fetch();
+        } else {
+            SelectConditionStep<Record> selectConditionStep = create.select()
+                    .from(STUDENT)
+                    .join(USERS)
+                    .on(STUDENT.USERNAME.eq(USERS.USERNAME))
+                    .join(POLITICAL_LANDSCAPE)
+                    .on(STUDENT.POLITICAL_LANDSCAPE_ID.eq(POLITICAL_LANDSCAPE.POLITICAL_LANDSCAPE_ID))
+                    .join(ORGANIZE)
+                    .on(STUDENT.ORGANIZE_ID.eq(ORGANIZE.ORGANIZE_ID))
+                    .join(GRADE)
+                    .on(ORGANIZE.GRADE_ID.eq(GRADE.GRADE_ID))
+                    .join(SCIENCE)
+                    .on(GRADE.SCIENCE_ID.eq(SCIENCE.SCIENCE_ID))
+                    .join(DEPARTMENT)
+                    .on(SCIENCE.DEPARTMENT_ID.eq(DEPARTMENT.DEPARTMENT_ID))
+                    .join(COLLEGE)
+                    .on(DEPARTMENT.COLLEGE_ID.eq(COLLEGE.COLLEGE_ID))
+                    .join(SCHOOL)
+                    .on(COLLEGE.SCHOOL_ID.eq(SCHOOL.SCHOOL_ID))
+                    .where(a);
+            sortCondition(bootstrapTableUtils, selectConditionStep, null, CONDITION_TYPE);
+            records = selectConditionStep.fetch();
+        }
+        return records;
+    }
+
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void save(Student student) {

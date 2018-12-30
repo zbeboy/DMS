@@ -2,6 +2,8 @@ package top.zbeboy.dms.web.data.student;
 
 import org.jooq.Record;
 import org.jooq.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
@@ -16,12 +18,15 @@ import top.zbeboy.dms.domain.dms.tables.pojos.Authorities;
 import top.zbeboy.dms.domain.dms.tables.pojos.Student;
 import top.zbeboy.dms.domain.dms.tables.pojos.Users;
 import top.zbeboy.dms.domain.dms.tables.records.StudentRecord;
+import top.zbeboy.dms.service.common.UploadService;
 import top.zbeboy.dms.service.data.StudentService;
+import top.zbeboy.dms.service.export.StudentDataExport;
 import top.zbeboy.dms.service.platform.UsersService;
 import top.zbeboy.dms.service.platform.UsersTypeService;
 import top.zbeboy.dms.service.system.AuthoritiesService;
 import top.zbeboy.dms.service.util.BCryptUtils;
 import top.zbeboy.dms.service.util.DateTimeUtils;
+import top.zbeboy.dms.service.util.RequestUtils;
 import top.zbeboy.dms.web.bean.data.student.StudentBean;
 import top.zbeboy.dms.web.util.AjaxUtils;
 import top.zbeboy.dms.web.util.BootstrapTableUtils;
@@ -30,11 +35,15 @@ import top.zbeboy.dms.web.vo.data.student.StudentEditVo;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.*;
 
 @RestController
 public class StudentRestController {
+
+    private final Logger log = LoggerFactory.getLogger(StudentRestController.class);
 
     @Resource
     private StudentService studentService;
@@ -47,6 +56,9 @@ public class StudentRestController {
 
     @Resource
     private UsersTypeService usersTypeService;
+
+    @Resource
+    private UploadService uploadService;
 
     /**
      * 列表数据
@@ -68,6 +80,30 @@ public class StudentRestController {
         bootstrapTableUtils.setTotal(studentService.countByCondition(bootstrapTableUtils));
         bootstrapTableUtils.setRows(students);
         return bootstrapTableUtils;
+    }
+
+    /**
+     * 数据导出
+     *
+     */
+    @GetMapping(value = "/web/data/student/export")
+    public void export(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            BootstrapTableUtils<StudentBean> bootstrapTableUtils = new BootstrapTableUtils<>(request);
+            Result<Record> records = studentService.export(bootstrapTableUtils);
+            List<StudentBean> students = new ArrayList<>();
+            if (!ObjectUtils.isEmpty(records) && records.isNotEmpty()) {
+                students = records.into(StudentBean.class);
+            }
+            String fileName = "学生数据";
+            String ext = Workbook.XLSX_FILE;
+            StudentDataExport export = new StudentDataExport(students);
+            String path = Workbook.studentFilePath() + fileName + "." + ext;
+            export.exportExcel(RequestUtils.getRealPath(request) + Workbook.studentFilePath(), fileName, ext);
+            uploadService.download(fileName, path, response, request);
+        } catch (IOException e) {
+            log.error("Export file error, error is {}", e);
+        }
     }
 
     /**

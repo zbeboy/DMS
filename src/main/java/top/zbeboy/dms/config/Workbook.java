@@ -32,6 +32,8 @@ public final class Workbook {
     */
     public static final String DIRECTORY_SPLIT = "/";
 
+    public static final String FILES_PORTFOLIOS = "files" + DIRECTORY_SPLIT;
+
     /*
     用户默认头像
      */
@@ -57,4 +59,11 @@ public final class Workbook {
     public static final String ROLE_DEPARTMENT_INSTRUCTOR = "ROLE_DEPARTMENT_INSTRUCTOR";
     // 班主任
     public static final String ROLE_HEADMASTER = "ROLE_HEADMASTER";
+
+    public static final String XLS_FILE = "xls";
+    public static final String XLSX_FILE = "xlsx";
+
+    public static String studentFilePath() {
+        return FILES_PORTFOLIOS + "student" + DIRECTORY_SPLIT;
+    }
 }

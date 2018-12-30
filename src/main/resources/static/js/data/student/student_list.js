@@ -16,6 +16,7 @@ function getAjaxUrl() {
         politicalLandscapes: web_path + '/web/data/politicalLandscape/all',
         students: web_path + '/web/data/student/data',
         student: web_path + '/web/data/student/one',
+        export: web_path + '/web/data/student/export',
         check_add_student: web_path + '/web/data/student/check/add/number',
         check_update_student: web_path + '/web/data/student/check/update/number',
         save: web_path + '/web/data/student/save',
@@ -781,6 +782,13 @@ $(document).ready(function () {
 
     $('#add').click(function () {
         $('#addModal').modal('show');
+    });
+
+    $('#export').click(function () {
+        var exportConfig = dataTable.bootstrapTable('getOptions');
+        window.location.href = encodeURI(getAjaxUrl().export + '?' +
+            'sortName=' + exportConfig.sortName + '&sortOrder=' + exportConfig.sortOrder +
+            '&extraSearch=' + JSON.stringify(param));
     });
 
     $('#addSave').click(function () {

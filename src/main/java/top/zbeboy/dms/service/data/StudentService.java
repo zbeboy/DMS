@@ -60,6 +60,14 @@ public interface StudentService {
     int countByCondition(BootstrapTableUtils<StudentBean> bootstrapTableUtils);
 
     /**
+     * 数据导出
+     *
+     * @param bootstrapTableUtils bootstrapTable工具类
+     * @return 分页数据
+     */
+    Result<Record> export(BootstrapTableUtils<StudentBean> bootstrapTableUtils);
+
+    /**
      * 保存
      *
      * @param student 数据
