@@ -16,6 +16,11 @@ public class UsersTypeServiceImpl implements UsersTypeService {
     private UsersTypeDao usersTypeDao;
 
     @Override
+    public UsersType findByUsersTypeId(int usersTypeId) {
+        return usersTypeDao.findById(usersTypeId);
+    }
+
+    @Override
     public UsersType findByUsersTypeName(String usersTypeName) {
         return usersTypeDao.fetchOneByUsersTypeName(usersTypeName);
     }

@@ -7,6 +7,7 @@ import top.zbeboy.dms.domain.dms.tables.records.StudentRecord;
 import top.zbeboy.dms.web.bean.data.student.StudentBean;
 import top.zbeboy.dms.web.util.BootstrapTableUtils;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface StudentService {
@@ -34,6 +35,14 @@ public interface StudentService {
      * @return 数据
      */
     Student findByStudentNumber(String studentNumber);
+
+    /**
+     * 根据账号查询
+     *
+     * @param username 账号
+     * @return 数据
+     */
+    List<Student> findByUsername(String username);
 
     /**
      * 根据学号查询(不等于学生id)

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header(~{::meta},~{::title},~{::link})">
+    <!-- csrf -->
+    <meta name="_csrf" content="" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
+    <title>个人资料-决策系统</title>
+
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"
+          th:href="@{/css/plugins/bootstrap-table/bootstrap-table.min.css}">
+    <link href="plugin/messenger/css/messenger.css" rel="stylesheet" th:href="@{/plugin/messenger/css/messenger.css}"/>
+    <link href="plugin/messenger/css/messenger-theme-air.css" rel="stylesheet"
+          th:href="@{/plugin/messenger/css/messenger-theme-air.css}"/>
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row animated fadeInRight">
+        <div class="col-sm-4 col-md-offset-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h3>个人资料</h3>
+                </div>
+                <div>
+                    <div class="ibox-content  center-block">
+                        <h4><strong th:text="${student.realName}">张三</strong></h4>
+                        <div class="row m-t-lg">
+                            <div class="col-sm-4">
+                                <span class="bar">学号：</span>
+                                <h5 th:text="${student.studentNumber}">1111111111</h5>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="line">生源地：</span>
+                                <h5 th:text="${student.placeOrigin}">云南昆明</h5>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="bar">性别：</span>
+                                <h5 th:text="${student.sex}">男</h5>
+                            </div>
+                        </div>
+                        <div class="row m-t-lg">
+                            <div class="col-sm-4">
+                                <span class="bar">班级：</span>
+                                <h5 th:text="${student.organizeName}">软件1511</h5>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="line">政治面貌：</span>
+                                <h5 th:text="${student.politicalLandscapeName}">党员</h5>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            修改
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">修改</h4>
+            </div>
+            <div class="modal-body" style="padding-top: 0;">
+                <form class="m-t" role="form">
+                    <div class="form-group" style="margin-top: 40px;">
+                        <span>姓名：</span>
+                        <input type="text" class="form-control" id="realName" th:value="${student.realName}">
+                        <div class="text-danger" id="real_name_error"></div>
+                    </div>
+                    <span>性别：</span>
+                    <div class="form-group">
+                        <select class="form-control" id="sex">
+                            <option value="">请选择性别</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                        <input type="hidden" class="form-control" id="sexData" th:value="${student.sex}">
+                    </div>
+                    <span>生源地：</span>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="placeOrigin" th:value="${student.placeOrigin}">
+                    </div>
+                    <span>政治面貌：</span>
+                    <div class="form-group">
+                        <select class="form-control" id="politicalLandscapeId">
+                            <option value="">请选择政治面貌</option>
+                        </select>
+                        <input type="hidden" class="form-control" id="politicalLandscapeIdData"
+                               th:value="${student.politicalLandscapeId}">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="save">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/jquery/jquery.min.js?v=2.1.4" th:src="@{/js/jquery/jquery.min.js}"></script>
+<script src="js/bootstrap/bootstrap.min.js?v=3.3.6" th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+<script src="plugin/messenger/js/messenger.js"
+        th:src="@{/plugin/messenger/js/messenger.js}"></script>
+<script th:inline="javascript">
+    var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+</script>
+<script src="js/util/csrf.js" th:src="@{/js/util/csrf.js}"></script>
+<script src="js/system/personal/student.js" th:src="@{/js/system/personal/student.js}"></script>
+</body>
+</html>

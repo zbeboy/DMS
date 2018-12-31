@@ -46,6 +46,8 @@ public class StaffServiceImpl extends BootstrapTablesPlugin<StaffBean> implement
                 .from(STAFF)
                 .join(USERS)
                 .on(STAFF.USERNAME.eq(USERS.USERNAME))
+                .join(POLITICAL_LANDSCAPE)
+                .on(STAFF.POLITICAL_LANDSCAPE_ID.eq(POLITICAL_LANDSCAPE.POLITICAL_LANDSCAPE_ID))
                 .join(DEPARTMENT)
                 .on(STAFF.DEPARTMENT_ID.eq(DEPARTMENT.DEPARTMENT_ID))
                 .join(COLLEGE)

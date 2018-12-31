@@ -17,6 +17,7 @@ import top.zbeboy.dms.web.bean.data.student.StudentBean;
 import top.zbeboy.dms.web.util.BootstrapTableUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Optional;
 
 import static top.zbeboy.dms.domain.dms.Tables.*;
@@ -46,6 +47,8 @@ public class StudentServiceImpl extends BootstrapTablesPlugin<StudentBean> imple
                 .from(STUDENT)
                 .join(USERS)
                 .on(STUDENT.USERNAME.eq(USERS.USERNAME))
+                .join(POLITICAL_LANDSCAPE)
+                .on(STUDENT.POLITICAL_LANDSCAPE_ID.eq(POLITICAL_LANDSCAPE.POLITICAL_LANDSCAPE_ID))
                 .join(ORGANIZE)
                 .on(STUDENT.ORGANIZE_ID.eq(ORGANIZE.ORGANIZE_ID))
                 .join(GRADE)
@@ -63,6 +66,11 @@ public class StudentServiceImpl extends BootstrapTablesPlugin<StudentBean> imple
     @Override
     public Student findByStudentNumber(String studentNumber) {
         return studentDao.fetchOneByStudentNumber(studentNumber);
+    }
+
+    @Override
+    public List<Student> findByUsername(String username) {
+        return studentDao.fetchByUsername(username);
     }
 
     @Override

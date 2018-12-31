@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header::no-metas-header(~{::title},~{::link})">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>个人资料-决策系统</title>
+    <meta name="keywords" content="决策系统，城市学院决策系统，城市学院决策分析">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../css/bootstrap/bootstrap.min14ed.css" rel="stylesheet">
+    <link href="../css/font/font-awesome.min93e3.css" rel="stylesheet">
+    <link href="../css/animate/animate.min.css" rel="stylesheet">
+    <link href="../css/style/style.min862f.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row animated fadeInRight">
+        <div class="col-sm-4 col-md-offset-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h3>个人资料</h3>
+                </div>
+                <div>
+                    <div class="ibox-content  center-block">
+                        <div class="row m-t-lg" style="margin-top: 0px;">
+                            <div class="col-sm-4">
+                                <span class="bar">姓名：</span>
+                                <h5>某教师</h5>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="line">工号：</span>
+                                <h5>云南昆明</h5>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="bar">职务：</span>
+                                <h5>指导教师</h5>
+                            </div>
+                        </div>
+
+                        <button ttype="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">修改</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">修改</h4>
+            </div>
+            <div class="modal-body">
+                <form class="m-t" role="form">
+                    <span>姓名：</span>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="" required="">
+                    </div>
+                    <span>职务：</span>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="" required="">
+                    </div>
+                    <button type="submit" class="btn btn-primary block full-width m-b">确定</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../js/jquery/jquery.min.js"></script>
+<script src="../js/bootstrap/bootstrap.min.js"></script>
+
+
+</body>
+</html>
