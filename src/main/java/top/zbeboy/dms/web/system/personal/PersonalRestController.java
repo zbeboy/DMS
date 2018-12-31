@@ -34,7 +34,7 @@ public class PersonalRestController {
      * @return true or false
      */
     @PostMapping(value = "/web/system/personal/student/save")
-    public ResponseEntity<Map<String, Object>> save(@RequestParam("realName") String realName,
+    public ResponseEntity<Map<String, Object>> student(@RequestParam("realName") String realName,
                                                     String sex,
                                                     String placeOrigin,
                                                     int politicalLandscapeId) {
@@ -52,6 +52,38 @@ public class PersonalRestController {
             student.setPlaceOrigin(placeOrigin);
             studentService.update(student);
         }
+        ajaxUtils.success().msg("保存成功");
+        return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
+    }
+
+    /**
+     * 保存教师
+     *
+     * @return true or false
+     */
+    @PostMapping(value = "/web/system/personal/staff/save")
+    public ResponseEntity<Map<String, Object>> staff(@RequestParam("realName") String realName) {
+        AjaxUtils ajaxUtils = AjaxUtils.of();
+        String username = usersService.getUserFromSession().getUsername();
+        Users users = usersService.findByUsername(username);
+        users.setRealName(realName);
+        usersService.update(users);
+        ajaxUtils.success().msg("保存成功");
+        return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
+    }
+
+    /**
+     * 保存系统
+     *
+     * @return true or false
+     */
+    @PostMapping(value = "/web/system/personal/admin/save")
+    public ResponseEntity<Map<String, Object>> admin(@RequestParam("realName") String realName) {
+        AjaxUtils ajaxUtils = AjaxUtils.of();
+        String username = usersService.getUserFromSession().getUsername();
+        Users users = usersService.findByUsername(username);
+        users.setRealName(realName);
+        usersService.update(users);
         ajaxUtils.success().msg("保存成功");
         return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
     }

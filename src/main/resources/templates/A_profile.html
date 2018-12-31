@@ -28,11 +28,7 @@
                         <div class="row m-t-lg" style="margin-top: 0px;">
                             <div class="col-sm-4">
                                 <span class="bar">姓名：</span>
-                                <h5 th:text="${staff.realName}">某教师</h5>
-                            </div>
-                            <div class="col-sm-4">
-                                <span class="line">工号：</span>
-                                <h5 th:text="${staff.staffNumber}">云南昆明</h5>
+                                <h5 th:text="${admin.realName}"></h5>
                             </div>
                         </div>
 
@@ -54,7 +50,7 @@
                 <form class="m-t" role="form">
                     <span>姓名：</span>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="realName" th:value="${staff.realName}">
+                        <input type="text" class="form-control" id="realName" th:value="${admin.realName}">
                         <div class="text-danger" id="real_name_error"></div>
                     </div>
                 </form>
@@ -74,6 +70,6 @@
     var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
 </script>
 <script src="js/util/csrf.js" th:src="@{/js/util/csrf.js}"></script>
-<script src="js/system/personal/staff.js" th:src="@{/js/system/personal/staff.js}"></script>
+<script src="js/system/personal/admin.js" th:src="@{/js/system/personal/admin.js}"></script>
 </body>
 </html>
