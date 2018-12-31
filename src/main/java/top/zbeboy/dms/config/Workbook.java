@@ -70,4 +70,8 @@ public final class Workbook {
     public static String studentFilePath() {
         return FILES_PORTFOLIOS + "student" + DIRECTORY_SPLIT;
     }
+
+    public static String staffFilePath() {
+        return FILES_PORTFOLIOS + "staff" + DIRECTORY_SPLIT;
+    }
 }

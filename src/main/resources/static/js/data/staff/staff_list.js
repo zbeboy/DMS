@@ -10,22 +10,19 @@ function getAjaxUrl() {
         schools: web_path + '/web/data/school/all',
         colleges: web_path + '/web/data/college/all',
         departments: web_path + '/web/data/department/all',
-        sciences: web_path + '/web/data/science/all',
-        grades: web_path + '/web/data/grade/all',
-        organizes: web_path + '/web/data/organize/all',
         politicalLandscapes: web_path + '/web/data/politicalLandscape/all',
-        roles: web_path + '/web/data/student/roles',
-        auths: web_path + '/web/data/student/auths',
-        students: web_path + '/web/data/student/data',
-        student: web_path + '/web/data/student/one',
-        export: web_path + '/web/data/student/export',
-        import_template: web_path + '/files/import_student.xlsx',
-        check_add_student: web_path + '/web/data/student/check/add/number',
-        check_update_student: web_path + '/web/data/student/check/update/number',
-        save: web_path + '/web/data/student/save',
-        save_role: web_path + '/web/data/student/role/save',
-        update: web_path + '/web/data/student/update',
-        status: web_path + '/web/data/student/status'
+        roles: web_path + '/web/data/staff/roles',
+        auths: web_path + '/web/data/staff/auths',
+        staffs: web_path + '/web/data/staff/data',
+        staff: web_path + '/web/data/staff/one',
+        export: web_path + '/web/data/staff/export',
+        import_template: web_path + '/files/import_staff.xlsx',
+        check_add_staff: web_path + '/web/data/staff/check/add/number',
+        check_update_staff: web_path + '/web/data/staff/check/update/number',
+        save: web_path + '/web/data/staff/save',
+        save_role: web_path + '/web/data/staff/role/save',
+        update: web_path + '/web/data/staff/update',
+        status: web_path + '/web/data/staff/status'
     };
 }
 
@@ -37,11 +34,8 @@ function getParamId() {
         schoolName: '#schoolName',
         collegeName: '#collegeName',
         departmentName: '#departmentName',
-        scienceName: '#scienceName',
-        grade: '#grade',
-        organizeName: '#organizeName',
         realName: '#realName',
-        studentNumber: '#studentNumber',
+        staffNumber: '#staffNumber',
         sex: '#sex'
     };
 }
@@ -53,11 +47,8 @@ var param = {
     schoolName: '',
     collegeName: '',
     departmentName: '',
-    scienceName: '',
-    grade: '',
-    organizeName: '',
     realName: '',
-    studentNumber: '',
+    staffNumber: '',
     sex: ''
 };
 
@@ -66,7 +57,7 @@ var dataTable = $('#dataTable');
 dataTable.bootstrapTable('destroy')
     .bootstrapTable({
         method: "get",  //使用get请求到服务器获取数据
-        url: getAjaxUrl().students, //获取数据的Servlet地址
+        url: getAjaxUrl().staffs, //获取数据的Servlet地址
         pagination: true, //启动分页
         pageSize: 10,  //每页显示的记录数
         pageNumber: 1, //当前第几页
@@ -107,21 +98,21 @@ function operation(value, row, index, field) {
                 "css": "auth",
                 "type": "info",
                 "id": row.username,
-                "student": row.realName
+                "staff": row.realName
             },
             {
                 "name": "编辑",
                 "css": "edit",
                 "type": "primary",
                 "id": row.username,
-                "student": row.realName
+                "staff": row.realName
             },
             {
                 "name": row.enabled ? "注销" : "恢复",
                 "css": row.enabled ? "del" : "recovery",
                 "type": row.enabled ? "danger" : "warning",
                 "id": row.username,
-                "student": row.realName
+                "staff": row.realName
             }
         ]
     };
@@ -135,11 +126,8 @@ function initParam() {
     param.schoolName = $(getParamId().schoolName).val();
     param.collegeName = $(getParamId().collegeName).val();
     param.departmentName = $(getParamId().departmentName).val();
-    param.scienceName = $(getParamId().scienceName).val();
-    param.grade = $(getParamId().grade).val();
-    param.organizeName = $(getParamId().organizeName).val();
     param.realName = $(getParamId().realName).val();
-    param.studentNumber = $(getParamId().studentNumber).val();
+    param.staffNumber = $(getParamId().staffNumber).val();
     param.sex = $(getParamId().sex).val();
 }
 
@@ -150,11 +138,8 @@ function cleanParam() {
     $(getParamId().schoolName).val('');
     $(getParamId().collegeName).val('');
     $(getParamId().departmentName).val('');
-    $(getParamId().scienceName).val('');
-    $(getParamId().grade).val('');
-    $(getParamId().organizeName).val('');
     $(getParamId().realName).val('');
-    $(getParamId().studentNumber).val('');
+    $(getParamId().staffNumber).val('');
     $(getParamId().sex).val('');
 }
 
@@ -279,84 +264,12 @@ function departmentsData(data, targetId, departmentId) {
     }
 }
 
-function initSciences(departmentId, targetId, scienceId) {
-    if (Number(departmentId) > 0) {
-        $.get(getAjaxUrl().sciences, {departmentId: departmentId},
-            function (data) {
-                sciencesData(data, targetId, scienceId);
-            }
-        );
-    } else {
-        $(targetId).html('<option value="">请选择专业</option>');
-    }
-}
-
-function sciencesData(data, targetId, scienceId) {
-    $(targetId).html('<option value="">请选择专业</option>');
-    $.each(data.sciences, function (i, n) {
-        $(targetId).append('<option value="' + n.scienceId + '">' + n.scienceName + '</option>');
-    });
-
-    if (Number(scienceId) > 0) {
-        $(targetId).val(scienceId);
-    }
-}
-
-function initGrades(scienceId, targetId, gradeId) {
-    if (Number(scienceId) > 0) {
-        $.get(getAjaxUrl().grades, {scienceId: scienceId},
-            function (data) {
-                gradesData(data, targetId, gradeId);
-            }
-        );
-    } else {
-        $(targetId).html('<option value="">请选择年级</option>');
-    }
-}
-
-function gradesData(data, targetId, gradeId) {
-    $(targetId).html('<option value="">请选择年级</option>');
-    $.each(data.grades, function (i, n) {
-        $(targetId).append('<option value="' + n.gradeId + '">' + n.grade + '</option>');
-    });
-
-    if (Number(gradeId) > 0) {
-        $(targetId).val(gradeId);
-    }
-}
-
-function initOrganizes(gradeId, targetId, organizeId) {
-    if (Number(gradeId) > 0) {
-        $.get(getAjaxUrl().organizes, {gradeId: gradeId},
-            function (data) {
-                organizesData(data, targetId, organizeId);
-            }
-        );
-    } else {
-        $(targetId).html('<option value="">请选择班级</option>');
-    }
-}
-
-function organizesData(data, targetId, organizeId) {
-    $(targetId).html('<option value="">请选择班级</option>');
-    $.each(data.organizes, function (i, n) {
-        $(targetId).append('<option value="' + n.organizeId + '">' + n.organizeName + '</option>');
-    });
-
-    if (Number(organizeId) > 0) {
-        $(targetId).val(organizeId);
-    }
-}
-
 var add_param_id = {
     schoolId: '#addSchoolId',
     collegeId: '#addCollegeId',
     departmentId: '#addDepartmentId',
-    scienceId: '#addScienceId',
-    gradeId: '#addGradeId',
-    organizeId: '#addOrganizeId',
     realName: '#addRealName',
-    studentNumber: '#addStudentNumber',
+    staffNumber: '#addStaffNumber',
     sex: '#addSex',
     politicalLandscapeId: '#addPoliticalLandscapeId',
     placeOrigin: '#addPlaceOrigin'
@@ -366,11 +279,8 @@ var add_param = {
     schoolId: '',
     collegeId: '',
     departmentId: '',
-    scienceId: '',
-    gradeId: '',
-    organizeId: '',
     realName: '',
-    studentNumber: '',
+    staffNumber: '',
     sex: '',
     politicalLandscapeId: '',
     placeOrigin: ''
@@ -380,11 +290,8 @@ var add_error_id = {
     schoolId: "#add_school_id_error",
     collegeId: '#add_college_id_error',
     departmentId: '#add_department_id_error',
-    scienceId: '#add_science_id_error',
-    gradeId: '#add_grade_id_error',
-    organizeId: '#add_organize_id_error',
     realName: '#add_real_name_error',
-    studentNumber: '#add_student_number_error',
+    staffNumber: '#add_staff_number_error',
     sex: '#add_sex_error',
     politicalLandscapeId: '#add_political_landscape_id_error',
     placeOrigin: '#add_place_origin_error'
@@ -394,11 +301,8 @@ function initAddParam() {
     add_param.schoolId = $(add_param_id.schoolId).val();
     add_param.collegeId = $(add_param_id.collegeId).val();
     add_param.departmentId = $(add_param_id.departmentId).val();
-    add_param.scienceId = $(add_param_id.scienceId).val();
-    add_param.gradeId = $(add_param_id.gradeId).val();
-    add_param.organizeId = $(add_param_id.organizeId).val();
     add_param.realName = $(add_param_id.realName).val();
-    add_param.studentNumber = $(add_param_id.studentNumber).val();
+    add_param.staffNumber = $(add_param_id.staffNumber).val();
     add_param.sex = $(add_param_id.sex).val();
     add_param.politicalLandscapeId = $(add_param_id.politicalLandscapeId).val();
     add_param.placeOrigin = $(add_param_id.placeOrigin).val();
@@ -408,38 +312,14 @@ $(add_param_id.schoolId).change(function () {
     var schoolId = $(this).val();
     initColleges(schoolId, add_param_id.collegeId, 0);
     initDepartments(0, add_param_id.departmentId, 0);
-    initSciences(0, add_param_id.scienceId, 0);
-    initGrades(0, add_param_id.gradeId, 0);
-    initOrganizes(0, add_param_id.organizeId, 0);
 });
 
 $(add_param_id.collegeId).change(function () {
     var collegeId = $(this).val();
     initDepartments(collegeId, add_param_id.departmentId, 0);
-    initSciences(0, add_param_id.scienceId, 0);
-    initGrades(0, add_param_id.gradeId, 0);
-    initOrganizes(0, add_param_id.organizeId, 0);
 });
 
-$(add_param_id.departmentId).change(function () {
-    var departmentId = $(this).val();
-    initSciences(departmentId, add_param_id.scienceId, 0);
-    initGrades(0, add_param_id.gradeId, 0);
-    initOrganizes(0, add_param_id.organizeId, 0);
-});
-
-$(add_param_id.scienceId).change(function () {
-    var scienceId = $(this).val();
-    initGrades(scienceId, add_param_id.gradeId, 0);
-    initOrganizes(0, add_param_id.organizeId, 0);
-});
-
-$(add_param_id.gradeId).change(function () {
-    var gradeId = $(this).val();
-    initOrganizes(gradeId, add_param_id.organizeId, 0);
-});
-
-function addStudent() {
+function addStaff() {
     initAddParam();
     checkAddSchoolId();
 }
@@ -468,39 +348,9 @@ function checkAddDepartmentId() {
     var departmentId = add_param.departmentId;
     if (Number(departmentId) !== 0) {
         validSuccessDom(add_error_id.departmentId);
-        checkAddScienceId();
-    } else {
-        validErrorDom(add_error_id.departmentId, '请选择系');
-    }
-}
-
-function checkAddScienceId() {
-    var scienceId = add_param.scienceId;
-    if (Number(scienceId) !== 0) {
-        validSuccessDom(add_error_id.scienceId);
-        checkAddGradeId();
-    } else {
-        validErrorDom(add_error_id.scienceId, '请选择专业');
-    }
-}
-
-function checkAddGradeId() {
-    var gradeId = add_param.gradeId;
-    if (Number(gradeId) !== 0) {
-        validSuccessDom(add_error_id.gradeId);
-        checkAddOrganizeId();
-    } else {
-        validErrorDom(add_error_id.gradeId, '请选择年级');
-    }
-}
-
-function checkAddOrganizeId() {
-    var organizeId = add_param.organizeId;
-    if (Number(organizeId) !== 0) {
-        validSuccessDom(add_error_id.organizeId);
         checkAddRealName();
     } else {
-        validErrorDom(add_error_id.organizeId, '请选择班级');
+        validErrorDom(add_error_id.departmentId, '请选择系');
     }
 }
 
@@ -508,27 +358,27 @@ function checkAddRealName() {
     var realName = add_param.realName;
     if (realName !== '') {
         validSuccessDom(add_error_id.realName);
-        checkAddStudentNumber();
+        checkAddStaffNumber();
     } else {
         validErrorDom(add_error_id.realName, '姓名不能为空');
     }
 }
 
-function checkAddStudentNumber() {
-    var studentNumber = add_param.studentNumber;
-    if (studentNumber !== '') {
-        $.post(getAjaxUrl().check_add_student, {
-            studentNumber: studentNumber
+function checkAddStaffNumber() {
+    var staffNumber = add_param.staffNumber;
+    if (staffNumber !== '') {
+        $.post(getAjaxUrl().check_add_staff, {
+            staffNumber: staffNumber
         }, function (data) {
             if (data.state) {
-                validSuccessDom(add_error_id.studentNumber);
+                validSuccessDom(add_error_id.staffNumber);
                 sendAddAjax();
             } else {
-                validErrorDom(add_error_id.studentNumber, data.msg);
+                validErrorDom(add_error_id.staffNumber, data.msg);
             }
         });
     } else {
-        validErrorDom(add_error_id.studentNumber, '学号不能为空');
+        validErrorDom(add_error_id.staffNumber, '工号不能为空');
     }
 }
 
@@ -545,15 +395,12 @@ function sendAddAjax() {
 
 var edit_param_id = {
     username: '#username',
-    studentId: '#studentId',
+    staffId: '#staffId',
     schoolId: '#editSchoolId',
     collegeId: '#editCollegeId',
     departmentId: '#editDepartmentId',
-    scienceId: '#editScienceId',
-    gradeId: '#editGradeId',
-    organizeId: '#editOrganizeId',
     realName: '#editRealName',
-    studentNumber: '#editStudentNumber',
+    staffNumber: '#editStaffNumber',
     sex: '#editSex',
     politicalLandscapeId: '#editPoliticalLandscapeId',
     placeOrigin: '#editPlaceOrigin'
@@ -561,15 +408,12 @@ var edit_param_id = {
 
 var edit_param = {
     username: '',
-    studentId: '',
+    staffId: '',
     collegeId: '',
     schoolId: '',
     departmentId: '',
-    scienceId: '',
-    gradeId: '',
-    organizeId: '',
     realName: '',
-    studentNumber: '',
+    staffNumber: '',
     sex: '',
     politicalLandscapeId: '',
     placeOrigin: ''
@@ -579,11 +423,8 @@ var edit_error_id = {
     schoolId: '#edit_school_id_error',
     collegeId: '#edit_college_id_error',
     departmentId: '#edit_department_id_error',
-    scienceId: '#edit_science_id_error',
-    gradeId: '#edit_grade_id_error',
-    organizeId: '#edit_organize_id_error',
     realName: '#edit_real_name_error',
-    studentNumber: '#edit_student_number_error',
+    staffNumber: '#edit_staff_number_error',
     sex: '#edit_sex_error',
     politicalLandscapeId: '#edit_political_landscape_id_error',
     placeOrigin: '#edit_place_origin_error'
@@ -591,15 +432,12 @@ var edit_error_id = {
 
 function initEditParam() {
     edit_param.username = $(edit_param_id.username).val();
-    edit_param.studentId = $(edit_param_id.studentId).val();
+    edit_param.staffId = $(edit_param_id.staffId).val();
     edit_param.schoolId = $(edit_param_id.schoolId).val();
     edit_param.collegeId = $(edit_param_id.collegeId).val();
     edit_param.departmentId = $(edit_param_id.departmentId).val();
-    edit_param.scienceId = $(edit_param_id.scienceId).val();
-    edit_param.gradeId = $(edit_param_id.gradeId).val();
-    edit_param.organizeId = $(edit_param_id.organizeId).val();
     edit_param.realName = $(edit_param_id.realName).val();
-    edit_param.studentNumber = $(edit_param_id.studentNumber).val();
+    edit_param.staffNumber = $(edit_param_id.staffNumber).val();
     edit_param.sex = $(edit_param_id.sex).val();
     edit_param.politicalLandscapeId = $(edit_param_id.politicalLandscapeId).val();
     edit_param.placeOrigin = $(edit_param_id.placeOrigin).val();
@@ -609,38 +447,14 @@ $(edit_param_id.schoolId).change(function () {
     var schoolId = $(this).val();
     initColleges(schoolId, edit_param_id.collegeId, 0);
     initDepartments(0, edit_param_id.departmentId, 0);
-    initSciences(0, edit_param_id.scienceId, 0);
-    initGrades(0, edit_param_id.gradeId, 0);
-    initOrganizes(0, edit_param_id.organizeId, 0);
 });
 
 $(edit_param_id.collegeId).change(function () {
     var collegeId = $(this).val();
     initDepartments(collegeId, edit_param_id.departmentId, 0);
-    initSciences(0, edit_param_id.scienceId, 0);
-    initGrades(0, edit_param_id.gradeId, 0);
-    initOrganizes(0, edit_param_id.organizeId, 0);
 });
 
-$(edit_param_id.departmentId).change(function () {
-    var departmentId = $(this).val();
-    initSciences(departmentId, edit_param_id.scienceId, 0);
-    initGrades(0, edit_param_id.gradeId, 0);
-    initOrganizes(0, edit_param_id.organizeId, 0);
-});
-
-$(edit_param_id.scienceId).change(function () {
-    var scienceId = $(this).val();
-    initGrades(scienceId, edit_param_id.gradeId, 0);
-    initOrganizes(0, edit_param_id.organizeId, 0);
-});
-
-$(edit_param_id.organizeId).change(function () {
-    var organizeId = $(this).val();
-    initOrganizes(organizeId, edit_param_id.organizeId, 0);
-});
-
-function editStudent() {
+function editStaff() {
     initEditParam();
     checkEditSchoolId();
 }
@@ -669,39 +483,9 @@ function checkEditDepartmentId() {
     var departmentId = edit_param.departmentId;
     if (Number(departmentId) !== 0) {
         validSuccessDom(edit_error_id.departmentId);
-        checkEditScienceId();
-    } else {
-        validErrorDom(edit_error_id.departmentId, '请选择系');
-    }
-}
-
-function checkEditScienceId() {
-    var scienceId = edit_param.scienceId;
-    if (Number(scienceId) !== 0) {
-        validSuccessDom(edit_error_id.scienceId);
-        checkEditGradeId();
-    } else {
-        validErrorDom(edit_error_id.scienceId, '请选择专业');
-    }
-}
-
-function checkEditGradeId() {
-    var gradeId = edit_param.gradeId;
-    if (Number(gradeId) !== 0) {
-        validSuccessDom(edit_error_id.gradeId);
-        checkEditOrganizeId();
-    } else {
-        validErrorDom(edit_error_id.gradeId, '请选择年级');
-    }
-}
-
-function checkEditOrganizeId() {
-    var organizeId = edit_param.organizeId;
-    if (Number(organizeId) !== 0) {
-        validSuccessDom(edit_error_id.organizeId);
         checkEditRealName();
     } else {
-        validErrorDom(edit_error_id.organizeId, '请选择班级');
+        validErrorDom(edit_error_id.departmentId, '请选择系');
     }
 }
 
@@ -709,29 +493,29 @@ function checkEditRealName() {
     var realName = edit_param.realName;
     if (realName !== '') {
         validSuccessDom(edit_error_id.realName);
-        checkEditStudentNumber();
+        checkEditStaffNumber();
     } else {
         validErrorDom(add_error_id.realName, '姓名不能为空');
     }
 }
 
-function checkEditStudentNumber() {
-    var studentNumber = edit_param.studentNumber;
-    var studentId = edit_param.studentId;
-    if (studentNumber !== '') {
-        $.post(getAjaxUrl().check_update_student, {
-            studentId: studentId,
-            studentNumber: studentNumber
+function checkEditStaffNumber() {
+    var staffNumber = edit_param.staffNumber;
+    var staffId = edit_param.staffId;
+    if (staffNumber !== '') {
+        $.post(getAjaxUrl().check_update_staff, {
+            staffId: staffId,
+            staffNumber: staffNumber
         }, function (data) {
             if (data.state) {
-                validSuccessDom(edit_error_id.studentNumber);
+                validSuccessDom(edit_error_id.staffNumber);
                 sendEditAjax();
             } else {
-                validErrorDom(edit_error_id.studentNumber, data.msg);
+                validErrorDom(edit_error_id.staffNumber, data.msg);
             }
         });
     } else {
-        validErrorDom(add_error_id.studentNumber, '学号不能为空');
+        validErrorDom(add_error_id.staffNumber, '工号不能为空');
     }
 }
 
@@ -749,7 +533,7 @@ function sendEditAjax() {
 function delOrRecover(id, name, isDel, message) {
     var msg;
     msg = Messenger().post({
-        message: "确定" + message + "学生 '" + name + "'  吗?",
+        message: "确定" + message + "教师 '" + name + "'  吗?",
         actions: {
             retry: {
                 label: '确定',
@@ -776,7 +560,7 @@ function delOrRecover(id, name, isDel, message) {
     });
 }
 
-function authStudent() {
+function authStaff() {
     $.post(getAjaxUrl().save_role, $('#roleData').serialize(), function (data) {
         $('#authModal').modal('hide');
         refreshTable();
@@ -824,32 +608,27 @@ $(document).ready(function () {
     });
 
     $('#addSave').click(function () {
-        addStudent();
+        addStaff();
     });
 
     dataTable.delegate('.edit', "click", function () {
         var username = $(this).attr('data-id');
-        $.post(getAjaxUrl().student, {username: username}, function (data) {
-            $(edit_param_id.username).val(data.student.username);
-            $(edit_param_id.studentId).val(data.student.studentId);
-            $(edit_param_id.schoolId).val(data.student.schoolId);
-            initColleges(data.student.schoolId, edit_param_id.collegeId, data.student.collegeId);
-            initDepartments(data.student.collegeId, edit_param_id.departmentId, data.student.departmentId);
-            initSciences(data.student.departmentId, edit_param_id.scienceId, data.student.scienceId);
-            initGrades(data.student.scienceId, edit_param_id.gradeId, data.student.gradeId);
-            initOrganizes(data.student.gradeId, edit_param_id.organizeId, data.student.organizeId);
-            $(edit_param_id.realName).val(data.student.realName);
-            $(edit_param_id.studentNumber).val(data.student.studentNumber);
-            $(edit_param_id.sex).val(data.student.sex);
-            $(edit_param_id.politicalLandscapeId).val(data.student.politicalLandscapeId);
-            $(edit_param_id.placeOrigin).val(data.student.placeOrigin);
+        $.post(getAjaxUrl().staff, {username: username}, function (data) {
+            $(edit_param_id.username).val(data.staff.username);
+            $(edit_param_id.staffId).val(data.staff.staffId);
+            $(edit_param_id.schoolId).val(data.staff.schoolId);
+            initColleges(data.staff.schoolId, edit_param_id.collegeId, data.staff.collegeId);
+            initDepartments(data.staff.collegeId, edit_param_id.departmentId, data.staff.departmentId);
+            $(edit_param_id.realName).val(data.staff.realName);
+            $(edit_param_id.staffNumber).val(data.staff.staffNumber);
+            $(edit_param_id.sex).val(data.staff.sex);
+            $(edit_param_id.politicalLandscapeId).val(data.staff.politicalLandscapeId);
+            $(edit_param_id.placeOrigin).val(data.staff.placeOrigin);
             validSuccessDom(edit_error_id.schoolId);
             validSuccessDom(edit_error_id.collegeId);
             validSuccessDom(edit_error_id.departmentId);
-            validSuccessDom(edit_error_id.scienceId);
-            validSuccessDom(edit_error_id.gradeId);
             validSuccessDom(edit_error_id.realName);
-            validSuccessDom(edit_error_id.studentNumber);
+            validSuccessDom(edit_error_id.staffNumber);
             validSuccessDom(edit_error_id.sex);
             validSuccessDom(edit_error_id.politicalLandscapeId);
             validSuccessDom(edit_error_id.placeOrigin);
@@ -859,19 +638,19 @@ $(document).ready(function () {
     });
 
     $('#editSave').click(function () {
-        editStudent();
+        editStaff();
     });
 
     $('#authSave').click(function () {
-        authStudent();
+        authStaff();
     });
 
     dataTable.delegate('.del', "click", function () {
-        delOrRecover($(this).attr('data-id'), $(this).attr('data-student'), false, '注销');
+        delOrRecover($(this).attr('data-id'), $(this).attr('data-staff'), false, '注销');
     });
 
     dataTable.delegate('.recovery', "click", function () {
-        delOrRecover($(this).attr('data-id'), $(this).attr('data-student'), true, '恢复');
+        delOrRecover($(this).attr('data-id'), $(this).attr('data-staff'), true, '恢复');
     });
 
     dataTable.delegate('.auth', "click", function () {
