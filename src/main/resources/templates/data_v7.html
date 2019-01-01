@@ -12,6 +12,8 @@
     <link href="plugin/messenger/css/messenger.css" rel="stylesheet" th:href="@{/plugin/messenger/css/messenger.css}"/>
     <link href="plugin/messenger/css/messenger-theme-air.css" rel="stylesheet"
           th:href="@{/plugin/messenger/css/messenger-theme-air.css}"/>
+    <link href="plugin/jquery-file-upload/css/jquery.fileupload.min.css" rel="stylesheet"
+          th:href="@{/plugin/jquery-file-upload/css/jquery.fileupload.min.css}"/>
 
 </head>
 
@@ -79,9 +81,11 @@
                 <button id="add" type="button" class="btn btn-default">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                 </button>
-                <button id="import" type="button" class="btn btn-default">
-                    <span class="glyphicon glyphicon-save" aria-hidden="true"></span>导入
-                </button>
+                <span class="btn btn-primary fileinput-button">
+                    <span>导入</span>
+                    <!-- The file input field used as target for the file upload widget -->
+                    <input id="fileupload" type="file" name="files[]"/>
+                </span>
                 <button id="importTemplate" type="button" class="btn btn-default">
                     <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>导入模板
                 </button>
@@ -338,6 +342,16 @@
         th:src="@{/plugin/messenger/js/messenger.js}"></script>
 <script src="plugin/handlebars/handlebars.js"
         th:src="@{/plugin/handlebars/handlebars.js}"></script>
+<script src="plugin/jquery-file-upload/js/vendor/jquery.ui.widget.min.js"
+        th:src="@{/plugin/jquery-file-upload/js/vendor/jquery.ui.widget.min.js}"></script>
+<script src="plugin/jquery-file-upload/js/jquery.iframe-transport.min.js"
+        th:src="@{/plugin/jquery-file-upload/js/jquery.iframe-transport.min.js}"></script>
+<script src="plugin/jquery-file-upload/js/jquery.fileupload.min.js"
+        th:src="@{/plugin/jquery-file-upload/js/jquery.fileupload.min.js}"></script>
+<script src="plugin/jquery-file-upload/js/jquery.fileupload-process.min.js"
+        th:src="@{/plugin/jquery-file-upload/js/jquery.fileupload-process.min.js}"></script>
+<script src="plugin/jquery-file-upload/js/jquery.fileupload-validate.min.js"
+        th:src="@{/plugin/jquery-file-upload/js/jquery.fileupload-validate.min.js}"></script>
 <script th:inline="javascript">
     var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
 </script>

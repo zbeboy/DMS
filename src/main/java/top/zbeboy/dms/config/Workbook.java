@@ -60,15 +60,19 @@ public final class Workbook {
     // 班主任
     public static final String ROLE_HEADMASTER = "ROLE_HEADMASTER";
     // 学生
-    public static final String ROLE_STUDENT= "ROLE_STUDENT";
+    public static final String ROLE_STUDENT = "ROLE_STUDENT";
     // 教职工
-    public static final String ROLE_STAFF= "ROLE_STAFF";
+    public static final String ROLE_STAFF = "ROLE_STAFF";
 
     public static final String XLS_FILE = "xls";
     public static final String XLSX_FILE = "xlsx";
 
     public static String studentFilePath() {
         return FILES_PORTFOLIOS + "student" + DIRECTORY_SPLIT;
+    }
+
+    public static String studentImportPath() {
+        return FILES_PORTFOLIOS + "student" + DIRECTORY_SPLIT + "import";
     }
 
     public static String staffFilePath() {

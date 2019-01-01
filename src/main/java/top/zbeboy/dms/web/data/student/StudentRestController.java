@@ -9,10 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import top.zbeboy.dms.config.Workbook;
 import top.zbeboy.dms.domain.dms.tables.pojos.Authorities;
 import top.zbeboy.dms.domain.dms.tables.pojos.Student;
@@ -20,6 +18,7 @@ import top.zbeboy.dms.domain.dms.tables.pojos.Users;
 import top.zbeboy.dms.domain.dms.tables.records.StudentRecord;
 import top.zbeboy.dms.service.common.UploadService;
 import top.zbeboy.dms.service.data.StudentService;
+import top.zbeboy.dms.service.entry.StudentReadExcel;
 import top.zbeboy.dms.service.export.StudentDataExport;
 import top.zbeboy.dms.service.platform.UsersService;
 import top.zbeboy.dms.service.platform.UsersTypeService;
@@ -28,6 +27,7 @@ import top.zbeboy.dms.service.util.BCryptUtils;
 import top.zbeboy.dms.service.util.DateTimeUtils;
 import top.zbeboy.dms.service.util.RequestUtils;
 import top.zbeboy.dms.web.bean.data.student.StudentBean;
+import top.zbeboy.dms.web.bean.file.FileBean;
 import top.zbeboy.dms.web.util.AjaxUtils;
 import top.zbeboy.dms.web.util.BootstrapTableUtils;
 import top.zbeboy.dms.web.vo.data.student.StudentAddVo;
@@ -287,5 +287,54 @@ public class StudentRestController {
             authoritiesService.save(authorities);
         }
         return new ResponseEntity<>(ajaxUtils.success().msg("保存成功").send(), HttpStatus.OK);
+    }
+
+    /**
+     * 导入学生
+     *
+     * @param multipartHttpServletRequest 数据
+     * @return true or false
+     */
+    @RequestMapping("/web/data/student/import")
+    public ResponseEntity<Map<String, Object>> studentImport(MultipartHttpServletRequest multipartHttpServletRequest) {
+        AjaxUtils ajaxUtils = AjaxUtils.of();
+        try {
+            String path = Workbook.studentImportPath();
+            List<FileBean> fileBeen = uploadService.upload(multipartHttpServletRequest,
+                    RequestUtils.getRealPath(multipartHttpServletRequest) + path, multipartHttpServletRequest.getRemoteAddr());
+            if (Objects.nonNull(fileBeen) && fileBeen.size() > 0) {
+                String filePath = fileBeen.get(0).getLastPath();
+                List<StudentBean> list = new StudentReadExcel().readExcel(filePath);
+                if (Objects.nonNull(list)) {
+                    list.forEach(studentBean -> {
+                        Users users = new Users();
+                        users.setUsername(studentBean.getStudentNumber());
+                        users.setPassword(BCryptUtils.bCryptPassword(studentBean.getStudentNumber()));
+                        users.setUsersTypeId(usersTypeService.findByUsersTypeName(Workbook.STUDENT_USERS_TYPE).getUsersTypeId());
+                        users.setRealName(studentBean.getRealName());
+                        users.setAvatar(Workbook.USERS_AVATAR);
+                        users.setJoinDate(DateTimeUtils.getNowSqlDate());
+                        users.setEnabled(true);
+                        users.setAccountNonExpired(true);
+                        users.setAccountNonLocked(true);
+                        users.setCredentialsNonExpired(true);
+                        usersService.save(users);
+
+                        Student student = new Student();
+                        student.setUsername(studentBean.getStudentNumber());
+                        student.setStudentNumber(studentBean.getStudentNumber());
+                        student.setOrganizeId(studentBean.getOrganizeId());
+                        student.setSex(studentBean.getSex());
+                        student.setPoliticalLandscapeId(studentBean.getPoliticalLandscapeId());
+                        student.setPlaceOrigin(studentBean.getPlaceOrigin());
+                        studentService.save(student);
+                    });
+                }
+            }
+        } catch (Exception e) {
+            log.error("Upload file exception,is {}", e);
+        }
+
+        return new ResponseEntity<>(ajaxUtils.success().msg("导入成功").send(), HttpStatus.OK);
     }
 }
