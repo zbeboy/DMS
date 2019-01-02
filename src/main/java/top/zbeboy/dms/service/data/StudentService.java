@@ -84,6 +84,13 @@ public interface StudentService {
     void save(Student student);
 
     /**
+     * 事务性保存
+     *
+     * @param studentBean 学生
+     */
+    void saveWithUsers(StudentBean studentBean);
+
+    /**
      * 更新
      *
      * @param student 数据

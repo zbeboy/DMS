@@ -75,9 +75,7 @@ public class StudentRestController {
             students.forEach(studentBean -> {
                 List<Authorities> authorities = authoritiesService.findByUsername(studentBean.getUsername());
                 List<String> role = new ArrayList<>();
-                authorities.forEach(auth -> {
-                    role.add(authoritiesService.getAuthName(auth.getAuthority()));
-                });
+                authorities.forEach(auth -> role.add(authoritiesService.getAuthName(auth.getAuthority())));
                 studentBean.setAuthority(io.vavr.collection.List.of(role).mkString(","));
             });
         }
@@ -306,29 +304,7 @@ public class StudentRestController {
                 String filePath = fileBeen.get(0).getLastPath();
                 List<StudentBean> list = new StudentReadExcel().readExcel(filePath);
                 if (Objects.nonNull(list)) {
-                    list.forEach(studentBean -> {
-                        Users users = new Users();
-                        users.setUsername(studentBean.getStudentNumber());
-                        users.setPassword(BCryptUtils.bCryptPassword(studentBean.getStudentNumber()));
-                        users.setUsersTypeId(usersTypeService.findByUsersTypeName(Workbook.STUDENT_USERS_TYPE).getUsersTypeId());
-                        users.setRealName(studentBean.getRealName());
-                        users.setAvatar(Workbook.USERS_AVATAR);
-                        users.setJoinDate(DateTimeUtils.getNowSqlDate());
-                        users.setEnabled(true);
-                        users.setAccountNonExpired(true);
-                        users.setAccountNonLocked(true);
-                        users.setCredentialsNonExpired(true);
-                        usersService.save(users);
-
-                        Student student = new Student();
-                        student.setUsername(studentBean.getStudentNumber());
-                        student.setStudentNumber(studentBean.getStudentNumber());
-                        student.setOrganizeId(studentBean.getOrganizeId());
-                        student.setSex(studentBean.getSex());
-                        student.setPoliticalLandscapeId(studentBean.getPoliticalLandscapeId());
-                        student.setPlaceOrigin(studentBean.getPlaceOrigin());
-                        studentService.save(student);
-                    });
+                    list.forEach(studentBean -> studentService.saveWithUsers(studentBean));
                 }
             }
         } catch (Exception e) {

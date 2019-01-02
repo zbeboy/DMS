@@ -2,16 +2,21 @@ package top.zbeboy.dms.service.data;
 
 import com.alibaba.fastjson.JSONObject;
 import org.jooq.*;
+import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
+import top.zbeboy.dms.config.Workbook;
 import top.zbeboy.dms.domain.dms.tables.daos.StudentDao;
 import top.zbeboy.dms.domain.dms.tables.pojos.Student;
 import top.zbeboy.dms.domain.dms.tables.records.StudentRecord;
+import top.zbeboy.dms.service.platform.UsersTypeService;
 import top.zbeboy.dms.service.plugin.BootstrapTablesPlugin;
+import top.zbeboy.dms.service.util.BCryptUtils;
+import top.zbeboy.dms.service.util.DateTimeUtils;
 import top.zbeboy.dms.service.util.SQLQueryUtils;
 import top.zbeboy.dms.web.bean.data.student.StudentBean;
 import top.zbeboy.dms.web.util.BootstrapTableUtils;
@@ -30,6 +35,9 @@ public class StudentServiceImpl extends BootstrapTablesPlugin<StudentBean> imple
 
     @Resource
     private StudentDao studentDao;
+
+    @Resource
+    private UsersTypeService usersTypeService;
 
     @Autowired
     StudentServiceImpl(DSLContext dslContext) {
@@ -237,6 +245,27 @@ public class StudentServiceImpl extends BootstrapTablesPlugin<StudentBean> imple
     @Override
     public void save(Student student) {
         studentDao.insert(student);
+    }
+
+    @Override
+    public void saveWithUsers(StudentBean studentBean) {
+        create.transaction(configuration -> {
+            DSL.using(configuration)
+                    .insertInto(USERS, USERS.USERNAME, USERS.PASSWORD, USERS.USERS_TYPE_ID, USERS.REAL_NAME,
+                            USERS.AVATAR, USERS.JOIN_DATE, USERS.ENABLED, USERS.ACCOUNT_NON_EXPIRED,
+                            USERS.ACCOUNT_NON_LOCKED, USERS.CREDENTIALS_NON_EXPIRED)
+                    .values(studentBean.getStudentNumber(), BCryptUtils.bCryptPassword(studentBean.getStudentNumber()),
+                            usersTypeService.findByUsersTypeName(Workbook.STUDENT_USERS_TYPE).getUsersTypeId(),
+                            studentBean.getRealName(), Workbook.USERS_AVATAR, DateTimeUtils.getNowSqlDate(),
+                            true, true, true, true)
+                    .execute();
+            DSL.using(configuration)
+                    .insertInto(STUDENT, STUDENT.USERNAME, STUDENT.STUDENT_NUMBER, STUDENT.ORGANIZE_ID,
+                            STUDENT.SEX, STUDENT.POLITICAL_LANDSCAPE_ID, STUDENT.PLACE_ORIGIN)
+                    .values(studentBean.getStudentNumber(), studentBean.getStudentNumber(), studentBean.getOrganizeId(),
+                            studentBean.getSex(), studentBean.getPoliticalLandscapeId(), studentBean.getPlaceOrigin())
+                    .execute();
+        });
     }
 
     @Override
