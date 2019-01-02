@@ -194,7 +194,6 @@ function init() {
     initSchools();
     initPoliticalLandscapes();
     initRoles();
-    initFileUpload();
 }
 
 function initPoliticalLandscapes() {
@@ -219,10 +218,6 @@ function initRoles() {
 function rolesData(data) {
     var role_template = Handlebars.compile($("#role_template").html());
     $('#roleData').append(role_template(data));
-}
-
-function initFileUpload() {
-
 }
 
 function initSchools() {

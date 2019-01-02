@@ -22,7 +22,8 @@ function getAjaxUrl() {
         save: web_path + '/web/data/staff/save',
         save_role: web_path + '/web/data/staff/role/save',
         update: web_path + '/web/data/staff/update',
-        status: web_path + '/web/data/staff/status'
+        status: web_path + '/web/data/staff/status',
+        file_upload_url: '/web/data/staff/import'
     };
 }
 
@@ -673,5 +674,42 @@ $(document).ready(function () {
                 }
             });
         });
+    });
+
+    // 上传组件
+    $('#fileupload').fileupload({
+        url: getAjaxUrl().file_upload_url,
+        dataType: 'json',
+        maxFileSize: 100000000,// 100MB
+        acceptFileTypes: /([.\/])(xlsx)$/i,
+        formAcceptCharset: 'utf-8',
+        maxNumberOfFiles: 1,
+        messages: {
+            maxNumberOfFiles: '最大支持上传1个文件',
+            acceptFileTypes: '仅支持上传xlsx等类型文件',
+            maxFileSize: '单文件上传仅允许100MB大小'
+        },
+        done: function (e, data) {
+            Messenger().post({
+                message: data.result.msg,
+                type: data.result.state ? 'success' : 'error',
+                showCloseButton: true
+            });
+        }
+    }).on('fileuploadadd', function (evt, data) {
+        var isOk = true;
+        var $this = $(this);
+        var validation = data.process(function () {
+            return $this.fileupload('process', data);
+        });
+        validation.fail(function (data) {
+            isOk = false;
+            Messenger().post({
+                message: '上传失败: ' + data.files[0].error,
+                type: 'error',
+                showCloseButton: true
+            });
+        });
+        return isOk;
     });
 });

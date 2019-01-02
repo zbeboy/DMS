@@ -78,4 +78,8 @@ public final class Workbook {
     public static String staffFilePath() {
         return FILES_PORTFOLIOS + "staff" + DIRECTORY_SPLIT;
     }
+
+    public static String staffImportPath() {
+        return FILES_PORTFOLIOS + "staff" + DIRECTORY_SPLIT + "import";
+    }
 }

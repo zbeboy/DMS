@@ -75,6 +75,13 @@ public interface StaffService {
     void save(Staff staff);
 
     /**
+     * 事务性保存
+     *
+     * @param staffBean 教师
+     */
+    void saveWithUsers(StaffBean staffBean);
+
+    /**
      * 更新
      *
      * @param staff 数据

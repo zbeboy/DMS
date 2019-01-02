@@ -9,10 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import top.zbeboy.dms.config.Workbook;
 import top.zbeboy.dms.domain.dms.tables.pojos.Authorities;
 import top.zbeboy.dms.domain.dms.tables.pojos.Staff;
@@ -23,6 +21,8 @@ import top.zbeboy.dms.domain.dms.tables.records.StudentRecord;
 import top.zbeboy.dms.service.common.UploadService;
 import top.zbeboy.dms.service.data.StaffService;
 import top.zbeboy.dms.service.data.StudentService;
+import top.zbeboy.dms.service.entry.StaffReadExcel;
+import top.zbeboy.dms.service.entry.StudentReadExcel;
 import top.zbeboy.dms.service.export.StaffDataExport;
 import top.zbeboy.dms.service.export.StudentDataExport;
 import top.zbeboy.dms.service.platform.UsersService;
@@ -33,6 +33,7 @@ import top.zbeboy.dms.service.util.DateTimeUtils;
 import top.zbeboy.dms.service.util.RequestUtils;
 import top.zbeboy.dms.web.bean.data.staff.StaffBean;
 import top.zbeboy.dms.web.bean.data.student.StudentBean;
+import top.zbeboy.dms.web.bean.file.FileBean;
 import top.zbeboy.dms.web.data.student.StudentRestController;
 import top.zbeboy.dms.web.util.AjaxUtils;
 import top.zbeboy.dms.web.util.BootstrapTableUtils;
@@ -83,9 +84,7 @@ public class StaffRestController {
             staffs.forEach(staffBean -> {
                 List<Authorities> authorities = authoritiesService.findByUsername(staffBean.getUsername());
                 List<String> role = new ArrayList<>();
-                authorities.forEach(auth -> {
-                    role.add(authoritiesService.getAuthName(auth.getAuthority()));
-                });
+                authorities.forEach(auth -> role.add(authoritiesService.getAuthName(auth.getAuthority())));
                 staffBean.setAuthority(io.vavr.collection.List.of(role).mkString(","));
             });
         }
@@ -293,5 +292,32 @@ public class StaffRestController {
             authoritiesService.save(authorities);
         }
         return new ResponseEntity<>(ajaxUtils.success().msg("保存成功").send(), HttpStatus.OK);
+    }
+
+    /**
+     * 导入教师
+     *
+     * @param multipartHttpServletRequest 数据
+     * @return true or false
+     */
+    @RequestMapping("/web/data/staff/import")
+    public ResponseEntity<Map<String, Object>> staffImport(MultipartHttpServletRequest multipartHttpServletRequest) {
+        AjaxUtils ajaxUtils = AjaxUtils.of();
+        try {
+            String path = Workbook.staffImportPath();
+            List<FileBean> fileBeen = uploadService.upload(multipartHttpServletRequest,
+                    RequestUtils.getRealPath(multipartHttpServletRequest) + path, multipartHttpServletRequest.getRemoteAddr());
+            if (Objects.nonNull(fileBeen) && fileBeen.size() > 0) {
+                String filePath = fileBeen.get(0).getLastPath();
+                List<StaffBean> list = new StaffReadExcel().readExcel(filePath);
+                if (Objects.nonNull(list)) {
+                    list.forEach(staffBean -> staffService.saveWithUsers(staffBean));
+                }
+            }
+        } catch (Exception e) {
+            log.error("Upload file exception,is {}", e);
+        }
+
+        return new ResponseEntity<>(ajaxUtils.success().msg("导入成功").send(), HttpStatus.OK);
     }
 }

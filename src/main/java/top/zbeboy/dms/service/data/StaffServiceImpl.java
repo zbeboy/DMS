@@ -2,16 +2,21 @@ package top.zbeboy.dms.service.data;
 
 import com.alibaba.fastjson.JSONObject;
 import org.jooq.*;
+import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
+import top.zbeboy.dms.config.Workbook;
 import top.zbeboy.dms.domain.dms.tables.daos.StaffDao;
 import top.zbeboy.dms.domain.dms.tables.pojos.Staff;
 import top.zbeboy.dms.domain.dms.tables.records.StaffRecord;
+import top.zbeboy.dms.service.platform.UsersTypeService;
 import top.zbeboy.dms.service.plugin.BootstrapTablesPlugin;
+import top.zbeboy.dms.service.util.BCryptUtils;
+import top.zbeboy.dms.service.util.DateTimeUtils;
 import top.zbeboy.dms.service.util.SQLQueryUtils;
 import top.zbeboy.dms.web.bean.data.staff.StaffBean;
 import top.zbeboy.dms.web.util.BootstrapTableUtils;
@@ -29,6 +34,9 @@ public class StaffServiceImpl extends BootstrapTablesPlugin<StaffBean> implement
 
     @Resource
     private StaffDao staffDao;
+
+    @Resource
+    private UsersTypeService usersTypeService;
 
     @Autowired
     StaffServiceImpl(DSLContext dslContext) {
@@ -189,6 +197,27 @@ public class StaffServiceImpl extends BootstrapTablesPlugin<StaffBean> implement
     @Override
     public void save(Staff staff) {
         staffDao.insert(staff);
+    }
+
+    @Override
+    public void saveWithUsers(StaffBean staffBean) {
+        create.transaction(configuration -> {
+            DSL.using(configuration)
+                    .insertInto(USERS, USERS.USERNAME, USERS.PASSWORD, USERS.USERS_TYPE_ID, USERS.REAL_NAME,
+                            USERS.AVATAR, USERS.JOIN_DATE, USERS.ENABLED, USERS.ACCOUNT_NON_EXPIRED,
+                            USERS.ACCOUNT_NON_LOCKED, USERS.CREDENTIALS_NON_EXPIRED)
+                    .values(staffBean.getStaffNumber(), BCryptUtils.bCryptPassword(staffBean.getStaffNumber()),
+                            usersTypeService.findByUsersTypeName(Workbook.STUDENT_USERS_TYPE).getUsersTypeId(),
+                            staffBean.getRealName(), Workbook.USERS_AVATAR, DateTimeUtils.getNowSqlDate(),
+                            true, true, true, true)
+                    .execute();
+            DSL.using(configuration)
+                    .insertInto(STAFF, STAFF.USERNAME, STAFF.STAFF_NUMBER, STAFF.DEPARTMENT_ID,
+                            STAFF.SEX, STAFF.POLITICAL_LANDSCAPE_ID)
+                    .values(staffBean.getStaffNumber(), staffBean.getStaffNumber(), staffBean.getDepartmentId(),
+                            staffBean.getSex(), staffBean.getPoliticalLandscapeId())
+                    .execute();
+        });
     }
 
     @Override
