@@ -5,13 +5,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import top.zbeboy.dms.config.Workbook;
+import top.zbeboy.dms.domain.dms.tables.pojos.Staff;
 import top.zbeboy.dms.domain.dms.tables.pojos.Student;
 import top.zbeboy.dms.domain.dms.tables.pojos.Users;
+import top.zbeboy.dms.service.data.StaffService;
 import top.zbeboy.dms.service.data.StudentService;
 import top.zbeboy.dms.service.platform.UsersService;
-import top.zbeboy.dms.service.util.BCryptUtils;
-import top.zbeboy.dms.service.util.DateTimeUtils;
 import top.zbeboy.dms.web.util.AjaxUtils;
 
 import javax.annotation.Resource;
@@ -28,6 +27,9 @@ public class PersonalRestController {
     @Resource
     private StudentService studentService;
 
+    @Resource
+    private StaffService staffService;
+
     /**
      * 保存学生
      *
@@ -35,9 +37,9 @@ public class PersonalRestController {
      */
     @PostMapping(value = "/web/system/personal/student/save")
     public ResponseEntity<Map<String, Object>> student(@RequestParam("realName") String realName,
-                                                    String sex,
-                                                    String placeOrigin,
-                                                    int politicalLandscapeId) {
+                                                       String sex,
+                                                       String placeOrigin,
+                                                       int politicalLandscapeId) {
         AjaxUtils ajaxUtils = AjaxUtils.of();
         String username = usersService.getUserFromSession().getUsername();
         Users users = usersService.findByUsername(username);
@@ -45,7 +47,7 @@ public class PersonalRestController {
         usersService.update(users);
 
         List<Student> students = studentService.findByUsername(username);
-        if(!Objects.isNull(students) && !students.isEmpty()){
+        if (!Objects.isNull(students) && !students.isEmpty()) {
             Student student = students.get(0);
             student.setSex(sex);
             student.setPoliticalLandscapeId(politicalLandscapeId);
@@ -62,12 +64,22 @@ public class PersonalRestController {
      * @return true or false
      */
     @PostMapping(value = "/web/system/personal/staff/save")
-    public ResponseEntity<Map<String, Object>> staff(@RequestParam("realName") String realName) {
+    public ResponseEntity<Map<String, Object>> staff(@RequestParam("realName") String realName,
+                                                     String sex,
+                                                     int politicalLandscapeId) {
         AjaxUtils ajaxUtils = AjaxUtils.of();
         String username = usersService.getUserFromSession().getUsername();
         Users users = usersService.findByUsername(username);
         users.setRealName(realName);
         usersService.update(users);
+
+        List<Staff> staffs = staffService.findByUsername(username);
+        if (!Objects.isNull(staffs) && !staffs.isEmpty()) {
+            Staff staff = staffs.get(0);
+            staff.setSex(sex);
+            staff.setPoliticalLandscapeId(politicalLandscapeId);
+            staffService.update(staff);
+        }
         ajaxUtils.success().msg("保存成功");
         return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
     }

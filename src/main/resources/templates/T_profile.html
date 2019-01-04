@@ -34,6 +34,14 @@
                                 <span class="line">工号：</span>
                                 <h5 th:text="${staff.staffNumber}">云南昆明</h5>
                             </div>
+                            <div class="col-sm-4">
+                                <span class="line">性别：</span>
+                                <h5 th:text="${staff.sex}">男</h5>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="line">政治面貌：</span>
+                                <h5 th:text="${staff.politicalLandscapeName}"></h5>
+                            </div>
                         </div>
 
                         <button ttype="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">修改</button>
@@ -56,6 +64,23 @@
                     <div class="form-group">
                         <input type="text" class="form-control" id="realName" th:value="${staff.realName}">
                         <div class="text-danger" id="real_name_error"></div>
+                    </div>
+                    <span>性别：</span>
+                    <div class="form-group">
+                        <select class="form-control" id="sex">
+                            <option value="">请选择性别</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                        <input type="hidden" class="form-control" id="sexData" th:value="${staff.sex}">
+                    </div>
+                    <span>政治面貌：</span>
+                    <div class="form-group">
+                        <select class="form-control" id="politicalLandscapeId">
+                            <option value="">请选择政治面貌</option>
+                        </select>
+                        <input type="hidden" class="form-control" id="politicalLandscapeIdData"
+                               th:value="${staff.politicalLandscapeId}">
                     </div>
                 </form>
             </div>

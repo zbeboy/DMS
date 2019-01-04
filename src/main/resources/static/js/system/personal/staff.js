@@ -14,17 +14,15 @@ var ajaxUrl = {
 };
 
 var param_id = {
-    realName: '#realName'/*,
+    realName: '#realName',
     sex: '#sex',
-    placeOrigin: '#placeOrigin',
-    politicalLandscapeId: '#politicalLandscapeId'*/
+    politicalLandscapeId: '#politicalLandscapeId'
 };
 
 var param = {
-    realName: ''/*,
+    realName: '',
     sex: '',
-    placeOrigin: '',
-    politicalLandscapeId: ''*/
+    politicalLandscapeId: ''
 };
 
 var error_id = {
@@ -33,9 +31,8 @@ var error_id = {
 
 function initParam() {
     param.realName = $(param_id.realName).val();
-    /*param.sex = $(param_id.sex).val();
-    param.placeOrigin = $(param_id.placeOrigin).val();
-    param.politicalLandscapeId = $(param_id.politicalLandscapeId).val();*/
+    param.sex = $(param_id.sex).val();
+    param.politicalLandscapeId = $(param_id.politicalLandscapeId).val();
 }
 
 /**
@@ -55,7 +52,7 @@ function validErrorDom(errorMsgId, msg) {
     $(errorMsgId).removeClass('hidden').text(msg);
 }
 
-// init();
+init();
 
 function init() {
     initSex();

@@ -7,6 +7,7 @@ import top.zbeboy.dms.domain.dms.tables.records.StaffRecord;
 import top.zbeboy.dms.web.bean.data.staff.StaffBean;
 import top.zbeboy.dms.web.util.BootstrapTableUtils;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface StaffService {
@@ -34,6 +35,14 @@ public interface StaffService {
      * @return 数据
      */
     Staff findByStaffNumber(String staffNumber);
+
+    /**
+     * 根据账号查询
+     *
+     * @param username 账号
+     * @return 数据
+     */
+    List<Staff> findByUsername(String username);
 
     /**
      * 根据工号查询(不等于教师id)

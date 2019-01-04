@@ -22,6 +22,7 @@ import top.zbeboy.dms.web.bean.data.staff.StaffBean;
 import top.zbeboy.dms.web.util.BootstrapTableUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Optional;
 
 import static top.zbeboy.dms.domain.dms.Tables.*;
@@ -67,6 +68,11 @@ public class StaffServiceImpl extends BootstrapTablesPlugin<StaffBean> implement
     @Override
     public Staff findByStaffNumber(String staffNumber) {
         return staffDao.fetchOneByStaffNumber(staffNumber);
+    }
+
+    @Override
+    public List<Staff> findByUsername(String username) {
+        return staffDao.fetchByUsername(username);
     }
 
     @Override
