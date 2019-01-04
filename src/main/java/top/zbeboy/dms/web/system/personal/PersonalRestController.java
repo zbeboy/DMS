@@ -11,6 +11,7 @@ import top.zbeboy.dms.domain.dms.tables.pojos.Users;
 import top.zbeboy.dms.service.data.StaffService;
 import top.zbeboy.dms.service.data.StudentService;
 import top.zbeboy.dms.service.platform.UsersService;
+import top.zbeboy.dms.service.util.BCryptUtils;
 import top.zbeboy.dms.web.util.AjaxUtils;
 
 import javax.annotation.Resource;
@@ -95,6 +96,22 @@ public class PersonalRestController {
         String username = usersService.getUserFromSession().getUsername();
         Users users = usersService.findByUsername(username);
         users.setRealName(realName);
+        usersService.update(users);
+        ajaxUtils.success().msg("保存成功");
+        return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
+    }
+
+    /**
+     * 更改密码
+     *
+     * @return true or false
+     */
+    @PostMapping(value = "/web/system/personal/password")
+    public ResponseEntity<Map<String, Object>> password(@RequestParam("password") String password) {
+        AjaxUtils ajaxUtils = AjaxUtils.of();
+        String username = usersService.getUserFromSession().getUsername();
+        Users users = usersService.findByUsername(username);
+        users.setPassword(BCryptUtils.bCryptPassword(password));
         usersService.update(users);
         ajaxUtils.success().msg("保存成功");
         return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
