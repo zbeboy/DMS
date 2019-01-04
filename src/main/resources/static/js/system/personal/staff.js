@@ -124,7 +124,7 @@ function checkPassword() {
 
 function sendPasswordAjax() {
     $.post(ajaxUrl.password, param, function (data) {
-        $('#passwordModalLabel').modal('hide');
+        $('#passwordModal').modal('hide');
         Messenger().post({
             message: data.msg,
             type: data.state ? 'info' : 'error',
