@@ -10,32 +10,28 @@ $(document).ready(function () {
 
 var ajaxUrl = {
     politicalLandscapes: web_path + '/web/data/politicalLandscape/all',
-    save: web_path + '/web/system/personal/admin/save'
+    save: web_path + '/web/system/personal/admin/save',
+    password: web_path + '/web/system/personal/password'
 };
 
 var param_id = {
-    realName: '#realName'/*,
-    sex: '#sex',
-    placeOrigin: '#placeOrigin',
-    politicalLandscapeId: '#politicalLandscapeId'*/
+    realName: '#realName',
+    password: '#password'
 };
 
 var param = {
-    realName: ''/*,
-    sex: '',
-    placeOrigin: '',
-    politicalLandscapeId: ''*/
+    realName: '',
+    password: ''
 };
 
 var error_id = {
-    realName: '#real_name_error'
+    realName: '#real_name_error',
+    password: '#password_error'
 };
 
 function initParam() {
     param.realName = $(param_id.realName).val();
-    /*param.sex = $(param_id.sex).val();
-    param.placeOrigin = $(param_id.placeOrigin).val();
-    param.politicalLandscapeId = $(param_id.politicalLandscapeId).val();*/
+    param.password = $(param_id.password).val();
 }
 
 /**
@@ -53,30 +49,6 @@ function validSuccessDom(errorMsgId) {
  */
 function validErrorDom(errorMsgId, msg) {
     $(errorMsgId).removeClass('hidden').text(msg);
-}
-
-// init();
-
-function init() {
-    initSex();
-    initPoliticalLandscapes();
-}
-
-function initSex() {
-    $(param_id.sex).val($('#sexData').val());
-}
-
-function initPoliticalLandscapes() {
-    $.get(ajaxUrl.politicalLandscapes, function (data) {
-        politicalLandscapesData(data);
-    });
-}
-
-function politicalLandscapesData(data) {
-    $.each(data.politicalLandscapes, function (i, n) {
-        $(param_id.politicalLandscapeId).append('<option value="' + n.politicalLandscapeId + '">' + n.politicalLandscapeName + '</option>');
-    });
-    $(param_id.politicalLandscapeId).val($('#politicalLandscapeIdData').val());
 }
 
 $('#save').click(function () {
@@ -97,6 +69,32 @@ function checkRealName() {
 function sendAjax() {
     $.post(ajaxUrl.save, param, function (data) {
         $('#myModal').modal('hide');
+        Messenger().post({
+            message: data.msg,
+            type: data.state ? 'info' : 'error',
+            showCloseButton: true
+        });
+    })
+}
+
+$('#savePassword').click(function () {
+    initParam();
+    checkPassword();
+});
+
+function checkPassword() {
+    var password = param.password;
+    if (password !== '') {
+        validSuccessDom(error_id.password);
+        sendPasswordAjax();
+    } else {
+        validErrorDom(error_id.password, '密码不能为空');
+    }
+}
+
+function sendPasswordAjax() {
+    $.post(ajaxUrl.password, param, function (data) {
+        $('#passwordModal').modal('hide');
         Messenger().post({
             message: data.msg,
             type: data.state ? 'info' : 'error',
