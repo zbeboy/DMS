@@ -24,6 +24,14 @@ public interface AuthoritiesService {
     Boolean isAnonymousAuthenticated();
 
     /**
+     * 检查当前用户是否有此权限
+     *
+     * @param authority
+     * @return
+     */
+    Boolean isCurrentUserInRole(String authority);
+
+    /**
      * 从当前用户信息中获取权限
      *
      * @return 权限集合

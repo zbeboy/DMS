@@ -12,9 +12,12 @@ import org.springframework.util.StringUtils;
 import top.zbeboy.dms.config.Workbook;
 import top.zbeboy.dms.domain.dms.tables.daos.StudentDao;
 import top.zbeboy.dms.domain.dms.tables.pojos.Student;
+import top.zbeboy.dms.domain.dms.tables.pojos.Users;
 import top.zbeboy.dms.domain.dms.tables.records.StudentRecord;
+import top.zbeboy.dms.service.platform.UsersService;
 import top.zbeboy.dms.service.platform.UsersTypeService;
 import top.zbeboy.dms.service.plugin.BootstrapTablesPlugin;
+import top.zbeboy.dms.service.system.AuthoritiesService;
 import top.zbeboy.dms.service.util.BCryptUtils;
 import top.zbeboy.dms.service.util.DateTimeUtils;
 import top.zbeboy.dms.service.util.SQLQueryUtils;
@@ -23,6 +26,7 @@ import top.zbeboy.dms.web.util.BootstrapTableUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static top.zbeboy.dms.domain.dms.Tables.*;
@@ -38,6 +42,12 @@ public class StudentServiceImpl extends BootstrapTablesPlugin<StudentBean> imple
 
     @Resource
     private UsersTypeService usersTypeService;
+
+    @Resource
+    private UsersService usersService;
+
+    @Resource
+    private AuthoritiesService authoritiesService;
 
     @Autowired
     StudentServiceImpl(DSLContext dslContext) {
@@ -92,6 +102,7 @@ public class StudentServiceImpl extends BootstrapTablesPlugin<StudentBean> imple
     public Result<Record> findAllByPage(BootstrapTableUtils<StudentBean> bootstrapTableUtils) {
         Result<Record> records;
         Condition a = searchCondition(bootstrapTableUtils);
+        a = buildCondition(a);
         if (ObjectUtils.isEmpty(a)) {
             SelectJoinStep<Record> selectJoinStep = create.select()
                     .from(STUDENT)
@@ -145,6 +156,7 @@ public class StudentServiceImpl extends BootstrapTablesPlugin<StudentBean> imple
     public int countByCondition(BootstrapTableUtils<StudentBean> bootstrapTableUtils) {
         Record1<Integer> count;
         Condition a = searchCondition(bootstrapTableUtils);
+        a = buildCondition(a);
         if (ObjectUtils.isEmpty(a)) {
             SelectJoinStep<Record1<Integer>> selectJoinStep = create.selectCount()
                     .from(STUDENT)
@@ -194,6 +206,7 @@ public class StudentServiceImpl extends BootstrapTablesPlugin<StudentBean> imple
     public Result<Record> export(BootstrapTableUtils<StudentBean> bootstrapTableUtils) {
         Result<Record> records;
         Condition a = searchCondition(bootstrapTableUtils);
+        a = buildCondition(a);
         if (ObjectUtils.isEmpty(a)) {
             SelectJoinStep<Record> selectJoinStep = create.select()
                     .from(STUDENT)
@@ -510,5 +523,55 @@ public class StudentServiceImpl extends BootstrapTablesPlugin<StudentBean> imple
             }
         }
         sortToFinish(selectConditionStep, selectJoinStep, type, sortField);
+    }
+
+    private Condition buildCondition(Condition condition) {
+        Users users = usersService.getUserFromSession();
+        if (Objects.nonNull(condition)) {
+            condition = condition.and(USERS.USERNAME.ne(users.getUsername()));
+        } else {
+            condition = USERS.USERNAME.ne(users.getUsername());
+        }
+
+        if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_SYSTEM)) {
+            condition = condition.andNotExists(create.selectFrom(AUTHORITIES)
+                    .where(AUTHORITIES.USERNAME.eq(USERS.USERNAME)
+                            .and(AUTHORITIES.AUTHORITY.in(Workbook.ROLE_SYSTEM))));
+        } else if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE)) {
+            condition = condition.andNotExists(create.selectFrom(AUTHORITIES)
+                    .where(AUTHORITIES.USERNAME.eq(USERS.USERNAME)
+                            .and(AUTHORITIES.AUTHORITY.in(
+                                    Workbook.ROLE_SYSTEM,
+                                    Workbook.ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE
+                            ))));
+        } else if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_COLLEGE_WORK_DEPARTMENT)) {
+            condition = condition.andNotExists(create.selectFrom(AUTHORITIES)
+                    .where(AUTHORITIES.USERNAME.eq(USERS.USERNAME)
+                            .and(AUTHORITIES.AUTHORITY.in(
+                                    Workbook.ROLE_SYSTEM,
+                                    Workbook.ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE,
+                                    Workbook.ROLE_COLLEGE_WORK_DEPARTMENT
+                            ))));
+        } else if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_DEPARTMENT_INSTRUCTOR)) {
+            condition = condition.andNotExists(create.selectFrom(AUTHORITIES)
+                    .where(AUTHORITIES.USERNAME.eq(USERS.USERNAME)
+                            .and(AUTHORITIES.AUTHORITY.in(
+                                    Workbook.ROLE_SYSTEM,
+                                    Workbook.ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE,
+                                    Workbook.ROLE_COLLEGE_WORK_DEPARTMENT,
+                                    Workbook.ROLE_DEPARTMENT_INSTRUCTOR
+                            ))));
+        } else if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_HEADMASTER)) {
+            condition = condition.andNotExists(create.selectFrom(AUTHORITIES)
+                    .where(AUTHORITIES.USERNAME.eq(USERS.USERNAME)
+                            .and(AUTHORITIES.AUTHORITY.in(
+                                    Workbook.ROLE_SYSTEM,
+                                    Workbook.ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE,
+                                    Workbook.ROLE_COLLEGE_WORK_DEPARTMENT,
+                                    Workbook.ROLE_DEPARTMENT_INSTRUCTOR,
+                                    Workbook.ROLE_HEADMASTER
+                            ))));
+        }
+        return condition;
     }
 }

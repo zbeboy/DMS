@@ -886,8 +886,9 @@ $(document).ready(function () {
                 showCloseButton: true
             });
 
+            var roles = $("input[name='role']");
+            roles.prop("checked", false);
             $.each(data.auths, function (i, n) {
-                var roles = $("input[name='role']");
                 for (var j = 0; j < roles.length; j++) {
                     if ($(roles[j]).val() === n.authority) {
                         $(roles[j]).prop("checked", true);

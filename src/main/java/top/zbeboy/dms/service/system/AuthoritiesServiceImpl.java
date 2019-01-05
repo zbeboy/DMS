@@ -4,7 +4,10 @@ import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +47,19 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
     public Boolean isAnonymousAuthenticated() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return !ObjectUtils.isEmpty(authentication) && new AuthenticationTrustResolverImpl().isAnonymous(authentication);
+    }
+
+    @Override
+    public Boolean isCurrentUserInRole(String authority) {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        if (authentication != null) {
+            if (authentication.getPrincipal() instanceof UserDetails) {
+                UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
+                return springSecurityUser.getAuthorities().contains(new SimpleGrantedAuthority(authority));
+            }
+        }
+        return false;
     }
 
     @Override
@@ -118,40 +134,66 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
     @Override
     public List<Map<String, String>> getAuthAll() {
         List<Map<String, String>> maps = new ArrayList<>();
+
         Map<String, String> map1 = new HashMap<>();
         map1.put("roleId", Workbook.ROLE_SYSTEM);
         map1.put("roleName", "系统管理员");
-        maps.add(map1);
 
         Map<String, String> map2 = new HashMap<>();
         map2.put("roleId", Workbook.ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE);
         map2.put("roleName", "学院团委");
-        maps.add(map2);
 
         Map<String, String> map3 = new HashMap<>();
         map3.put("roleId", Workbook.ROLE_COLLEGE_WORK_DEPARTMENT);
         map3.put("roleName", "学生工作部");
-        maps.add(map3);
 
         Map<String, String> map4 = new HashMap<>();
         map4.put("roleId", Workbook.ROLE_DEPARTMENT_INSTRUCTOR);
         map4.put("roleName", "系部辅导员");
-        maps.add(map4);
 
         Map<String, String> map5 = new HashMap<>();
         map5.put("roleId", Workbook.ROLE_HEADMASTER);
         map5.put("roleName", "班主任");
-        maps.add(map5);
 
         Map<String, String> map6 = new HashMap<>();
         map6.put("roleId", Workbook.ROLE_STUDENT);
         map6.put("roleName", "学生");
-        maps.add(map6);
 
         Map<String, String> map7 = new HashMap<>();
         map7.put("roleId", Workbook.ROLE_STAFF);
         map7.put("roleName", "教职工");
-        maps.add(map7);
+
+        if (isCurrentUserInRole(Workbook.ROLE_SYSTEM)) {
+            maps.add(map1);
+            maps.add(map2);
+            maps.add(map3);
+            maps.add(map4);
+            maps.add(map5);
+            maps.add(map6);
+            maps.add(map7);
+        } else if (isCurrentUserInRole(Workbook.ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE)) {
+            maps.add(map3);
+            maps.add(map4);
+            maps.add(map5);
+            maps.add(map6);
+            maps.add(map7);
+
+        } else if (isCurrentUserInRole(Workbook.ROLE_COLLEGE_WORK_DEPARTMENT)) {
+            maps.add(map4);
+            maps.add(map5);
+            maps.add(map6);
+            maps.add(map7);
+
+        } else if (isCurrentUserInRole(Workbook.ROLE_DEPARTMENT_INSTRUCTOR)) {
+            maps.add(map5);
+            maps.add(map6);
+            maps.add(map7);
+
+        } else if (isCurrentUserInRole(Workbook.ROLE_HEADMASTER)) {
+            maps.add(map6);
+            maps.add(map7);
+        }
+
         return maps;
     }
 
