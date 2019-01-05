@@ -12,6 +12,7 @@ import org.jooq.impl.Internal;
 
 import top.zbeboy.dms.domain.dms.tables.Authorities;
 import top.zbeboy.dms.domain.dms.tables.College;
+import top.zbeboy.dms.domain.dms.tables.Credit;
 import top.zbeboy.dms.domain.dms.tables.Department;
 import top.zbeboy.dms.domain.dms.tables.Files;
 import top.zbeboy.dms.domain.dms.tables.Grade;
@@ -49,6 +50,7 @@ public class Indexes {
     public static final Index PRIMARY_KEY_A = Indexes0.PRIMARY_KEY_A;
     public static final Index CONSTRAINT_INDEX_6 = Indexes0.CONSTRAINT_INDEX_6;
     public static final Index PRIMARY_KEY_63 = Indexes0.PRIMARY_KEY_63;
+    public static final Index PRIMARY_KEY_76 = Indexes0.PRIMARY_KEY_76;
     public static final Index CONSTRAINT_INDEX_4F = Indexes0.CONSTRAINT_INDEX_4F;
     public static final Index PRIMARY_KEY_4F = Indexes0.PRIMARY_KEY_4F;
     public static final Index PRIMARY_KEY_3 = Indexes0.PRIMARY_KEY_3;
@@ -86,6 +88,7 @@ public class Indexes {
         public static Index PRIMARY_KEY_A = Internal.createIndex("PRIMARY_KEY_A", Authorities.AUTHORITIES, new OrderField[] { Authorities.AUTHORITIES.USERNAME, Authorities.AUTHORITIES.AUTHORITY }, true);
         public static Index CONSTRAINT_INDEX_6 = Internal.createIndex("CONSTRAINT_INDEX_6", College.COLLEGE, new OrderField[] { College.COLLEGE.SCHOOL_ID }, false);
         public static Index PRIMARY_KEY_63 = Internal.createIndex("PRIMARY_KEY_63", College.COLLEGE, new OrderField[] { College.COLLEGE.COLLEGE_ID }, true);
+        public static Index PRIMARY_KEY_76 = Internal.createIndex("PRIMARY_KEY_76", Credit.CREDIT, new OrderField[] { Credit.CREDIT.CREDIT_ID }, true);
         public static Index CONSTRAINT_INDEX_4F = Internal.createIndex("CONSTRAINT_INDEX_4F", Department.DEPARTMENT, new OrderField[] { Department.DEPARTMENT.COLLEGE_ID }, false);
         public static Index PRIMARY_KEY_4F = Internal.createIndex("PRIMARY_KEY_4F", Department.DEPARTMENT, new OrderField[] { Department.DEPARTMENT.DEPARTMENT_ID }, true);
         public static Index PRIMARY_KEY_3 = Internal.createIndex("PRIMARY_KEY_3", Files.FILES, new OrderField[] { Files.FILES.FILE_ID }, true);

@@ -17,6 +17,7 @@ import org.jooq.impl.SchemaImpl;
 import top.zbeboy.dms.domain.DefaultCatalog;
 import top.zbeboy.dms.domain.dms.tables.Authorities;
 import top.zbeboy.dms.domain.dms.tables.College;
+import top.zbeboy.dms.domain.dms.tables.Credit;
 import top.zbeboy.dms.domain.dms.tables.Department;
 import top.zbeboy.dms.domain.dms.tables.Files;
 import top.zbeboy.dms.domain.dms.tables.Grade;
@@ -46,7 +47,7 @@ import top.zbeboy.dms.domain.dms.tables.UsersType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Dms extends SchemaImpl {
 
-    private static final long serialVersionUID = 528843369;
+    private static final long serialVersionUID = 444853416;
 
     /**
      * The reference instance of <code>DMS</code>
@@ -62,6 +63,11 @@ public class Dms extends SchemaImpl {
      * The table <code>DMS.COLLEGE</code>.
      */
     public final College COLLEGE = top.zbeboy.dms.domain.dms.tables.College.COLLEGE;
+
+    /**
+     * The table <code>DMS.CREDIT</code>.
+     */
+    public final Credit CREDIT = top.zbeboy.dms.domain.dms.tables.Credit.CREDIT;
 
     /**
      * The table <code>DMS.DEPARTMENT</code>.
@@ -160,6 +166,7 @@ public class Dms extends SchemaImpl {
         return Arrays.<Table<?>>asList(
             Authorities.AUTHORITIES,
             College.COLLEGE,
+            Credit.CREDIT,
             Department.DEPARTMENT,
             Files.FILES,
             Grade.GRADE,

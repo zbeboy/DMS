@@ -13,6 +13,7 @@ import org.jooq.impl.Internal;
 
 import top.zbeboy.dms.domain.dms.tables.Authorities;
 import top.zbeboy.dms.domain.dms.tables.College;
+import top.zbeboy.dms.domain.dms.tables.Credit;
 import top.zbeboy.dms.domain.dms.tables.Department;
 import top.zbeboy.dms.domain.dms.tables.Files;
 import top.zbeboy.dms.domain.dms.tables.Grade;
@@ -29,6 +30,7 @@ import top.zbeboy.dms.domain.dms.tables.Users;
 import top.zbeboy.dms.domain.dms.tables.UsersType;
 import top.zbeboy.dms.domain.dms.tables.records.AuthoritiesRecord;
 import top.zbeboy.dms.domain.dms.tables.records.CollegeRecord;
+import top.zbeboy.dms.domain.dms.tables.records.CreditRecord;
 import top.zbeboy.dms.domain.dms.tables.records.DepartmentRecord;
 import top.zbeboy.dms.domain.dms.tables.records.FilesRecord;
 import top.zbeboy.dms.domain.dms.tables.records.GradeRecord;
@@ -64,6 +66,7 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final Identity<CollegeRecord, Integer> IDENTITY_COLLEGE = Identities0.IDENTITY_COLLEGE;
+    public static final Identity<CreditRecord, Integer> IDENTITY_CREDIT = Identities0.IDENTITY_CREDIT;
     public static final Identity<DepartmentRecord, Integer> IDENTITY_DEPARTMENT = Identities0.IDENTITY_DEPARTMENT;
     public static final Identity<GradeRecord, Integer> IDENTITY_GRADE = Identities0.IDENTITY_GRADE;
     public static final Identity<OrganizeRecord, Integer> IDENTITY_ORGANIZE = Identities0.IDENTITY_ORGANIZE;
@@ -80,6 +83,7 @@ public class Keys {
 
     public static final UniqueKey<AuthoritiesRecord> CONSTRAINT_AB = UniqueKeys0.CONSTRAINT_AB;
     public static final UniqueKey<CollegeRecord> CONSTRAINT_6 = UniqueKeys0.CONSTRAINT_6;
+    public static final UniqueKey<CreditRecord> CONSTRAINT_76 = UniqueKeys0.CONSTRAINT_76;
     public static final UniqueKey<DepartmentRecord> CONSTRAINT_4F = UniqueKeys0.CONSTRAINT_4F;
     public static final UniqueKey<FilesRecord> CONSTRAINT_3 = UniqueKeys0.CONSTRAINT_3;
     public static final UniqueKey<GradeRecord> CONSTRAINT_40 = UniqueKeys0.CONSTRAINT_40;
@@ -121,6 +125,7 @@ public class Keys {
 
     private static class Identities0 {
         public static Identity<CollegeRecord, Integer> IDENTITY_COLLEGE = Internal.createIdentity(College.COLLEGE, College.COLLEGE.COLLEGE_ID);
+        public static Identity<CreditRecord, Integer> IDENTITY_CREDIT = Internal.createIdentity(Credit.CREDIT, Credit.CREDIT.CREDIT_ID);
         public static Identity<DepartmentRecord, Integer> IDENTITY_DEPARTMENT = Internal.createIdentity(Department.DEPARTMENT, Department.DEPARTMENT.DEPARTMENT_ID);
         public static Identity<GradeRecord, Integer> IDENTITY_GRADE = Internal.createIdentity(Grade.GRADE, Grade.GRADE.GRADE_ID);
         public static Identity<OrganizeRecord, Integer> IDENTITY_ORGANIZE = Internal.createIdentity(Organize.ORGANIZE, Organize.ORGANIZE.ORGANIZE_ID);
@@ -135,6 +140,7 @@ public class Keys {
     private static class UniqueKeys0 {
         public static final UniqueKey<AuthoritiesRecord> CONSTRAINT_AB = Internal.createUniqueKey(Authorities.AUTHORITIES, "CONSTRAINT_AB", Authorities.AUTHORITIES.USERNAME, Authorities.AUTHORITIES.AUTHORITY);
         public static final UniqueKey<CollegeRecord> CONSTRAINT_6 = Internal.createUniqueKey(College.COLLEGE, "CONSTRAINT_6", College.COLLEGE.COLLEGE_ID);
+        public static final UniqueKey<CreditRecord> CONSTRAINT_76 = Internal.createUniqueKey(Credit.CREDIT, "CONSTRAINT_76", Credit.CREDIT.CREDIT_ID);
         public static final UniqueKey<DepartmentRecord> CONSTRAINT_4F = Internal.createUniqueKey(Department.DEPARTMENT, "CONSTRAINT_4F", Department.DEPARTMENT.DEPARTMENT_ID);
         public static final UniqueKey<FilesRecord> CONSTRAINT_3 = Internal.createUniqueKey(Files.FILES, "CONSTRAINT_3", Files.FILES.FILE_ID);
         public static final UniqueKey<GradeRecord> CONSTRAINT_40 = Internal.createUniqueKey(Grade.GRADE, "CONSTRAINT_40", Grade.GRADE.GRADE_ID);

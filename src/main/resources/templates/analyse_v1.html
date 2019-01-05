@@ -1,15 +1,16 @@
 ﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>活动数据收集</title>
-
-    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
-    <link href="css/font/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
-    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
-    <link href="css/animate/animate.min.css" rel="stylesheet">
-    <link href="css/style/style.min862f.css?v=4.1.0" rel="stylesheet">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header(~{::meta},~{::title},~{::link})">
+    <!-- csrf -->
+    <meta name="_csrf" content="" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
+    <title>学分-决策系统</title>
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"
+          th:href="@{/css/plugins/bootstrap-table/bootstrap-table.min.css}">
+    <link href="plugin/messenger/css/messenger.css" rel="stylesheet" th:href="@{/plugin/messenger/css/messenger.css}"/>
+    <link href="plugin/messenger/css/messenger-theme-air.css" rel="stylesheet"
+          th:href="@{/plugin/messenger/css/messenger-theme-air.css}"/>
 
 </head>
 
@@ -17,24 +18,60 @@
 <div class="col-sm-12">
     <!-- Example Events -->
     <div class="example-wrap">
-        <h3 class="example-title">活动数据收集</h3>
+        <h3 class="example-title">学分</h3>
         <hr/>
         <div class="example">
-            <div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
-                <button type="button" class="btn btn-outline btn-default">
-                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+            <div class="form-group">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="realName"
+                           placeholder="姓名">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="studentNumber"
+                           placeholder="学号">
+                </div>
+            </div>
+            <div class="text-center" style="padding: 10px;">
+                <button type="button" id="search" class="btn btn-default">搜索</button>
+                <button type="button" id="reset_search" class="btn btn-default">重置</button>
+            </div>
+            <div id="toolbar" class="btn-group">
+                <button id="add" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                 </button>
-                <button type="button" class="btn btn-outline btn-default">
-                    <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+                <span class="btn btn-primary fileinput-button">
+                    <span>导入</span>
+                    <!-- The file input field used as target for the file upload widget -->
+                    <input id="fileupload" type="file" name="files[]"/>
+                </span>
+                <button id="importTemplate" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>导入模板
+                </button>
+                <button id="export" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-open" aria-hidden="true"></span>导出
                 </button>
             </div>
-            <table id="exampleTableEvents" data-height="400" data-mobile-responsive="true">
+            <table data-mobile-responsive="true" data-toggle="table" data-show-refresh="true"
+                   data-show-columns="true" data-sort-name="studentNumber" data-show-toggle="true"
+                   data-sort-order="desc"
+                   data-locale="zh-CN" id="dataTable" style="table-layout:fixed;">
                 <thead>
                 <tr>
-                    <th data-field="state" data-checkbox="true"></th>
-                    <th data-field="id">学校</th>
-                    <th data-field="state">状态</th>
-                    <th data-field="operation">操作</th>
+                    <th data-field="realName">姓名</th>
+                    <th data-field="studentNumber">学号</th>
+                    <th data-field="organizeName">班级</th>
+                    <th data-field="year">年份</th>
+                    <th data-field="term">学期</th>
+                    <th data-field="sports">文体活动</th>
+                    <th data-field="skills">技能特长</th>
+                    <th data-field="voluntary">志愿公益</th>
+                    <th data-field="technological">科技创新</th>
+                    <th data-field="post">任职经历</th>
+                    <th data-field="ideological">思想成长</th>
+                    <th data-field="practical">实践实习</th>
+                    <th data-field="work">工作履历</th>
+                    <th data-field="achievement">学习成绩</th>
+                    <th data-formatter="operation">操作</th>
                 </tr>
                 </thead>
             </table>
@@ -42,11 +79,204 @@
     </div>
     <!-- End Example Events -->
 </div>
+
+<!-- 添加Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addModalLabel">添加</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input class="form-control" id="addStudentNumber" placeholder="学号">
+                        <div class="text-danger" id="add_student_number_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="addYear" style="width: 184px;">
+                            <option value="">请选择年份</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                        </select>
+                        <div class="text-danger" id="add_year_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="addTerm" style="width: 184px;">
+                            <option value="">请选择学期</option>
+                            <option value="0">上学期</option>
+                            <option value="1">下学期</option>
+                        </select>
+                        <div class="text-danger" id="add_term_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="addSports" placeholder="文体活动">
+                        <div class="text-danger" id="add_sports_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="addSkills" placeholder="技能特长">
+                        <div class="text-danger" id="add_skills_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="addVoluntary" placeholder="志愿公益">
+                        <div class="text-danger" id="add_voluntary_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="addTechnological" placeholder="科技创新">
+                        <div class="text-danger" id="add_technological_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="addPost" placeholder="任职经历">
+                        <div class="text-danger" id="add_post_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="addIdeological" placeholder="思想成长">
+                        <div class="text-danger" id="add_ideological_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="addPractical" placeholder="实践实习">
+                        <div class="text-danger" id="add_practical_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="addWork" placeholder="工作履历">
+                        <div class="text-danger" id="add_work_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="addAchievement" placeholder="学习成绩">
+                        <div class="text-danger" id="add_achievement_error"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="addSave">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="editModalLabel">编辑</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input class="form-control" id="editStudentNumber" placeholder="学号">
+                        <div class="text-danger" id="edit_student_number_error"></div>
+                        <input type="hidden" id="editCreditId" />
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="editYear" style="width: 184px;">
+                            <option value="">请选择年份</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                        </select>
+                        <div class="text-danger" id="edit_year_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="editTerm" style="width: 184px;">
+                            <option value="">请选择学期</option>
+                            <option value="0">上学期</option>
+                            <option value="1">下学期</option>
+                        </select>
+                        <div class="text-danger" id="edit_term_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="editSports" placeholder="文体活动">
+                        <div class="text-danger" id="edit_sports_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="editSkills" placeholder="技能特长">
+                        <div class="text-danger" id="edit_skills_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="editVoluntary" placeholder="志愿公益">
+                        <div class="text-danger" id="edit_voluntary_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="editTechnological" placeholder="科技创新">
+                        <div class="text-danger" id="edit_technological_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="editPost" placeholder="任职经历">
+                        <div class="text-danger" id="edit_post_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="editIdeological" placeholder="思想成长">
+                        <div class="text-danger" id="edit_ideological_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="editPractical" placeholder="实践实习">
+                        <div class="text-danger" id="edit_practical_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="editWork" placeholder="工作履历">
+                        <div class="text-danger" id="edit_work_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="editAchievement" placeholder="学习成绩">
+                        <div class="text-danger" id="edit_achievement_error"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="editSave">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
-<script src="js/jquery/jquery.min.js?v=2.1.4"></script>
-<script src="js/bootstrap/bootstrap.min.js?v=3.3.6"></script>
-<script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
-<script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-<script src="js/demo/bootstrap-table-demo.min.js"></script>
+<!--定义操作列按钮模板-->
+<script id="operator_button" type="text/x-handlebars-template">
+    <div class="btn-group" role="group">
+        {{#each func}}
+        <button type="button" class="btn btn-{{this.type}} btn-sm {{this.css}}" data-id="{{this.id}}"
+                data-credit="{{this.credit}}">
+            {{this.name}}
+        </button>
+        {{/each}}
+    </div>
+</script>
+<script src="js/jquery/jquery.min.js?v=2.1.4" th:src="@{/js/jquery/jquery.min.js}"></script>
+<script src="js/bootstrap/bootstrap.min.js?v=3.3.6" th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+<script src="js/plugins/bootstrap-table/bootstrap-table.min.js"
+        th:src="@{/js/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
+<script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"
+        th:src="@{/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+<script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"
+        th:src="@{/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+<script src="plugin/messenger/js/messenger.js"
+        th:src="@{/plugin/messenger/js/messenger.js}"></script>
+<script src="plugin/handlebars/handlebars.js"
+        th:src="@{/plugin/handlebars/handlebars.js}"></script>
+<script src="plugin/jquery-file-upload/js/vendor/jquery.ui.widget.min.js"
+        th:src="@{/plugin/jquery-file-upload/js/vendor/jquery.ui.widget.min.js}"></script>
+<script src="plugin/jquery-file-upload/js/jquery.iframe-transport.min.js"
+        th:src="@{/plugin/jquery-file-upload/js/jquery.iframe-transport.min.js}"></script>
+<script src="plugin/jquery-file-upload/js/jquery.fileupload.min.js"
+        th:src="@{/plugin/jquery-file-upload/js/jquery.fileupload.min.js}"></script>
+<script src="plugin/jquery-file-upload/js/jquery.fileupload-process.min.js"
+        th:src="@{/plugin/jquery-file-upload/js/jquery.fileupload-process.min.js}"></script>
+<script src="plugin/jquery-file-upload/js/jquery.fileupload-validate.min.js"
+        th:src="@{/plugin/jquery-file-upload/js/jquery.fileupload-validate.min.js}"></script>
+<script th:inline="javascript">
+    var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+</script>
+<script src="js/util/csrf.js" th:src="@{/js/util/csrf.js}"></script>
+<script src="js/analyse/analyse_list.js" th:src="@{/js/analyse/analyse_list.js}"></script>
 </html>

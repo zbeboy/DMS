@@ -8,6 +8,7 @@ import javax.annotation.Generated;
 
 import top.zbeboy.dms.domain.dms.tables.Authorities;
 import top.zbeboy.dms.domain.dms.tables.College;
+import top.zbeboy.dms.domain.dms.tables.Credit;
 import top.zbeboy.dms.domain.dms.tables.Department;
 import top.zbeboy.dms.domain.dms.tables.Files;
 import top.zbeboy.dms.domain.dms.tables.Grade;
@@ -46,6 +47,11 @@ public class Tables {
      * The table <code>DMS.COLLEGE</code>.
      */
     public static final College COLLEGE = top.zbeboy.dms.domain.dms.tables.College.COLLEGE;
+
+    /**
+     * The table <code>DMS.CREDIT</code>.
+     */
+    public static final Credit CREDIT = top.zbeboy.dms.domain.dms.tables.Credit.CREDIT;
 
     /**
      * The table <code>DMS.DEPARTMENT</code>.
