@@ -90,4 +90,12 @@ public final class Workbook {
     public static String staffImportPath() {
         return FILES_PORTFOLIOS + "staff" + DIRECTORY_SPLIT + "import";
     }
+
+    public static String creditFilePath() {
+        return FILES_PORTFOLIOS + "credit" + DIRECTORY_SPLIT;
+    }
+
+    public static String creditImportPath() {
+        return FILES_PORTFOLIOS + "credit" + DIRECTORY_SPLIT + "import";
+    }
 }

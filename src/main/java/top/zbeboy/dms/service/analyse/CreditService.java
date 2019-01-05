@@ -32,6 +32,14 @@ public interface CreditService {
     int countByCondition(BootstrapTableUtils<CreditBean> bootstrapTableUtils);
 
     /**
+     * 数据导出
+     *
+     * @param bootstrapTableUtils bootstrapTable工具类
+     * @return 分页数据
+     */
+    Result<Record> export(BootstrapTableUtils<CreditBean> bootstrapTableUtils);
+
+    /**
      * 保存
      *
      * @param credit 数据

@@ -5,9 +5,12 @@ function getAjaxUrl() {
     return {
         analyses: web_path + '/web/analyse/data',
         analyse: web_path + '/web/analyse/one',
+        export: web_path + '/web/analyse/export',
+        import_template: web_path + '/files/import_credit.xlsx',
         save: web_path + '/web/analyse/save',
         update: web_path + '/web/analyse/update',
-        del: web_path + '/web/analyse/delete'
+        del: web_path + '/web/analyse/delete',
+        file_upload_url: '/web/analyse/import'
     };
 }
 
@@ -406,6 +409,17 @@ $(document).ready(function () {
         refreshTable();
     });
 
+    $('#export').click(function () {
+        var exportConfig = dataTable.bootstrapTable('getOptions');
+        window.location.href = encodeURI(getAjaxUrl().export + '?' +
+            'sortName=' + exportConfig.sortName + '&sortOrder=' + exportConfig.sortOrder +
+            '&extraSearch=' + JSON.stringify(param));
+    });
+
+    $('#importTemplate').click(function () {
+        window.location.href = getAjaxUrl().import_template;
+    });
+
     $('#add').click(function () {
         $('#addModal').modal('show');
     });
@@ -442,10 +456,47 @@ $(document).ready(function () {
     });
 
     dataTable.delegate('.del', "click", function () {
-        delOrRecover($(this).attr('data-id'), $(this).attr('data-credit'),  '删除');
+        delOrRecover($(this).attr('data-id'), $(this).attr('data-credit'), '删除');
     });
 
     dataTable.delegate('.chart', "click", function () {
 
+    });
+
+    // 上传组件
+    $('#fileupload').fileupload({
+        url: getAjaxUrl().file_upload_url,
+        dataType: 'json',
+        maxFileSize: 100000000,// 100MB
+        acceptFileTypes: /([.\/])(xlsx)$/i,
+        formAcceptCharset: 'utf-8',
+        maxNumberOfFiles: 1,
+        messages: {
+            maxNumberOfFiles: '最大支持上传1个文件',
+            acceptFileTypes: '仅支持上传xlsx等类型文件',
+            maxFileSize: '单文件上传仅允许100MB大小'
+        },
+        done: function (e, data) {
+            Messenger().post({
+                message: data.result.msg,
+                type: data.result.state ? 'success' : 'error',
+                showCloseButton: true
+            });
+        }
+    }).on('fileuploadadd', function (evt, data) {
+        var isOk = true;
+        var $this = $(this);
+        var validation = data.process(function () {
+            return $this.fileupload('process', data);
+        });
+        validation.fail(function (data) {
+            isOk = false;
+            Messenger().post({
+                message: '上传失败: ' + data.files[0].error,
+                type: 'error',
+                showCloseButton: true
+            });
+        });
+        return isOk;
     });
 });

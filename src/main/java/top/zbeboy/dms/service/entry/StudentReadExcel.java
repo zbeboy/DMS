@@ -1,11 +1,9 @@
 package top.zbeboy.dms.service.entry;
 
-import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -126,9 +124,9 @@ public class StudentReadExcel {
     }
 
     private String getValue(HSSFCell hssfCell) {
-        if(hssfCell.getCellType() == CellType.BOOLEAN){
+        if (hssfCell.getCellType() == CellType.BOOLEAN) {
             return String.valueOf(hssfCell.getBooleanCellValue());
-        } else if (hssfCell.getCellType() == CellType.NUMERIC){
+        } else if (hssfCell.getCellType() == CellType.NUMERIC) {
             return String.valueOf(hssfCell.getNumericCellValue());
         } else {
             return String.valueOf(hssfCell.getStringCellValue());

@@ -2,17 +2,23 @@ package top.zbeboy.dms.web.analyse;
 
 import org.jooq.Record;
 import org.jooq.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import top.zbeboy.dms.config.Workbook;
 import top.zbeboy.dms.domain.dms.tables.pojos.Credit;
 import top.zbeboy.dms.service.analyse.CreditService;
+import top.zbeboy.dms.service.common.UploadService;
+import top.zbeboy.dms.service.entry.CreditReadExcel;
+import top.zbeboy.dms.service.export.CreditDataExport;
+import top.zbeboy.dms.service.util.RequestUtils;
 import top.zbeboy.dms.web.bean.analyse.CreditBean;
+import top.zbeboy.dms.web.bean.file.FileBean;
 import top.zbeboy.dms.web.util.AjaxUtils;
 import top.zbeboy.dms.web.util.BootstrapTableUtils;
 import top.zbeboy.dms.web.vo.analyse.CreditAddVo;
@@ -20,7 +26,9 @@ import top.zbeboy.dms.web.vo.analyse.CreditEditVo;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +37,13 @@ import java.util.Objects;
 @RestController
 public class AnalyseRestController {
 
+    private final Logger log = LoggerFactory.getLogger(AnalyseRestController.class);
+
     @Resource
     private CreditService creditService;
+
+    @Resource
+    private UploadService uploadService;
 
     /**
      * 列表数据
@@ -48,6 +61,29 @@ public class AnalyseRestController {
         bootstrapTableUtils.setTotal(creditService.countByCondition(bootstrapTableUtils));
         bootstrapTableUtils.setRows(credits);
         return bootstrapTableUtils;
+    }
+
+    /**
+     * 数据导出
+     */
+    @GetMapping(value = "/web/analyse/export")
+    public void export(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            BootstrapTableUtils<CreditBean> bootstrapTableUtils = new BootstrapTableUtils<>(request);
+            Result<Record> records = creditService.export(bootstrapTableUtils);
+            List<CreditBean> credits = new ArrayList<>();
+            if (!ObjectUtils.isEmpty(records) && records.isNotEmpty()) {
+                credits = records.into(CreditBean.class);
+            }
+            String fileName = "学分数据";
+            String ext = Workbook.XLSX_FILE;
+            CreditDataExport export = new CreditDataExport(credits);
+            String path = Workbook.creditFilePath() + fileName + "." + ext;
+            export.exportExcel(RequestUtils.getRealPath(request) + Workbook.creditFilePath(), fileName, ext);
+            uploadService.download(fileName, path, response, request);
+        } catch (IOException e) {
+            log.error("Export file error, error is {}", e);
+        }
     }
 
     /**
@@ -137,5 +173,47 @@ public class AnalyseRestController {
         AjaxUtils ajaxUtils = AjaxUtils.of();
         creditService.deleteById(creditId);
         return new ResponseEntity<>(ajaxUtils.success().msg("删除成功").send(), HttpStatus.OK);
+    }
+
+    /**
+     * 导入
+     *
+     * @param multipartHttpServletRequest 数据
+     * @return true or false
+     */
+    @RequestMapping("/web/analyse/import")
+    public ResponseEntity<Map<String, Object>> analyseImport(MultipartHttpServletRequest multipartHttpServletRequest) {
+        AjaxUtils ajaxUtils = AjaxUtils.of();
+        try {
+            String path = Workbook.creditImportPath();
+            List<FileBean> fileBeen = uploadService.upload(multipartHttpServletRequest,
+                    RequestUtils.getRealPath(multipartHttpServletRequest) + path, multipartHttpServletRequest.getRemoteAddr());
+            if (Objects.nonNull(fileBeen) && fileBeen.size() > 0) {
+                String filePath = fileBeen.get(0).getLastPath();
+                List<CreditBean> list = new CreditReadExcel().readExcel(filePath);
+                if (Objects.nonNull(list)) {
+                    list.forEach(creditBean -> {
+                        Credit credit = new Credit();
+                        credit.setStudentNumber(creditBean.getStudentNumber());
+                        credit.setYear(creditBean.getYear());
+                        credit.setTerm(creditBean.getTerm());
+                        credit.setSports(creditBean.getSports());
+                        credit.setSkills(creditBean.getSkills());
+                        credit.setVoluntary(creditBean.getVoluntary());
+                        credit.setTechnological(creditBean.getTechnological());
+                        credit.setPost(creditBean.getPost());
+                        credit.setIdeological(creditBean.getIdeological());
+                        credit.setPractical(creditBean.getPractical());
+                        credit.setWork(creditBean.getWork());
+                        credit.setAchievement(creditBean.getAchievement());
+                        creditService.save(credit);
+                    });
+                }
+            }
+        } catch (Exception e) {
+            log.error("Upload file exception,is {}", e);
+        }
+
+        return new ResponseEntity<>(ajaxUtils.success().msg("导入成功").send(), HttpStatus.OK);
     }
 }

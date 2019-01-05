@@ -100,6 +100,37 @@ public class CreditServiceImpl extends BootstrapTablesPlugin<CreditBean> impleme
         return count.value1();
     }
 
+    @Override
+    public Result<Record> export(BootstrapTableUtils<CreditBean> bootstrapTableUtils) {
+        Result<Record> records;
+        Condition a = searchCondition(bootstrapTableUtils);
+        if (ObjectUtils.isEmpty(a)) {
+            SelectJoinStep<Record> selectJoinStep = create.select()
+                    .from(CREDIT)
+                    .leftJoin(STUDENT)
+                    .on(CREDIT.STUDENT_NUMBER.eq(STUDENT.STUDENT_NUMBER))
+                    .leftJoin(USERS)
+                    .on(STUDENT.USERNAME.eq(USERS.USERNAME))
+                    .leftJoin(ORGANIZE)
+                    .on(STUDENT.ORGANIZE_ID.eq(ORGANIZE.ORGANIZE_ID));
+            sortCondition(bootstrapTableUtils, null, selectJoinStep, JOIN_TYPE);
+            records = selectJoinStep.fetch();
+        } else {
+            SelectConditionStep<Record> selectConditionStep = create.select()
+                    .from(CREDIT)
+                    .leftJoin(STUDENT)
+                    .on(CREDIT.STUDENT_NUMBER.eq(STUDENT.STUDENT_NUMBER))
+                    .leftJoin(USERS)
+                    .on(STUDENT.USERNAME.eq(USERS.USERNAME))
+                    .leftJoin(ORGANIZE)
+                    .on(STUDENT.ORGANIZE_ID.eq(ORGANIZE.ORGANIZE_ID))
+                    .where(a);
+            sortCondition(bootstrapTableUtils, selectConditionStep, null, CONDITION_TYPE);
+            records = selectConditionStep.fetch();
+        }
+        return records;
+    }
+
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void save(Credit credit) {
