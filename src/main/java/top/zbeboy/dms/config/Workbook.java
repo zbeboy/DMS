@@ -49,20 +49,28 @@ public final class Workbook {
     /*
     系统角色
      */
+    public static final String ROLE_PREFIX = "ROLE_";
+    public static final String SYSTEM = "SYSTEM";
+    public static final String COLLEGE_YOUTH_LEAGUE_COMMITTEE = "COLLEGE_YOUTH_LEAGUE_COMMITTEE";
+    public static final String COLLEGE_WORK_DEPARTMENT = "COLLEGE_WORK_DEPARTMENT";
+    public static final String DEPARTMENT_INSTRUCTOR = "DEPARTMENT_INSTRUCTOR";
+    public static final String HEADMASTER = "HEADMASTER";
+    public static final String STUDENT = "STUDENT";
+    public static final String STAFF = "STAFF";
     // 系统管理员
-    public static final String ROLE_SYSTEM = "ROLE_SYSTEM";
+    public static final String ROLE_SYSTEM = ROLE_PREFIX + SYSTEM;
     // 学院团委
-    public static final String ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE = "ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE";
+    public static final String ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE = ROLE_PREFIX + COLLEGE_YOUTH_LEAGUE_COMMITTEE;
     // 学生工作部
-    public static final String ROLE_COLLEGE_WORK_DEPARTMENT = "ROLE_COLLEGE_WORK_DEPARTMENT";
+    public static final String ROLE_COLLEGE_WORK_DEPARTMENT = ROLE_PREFIX + COLLEGE_WORK_DEPARTMENT;
     // 系部辅导员
-    public static final String ROLE_DEPARTMENT_INSTRUCTOR = "ROLE_DEPARTMENT_INSTRUCTOR";
+    public static final String ROLE_DEPARTMENT_INSTRUCTOR = ROLE_PREFIX + DEPARTMENT_INSTRUCTOR;
     // 班主任
-    public static final String ROLE_HEADMASTER = "ROLE_HEADMASTER";
+    public static final String ROLE_HEADMASTER = ROLE_PREFIX + HEADMASTER;
     // 学生
-    public static final String ROLE_STUDENT = "ROLE_STUDENT";
+    public static final String ROLE_STUDENT = ROLE_PREFIX + STUDENT;
     // 教职工
-    public static final String ROLE_STAFF = "ROLE_STAFF";
+    public static final String ROLE_STAFF = ROLE_PREFIX + STAFF;
 
     public static final String XLS_FILE = "xls";
     public static final String XLSX_FILE = "xlsx";

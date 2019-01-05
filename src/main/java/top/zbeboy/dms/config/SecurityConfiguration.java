@@ -71,8 +71,78 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().sessionManagement().invalidSessionUrl("/login")
                 .and().logout().logoutSuccessUrl("/")
                 .permitAll().invalidateHttpSession(true)
-                .and().rememberMe().alwaysRemember(true).tokenValiditySeconds(2419200).tokenRepository(jdbcTokenRepository())
-                .and().authorizeRequests().antMatchers("/web/**").authenticated()
+                .and().rememberMe().alwaysRemember(true).tokenRepository(jdbcTokenRepository())
+                .and().authorizeRequests()
+                .antMatchers(
+                        "/web/menu/system/personal/**",
+                        "/web/menu/contacts/**",
+                        "/web/system/personal/**",
+                        "/web/data/politicalLandscape/**"
+                )
+                .authenticated()
+                .and().authorizeRequests()
+                .antMatchers("/web/menu/system/role/**", "/web/system/role/**")
+                .hasAnyRole(Workbook.SYSTEM)
+                .and().authorizeRequests()
+                .antMatchers("/web/menu/data/school/**", "/web/data/school/**")
+                .hasAnyRole(Workbook.SYSTEM)
+                .and().authorizeRequests()
+                .antMatchers("/web/menu/data/college/**", "/web/data/college/**")
+                .hasAnyRole(
+                        Workbook.SYSTEM,
+                        Workbook.COLLEGE_YOUTH_LEAGUE_COMMITTEE,
+                        Workbook.COLLEGE_WORK_DEPARTMENT
+                )
+                .and().authorizeRequests()
+                .antMatchers("/web/menu/data/department/**", "/web/data/department/**")
+                .hasAnyRole(
+                        Workbook.SYSTEM,
+                        Workbook.COLLEGE_YOUTH_LEAGUE_COMMITTEE,
+                        Workbook.COLLEGE_WORK_DEPARTMENT,
+                        Workbook.DEPARTMENT_INSTRUCTOR
+                )
+                .and().authorizeRequests()
+                .antMatchers("/web/menu/data/science/**", "/web/data/science/**")
+                .hasAnyRole(
+                        Workbook.SYSTEM,
+                        Workbook.COLLEGE_YOUTH_LEAGUE_COMMITTEE,
+                        Workbook.COLLEGE_WORK_DEPARTMENT,
+                        Workbook.DEPARTMENT_INSTRUCTOR
+                )
+                .and().authorizeRequests()
+                .antMatchers("/web/menu/data/grade/**", "/web/data/grade/**")
+                .hasAnyRole(
+                        Workbook.SYSTEM,
+                        Workbook.COLLEGE_YOUTH_LEAGUE_COMMITTEE,
+                        Workbook.COLLEGE_WORK_DEPARTMENT,
+                        Workbook.DEPARTMENT_INSTRUCTOR
+                )
+                .and().authorizeRequests()
+                .antMatchers("/web/menu/data/organize/**", "/web/data/organize/**")
+                .hasAnyRole(
+                        Workbook.SYSTEM,
+                        Workbook.COLLEGE_YOUTH_LEAGUE_COMMITTEE,
+                        Workbook.COLLEGE_WORK_DEPARTMENT,
+                        Workbook.DEPARTMENT_INSTRUCTOR,
+                        Workbook.HEADMASTER
+                )
+                .and().authorizeRequests()
+                .antMatchers("/web/menu/data/student/**", "/web/data/student/**")
+                .hasAnyRole(
+                        Workbook.SYSTEM,
+                        Workbook.COLLEGE_YOUTH_LEAGUE_COMMITTEE,
+                        Workbook.COLLEGE_WORK_DEPARTMENT,
+                        Workbook.DEPARTMENT_INSTRUCTOR,
+                        Workbook.HEADMASTER
+                )
+                .and().authorizeRequests()
+                .antMatchers("/web/menu/data/staff/**", "/web/data/staff/**")
+                .hasAnyRole(
+                        Workbook.SYSTEM,
+                        Workbook.COLLEGE_YOUTH_LEAGUE_COMMITTEE,
+                        Workbook.COLLEGE_WORK_DEPARTMENT,
+                        Workbook.DEPARTMENT_INSTRUCTOR
+                )
                 .and().authorizeRequests().antMatchers("/anyone/**").permitAll()
                 .and().addFilterBefore(new SecurityLoginFilter(), UsernamePasswordAuthenticationFilter.class);
     }
