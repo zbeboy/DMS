@@ -56,6 +56,14 @@ dataTable.bootstrapTable('destroy')
         }
     });
 
+function tableStyle(value, row, index, field) {
+    return {css: {'word-wrap': 'break-word'}};
+}
+
+function formatterTime(value, row, index, field) {
+    return row.year + (row.term === 1 ? '下' : '上');
+}
+
 // 预编译模板
 var template = Handlebars.compile($("#operator_button").html());
 
@@ -358,7 +366,7 @@ function delOrRecover(id, name, message) {
                 phrase: 'Retrying TIME',
                 action: function () {
                     msg.cancel();
-                    $.post(getAjaxUrl().status, {creditId: id}, function (data) {
+                    $.post(getAjaxUrl().del, {creditId: id}, function (data) {
                         refreshTable();
                         Messenger().post({
                             message: data.msg,
@@ -409,7 +417,7 @@ $(document).ready(function () {
     dataTable.delegate('.edit', "click", function () {
         var creditId = $(this).attr('data-id');
         $.post(getAjaxUrl().analyse, {creditId: creditId}, function (data) {
-            $(edit_param_id.studentNumber).val(data.analyse.organizeId);
+            $(edit_param_id.studentNumber).val(data.analyse.studentNumber);
             $(edit_param_id.creditId).val(data.analyse.creditId);
             $(edit_param_id.year).val(data.analyse.year);
             $(edit_param_id.term).val(data.analyse.term);
@@ -434,7 +442,7 @@ $(document).ready(function () {
     });
 
     dataTable.delegate('.del', "click", function () {
-        delOrRecover($(this).attr('data-id'), $(this).attr('data-school'), true, '删除');
+        delOrRecover($(this).attr('data-id'), $(this).attr('data-credit'),  '删除');
     });
 
     dataTable.delegate('.chart', "click", function () {

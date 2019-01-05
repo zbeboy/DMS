@@ -174,7 +174,7 @@ public class CollegeRestController {
      * @return true or false
      */
     @PostMapping(value = "/web/data/college/status")
-    public ResponseEntity<Map<String, Object>> update(@RequestParam("collegeId") int collegeId, @RequestParam("collegeIsDel") boolean collegeIsDel) {
+    public ResponseEntity<Map<String, Object>> status(@RequestParam("collegeId") int collegeId, @RequestParam("collegeIsDel") boolean collegeIsDel) {
         AjaxUtils ajaxUtils = AjaxUtils.of();
         College college = collegeService.findByCollegeId(collegeId);
         college.setCollegeIsDel(collegeIsDel);
