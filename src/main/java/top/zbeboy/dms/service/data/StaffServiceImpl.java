@@ -226,7 +226,7 @@ public class StaffServiceImpl extends BootstrapTablesPlugin<StaffBean> implement
                             USERS.AVATAR, USERS.JOIN_DATE, USERS.ENABLED, USERS.ACCOUNT_NON_EXPIRED,
                             USERS.ACCOUNT_NON_LOCKED, USERS.CREDENTIALS_NON_EXPIRED)
                     .values(staffBean.getStaffNumber(), BCryptUtils.bCryptPassword(staffBean.getStaffNumber()),
-                            usersTypeService.findByUsersTypeName(Workbook.STUDENT_USERS_TYPE).getUsersTypeId(),
+                            usersTypeService.findByUsersTypeName(Workbook.STAFF_USERS_TYPE).getUsersTypeId(),
                             staffBean.getRealName(), Workbook.USERS_AVATAR, DateTimeUtils.getNowSqlDate(),
                             true, true, true, true)
                     .execute();

@@ -17,6 +17,7 @@ var ajaxUrl = {
 var param_id = {
     realName: '#realName',
     password: '#password',
+    okPassword: '#okPassword',
     sex: '#sex',
     placeOrigin: '#placeOrigin',
     politicalLandscapeId: '#politicalLandscapeId'
@@ -25,6 +26,7 @@ var param_id = {
 var param = {
     realName: '',
     password: '',
+    okPassword: '',
     sex: '',
     placeOrigin: '',
     politicalLandscapeId: ''
@@ -32,7 +34,8 @@ var param = {
 
 var error_id = {
     realName: '#real_name_error',
-    password: '#password_error'
+    password: '#password_error',
+    okPassword:'#ok_password_error'
 };
 
 function initParam() {
@@ -41,6 +44,7 @@ function initParam() {
     param.placeOrigin = $(param_id.placeOrigin).val();
     param.politicalLandscapeId = $(param_id.politicalLandscapeId).val();
     param.password = $(param_id.password).val();
+    param.okPassword = $(param_id.okPassword).val();
 }
 
 /**
@@ -119,9 +123,20 @@ function checkPassword() {
     var password = param.password;
     if (password !== '') {
         validSuccessDom(error_id.password);
-        sendPasswordAjax();
+        checkOkPassword();
     } else {
         validErrorDom(error_id.password, '密码不能为空');
+    }
+}
+
+function checkOkPassword() {
+    var password = param.password;
+    var okPassword = param.okPassword;
+    if (password === okPassword) {
+        validSuccessDom(error_id.okPassword);
+        sendPasswordAjax();
+    } else {
+        validErrorDom(error_id.okPassword, '密码不一致');
     }
 }
 

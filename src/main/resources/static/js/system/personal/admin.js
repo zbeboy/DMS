@@ -16,22 +16,26 @@ var ajaxUrl = {
 
 var param_id = {
     realName: '#realName',
-    password: '#password'
+    password: '#password',
+    okPassword: '#okPassword'
 };
 
 var param = {
     realName: '',
-    password: ''
+    password: '',
+    okPassword: ''
 };
 
 var error_id = {
     realName: '#real_name_error',
-    password: '#password_error'
+    password: '#password_error',
+    okPassword:'#ok_password_error'
 };
 
 function initParam() {
     param.realName = $(param_id.realName).val();
     param.password = $(param_id.password).val();
+    param.okPassword = $(param_id.okPassword).val();
 }
 
 /**
@@ -86,9 +90,20 @@ function checkPassword() {
     var password = param.password;
     if (password !== '') {
         validSuccessDom(error_id.password);
-        sendPasswordAjax();
+        checkOkPassword();
     } else {
         validErrorDom(error_id.password, '密码不能为空');
+    }
+}
+
+function checkOkPassword() {
+    var password = param.password;
+    var okPassword = param.okPassword;
+    if (password === okPassword) {
+        validSuccessDom(error_id.okPassword);
+        sendPasswordAjax();
+    } else {
+        validErrorDom(error_id.okPassword, '密码不一致');
     }
 }
 
