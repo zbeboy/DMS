@@ -77,7 +77,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/web/menu/system/personal/**",
                         "/web/menu/contacts/**",
                         "/web/system/personal/**",
-                        "/web/data/politicalLandscape/**"
+                        "/web/data/politicalLandscape/**",
+                        "/web/analyse/data"
                 )
                 .authenticated()
                 .and().authorizeRequests()

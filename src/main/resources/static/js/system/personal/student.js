@@ -11,7 +11,8 @@ $(document).ready(function () {
 var ajaxUrl = {
     politicalLandscapes: web_path + '/web/data/politicalLandscape/all',
     save: web_path + '/web/system/personal/student/save',
-    password: web_path + '/web/system/personal/password'
+    password: web_path + '/web/system/personal/password',
+    analyses: web_path + '/web/analyse/data'
 };
 
 var param_id = {
@@ -29,13 +30,14 @@ var param = {
     okPassword: '',
     sex: '',
     placeOrigin: '',
-    politicalLandscapeId: ''
+    politicalLandscapeId: '',
+    studentNumber: init_page_param.studentNumber
 };
 
 var error_id = {
     realName: '#real_name_error',
     password: '#password_error',
-    okPassword:'#ok_password_error'
+    okPassword: '#ok_password_error'
 };
 
 function initParam() {
@@ -149,4 +151,35 @@ function sendPasswordAjax() {
             showCloseButton: true
         });
     })
+}
+
+var dataTable = $('#dataTable');
+
+dataTable.bootstrapTable('destroy')
+    .bootstrapTable({
+        method: "get",  //使用get请求到服务器获取数据
+        url: ajaxUrl.analyses, //获取数据的Servlet地址
+        pagination: true, //启动分页
+        pageSize: 10,  //每页显示的记录数
+        pageNumber: 1, //当前第几页
+        sidePagination: "server", //表示服务端请求
+        toolbar: "#toolbar",
+        queryParamsType: "undefined",
+        queryParams: function (params) {
+            params.extraSearch = JSON.stringify(param);
+            return params;
+        },
+        search: false,
+        onLoadError: function () {  //加载失败时执行
+            Messenger().post({
+                message: '加载数据失败！',
+                type: 'error',
+                id: 'menuFail',
+                showCloseButton: true
+            });
+        }
+    });
+
+function formatterTime(value, row, index, field) {
+    return row.year + (row.term === 1 ? '下' : '上');
 }
