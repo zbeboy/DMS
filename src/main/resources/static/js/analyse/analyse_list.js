@@ -10,7 +10,8 @@ function getAjaxUrl() {
         save: web_path + '/web/analyse/save',
         update: web_path + '/web/analyse/update',
         del: web_path + '/web/analyse/delete',
-        file_upload_url: '/web/analyse/import'
+        file_upload_url: '/web/analyse/import',
+        chart: web_path + '/web/analyse/chart'
     };
 }
 
@@ -460,7 +461,7 @@ $(document).ready(function () {
     });
 
     dataTable.delegate('.chart', "click", function () {
-
+        window.location.href = getAjaxUrl().chart + "/" + $(this).attr('data-id');
     });
 
     // 上传组件
