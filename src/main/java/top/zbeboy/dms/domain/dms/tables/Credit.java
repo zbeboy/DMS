@@ -39,7 +39,7 @@ import top.zbeboy.dms.domain.dms.tables.records.CreditRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Credit extends TableImpl<CreditRecord> {
 
-    private static final long serialVersionUID = -937043867;
+    private static final long serialVersionUID = 1247554837;
 
     /**
      * The reference instance of <code>DMS.CREDIT</code>
@@ -118,6 +118,11 @@ public class Credit extends TableImpl<CreditRecord> {
      * The column <code>DMS.CREDIT.ACHIEVEMENT</code>.
      */
     public final TableField<CreditRecord, Double> ACHIEVEMENT = createField("ACHIEVEMENT", org.jooq.impl.SQLDataType.DOUBLE, this, "");
+
+    /**
+     * The column <code>DMS.CREDIT.INTELLECTUAL</code>.
+     */
+    public final TableField<CreditRecord, Double> INTELLECTUAL = createField("INTELLECTUAL", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
     /**
      * Create a <code>DMS.CREDIT</code> table reference

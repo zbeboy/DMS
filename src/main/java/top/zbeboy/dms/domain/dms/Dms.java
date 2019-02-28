@@ -19,6 +19,7 @@ import top.zbeboy.dms.domain.dms.tables.Authorities;
 import top.zbeboy.dms.domain.dms.tables.College;
 import top.zbeboy.dms.domain.dms.tables.Credit;
 import top.zbeboy.dms.domain.dms.tables.Department;
+import top.zbeboy.dms.domain.dms.tables.Evaluate;
 import top.zbeboy.dms.domain.dms.tables.Files;
 import top.zbeboy.dms.domain.dms.tables.Grade;
 import top.zbeboy.dms.domain.dms.tables.Organize;
@@ -47,7 +48,7 @@ import top.zbeboy.dms.domain.dms.tables.UsersType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Dms extends SchemaImpl {
 
-    private static final long serialVersionUID = 444853416;
+    private static final long serialVersionUID = 1408770255;
 
     /**
      * The reference instance of <code>DMS</code>
@@ -73,6 +74,11 @@ public class Dms extends SchemaImpl {
      * The table <code>DMS.DEPARTMENT</code>.
      */
     public final Department DEPARTMENT = top.zbeboy.dms.domain.dms.tables.Department.DEPARTMENT;
+
+    /**
+     * The table <code>DMS.EVALUATE</code>.
+     */
+    public final Evaluate EVALUATE = top.zbeboy.dms.domain.dms.tables.Evaluate.EVALUATE;
 
     /**
      * The table <code>DMS.FILES</code>.
@@ -168,6 +174,7 @@ public class Dms extends SchemaImpl {
             College.COLLEGE,
             Credit.CREDIT,
             Department.DEPARTMENT,
+            Evaluate.EVALUATE,
             Files.FILES,
             Grade.GRADE,
             Organize.ORGANIZE,

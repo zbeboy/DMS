@@ -10,6 +10,7 @@ import top.zbeboy.dms.domain.dms.tables.Authorities;
 import top.zbeboy.dms.domain.dms.tables.College;
 import top.zbeboy.dms.domain.dms.tables.Credit;
 import top.zbeboy.dms.domain.dms.tables.Department;
+import top.zbeboy.dms.domain.dms.tables.Evaluate;
 import top.zbeboy.dms.domain.dms.tables.Files;
 import top.zbeboy.dms.domain.dms.tables.Grade;
 import top.zbeboy.dms.domain.dms.tables.Organize;
@@ -57,6 +58,11 @@ public class Tables {
      * The table <code>DMS.DEPARTMENT</code>.
      */
     public static final Department DEPARTMENT = top.zbeboy.dms.domain.dms.tables.Department.DEPARTMENT;
+
+    /**
+     * The table <code>DMS.EVALUATE</code>.
+     */
+    public static final Evaluate EVALUATE = top.zbeboy.dms.domain.dms.tables.Evaluate.EVALUATE;
 
     /**
      * The table <code>DMS.FILES</code>.

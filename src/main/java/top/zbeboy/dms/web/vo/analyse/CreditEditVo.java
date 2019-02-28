@@ -23,6 +23,7 @@ public class CreditEditVo {
     private Double practical;
     private Double work;
     private Double achievement;
+    private Double intellectual;
 
     public int getCreditId() {
         return creditId;
@@ -126,5 +127,13 @@ public class CreditEditVo {
 
     public void setAchievement(Double achievement) {
         this.achievement = achievement;
+    }
+
+    public Double getIntellectual() {
+        return intellectual;
+    }
+
+    public void setIntellectual(Double intellectual) {
+        this.intellectual = intellectual;
     }
 }

@@ -71,6 +71,7 @@ public class CreditReadExcel {
                     XSSFCell practical = xssfRow.getCell(9);
                     XSSFCell work = xssfRow.getCell(10);
                     XSSFCell achievement = xssfRow.getCell(11);
+                    XSSFCell intellectual = xssfRow.getCell(12);
                     credit.setStudentNumber(getValue(studentNumber));
                     credit.setYear(getValue(year));
                     credit.setTerm(Integer.valueOf(getValue(term)));
@@ -83,6 +84,7 @@ public class CreditReadExcel {
                     credit.setPractical(Double.valueOf(getValue(practical)));
                     credit.setWork(Double.valueOf(getValue(work)));
                     credit.setAchievement(Double.valueOf(getValue(achievement)));
+                    credit.setIntellectual(Double.valueOf(getValue(intellectual)));
                     list.add(credit);
                 }
             }
@@ -116,6 +118,7 @@ public class CreditReadExcel {
                     HSSFCell practical = hssfRow.getCell(9);
                     HSSFCell work = hssfRow.getCell(10);
                     HSSFCell achievement = hssfRow.getCell(11);
+                    HSSFCell intellectual = hssfRow.getCell(12);
                     credit.setStudentNumber(getValue(studentNumber));
                     credit.setYear(getValue(year));
                     credit.setTerm(Integer.valueOf(getValue(term)));
@@ -128,6 +131,7 @@ public class CreditReadExcel {
                     credit.setPractical(Double.valueOf(getValue(practical)));
                     credit.setWork(Double.valueOf(getValue(work)));
                     credit.setAchievement(Double.valueOf(getValue(achievement)));
+                    credit.setIntellectual(Double.valueOf(getValue(intellectual)));
                     list.add(credit);
                 }
             }

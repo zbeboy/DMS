@@ -157,7 +157,8 @@ var add_param_id = {
     ideological: '#addIdeological',
     practical: '#addPractical',
     work: '#addWork',
-    achievement: '#addAchievement'
+    achievement: '#addAchievement',
+    intellectual: '#addIntellectual'
 };
 
 var add_param = {
@@ -172,7 +173,8 @@ var add_param = {
     ideological: '',
     practical: '',
     work: '',
-    achievement: ''
+    achievement: '',
+    intellectual: ''
 };
 
 var add_error_id = {
@@ -187,7 +189,8 @@ var add_error_id = {
     ideological: '#add_ideological_error',
     practical: '#add_practical_error',
     work: '#add_work_error',
-    achievement: '#add_achievement_error'
+    achievement: '#add_achievement_error',
+    intellectual: '#add_intellectual_error'
 };
 
 function initAddParam() {
@@ -203,6 +206,7 @@ function initAddParam() {
     add_param.practical = $(add_param_id.practical).val();
     add_param.work = $(add_param_id.work).val();
     add_param.achievement = $(add_param_id.achievement).val();
+    add_param.intellectual = $(add_param_id.intellectual).val();
 }
 
 function addCredit() {
@@ -264,7 +268,8 @@ var edit_param_id = {
     ideological: '#editIdeological',
     practical: '#editPractical',
     work: '#editWork',
-    achievement: '#editAchievement'
+    achievement: '#editAchievement',
+    intellectual: '#editIntellectual'
 };
 
 var edit_param = {
@@ -280,7 +285,8 @@ var edit_param = {
     ideological: '',
     practical: '',
     work: '',
-    achievement: ''
+    achievement: '',
+    intellectual: ''
 };
 
 var edit_error_id = {
@@ -295,7 +301,8 @@ var edit_error_id = {
     ideological: '#edit_ideological_error',
     practical: '#edit_practical_error',
     work: '#edit_work_error',
-    achievement: '#edit_achievement_error'
+    achievement: '#edit_achievement_error',
+    intellectual: '#edit_intellectual_error'
 };
 
 function initEditParam() {
@@ -312,6 +319,7 @@ function initEditParam() {
     edit_param.practical = $(edit_param_id.practical).val();
     edit_param.work = $(edit_param_id.work).val();
     edit_param.achievement = $(edit_param_id.achievement).val();
+    edit_param.intellectual = $(edit_param_id.intellectual).val();
 }
 
 function editCredit() {
@@ -445,6 +453,7 @@ $(document).ready(function () {
             $(edit_param_id.practical).val(data.analyse.practical);
             $(edit_param_id.work).val(data.analyse.work);
             $(edit_param_id.achievement).val(data.analyse.achievement);
+            $(edit_param_id.intellectual).val(data.analyse.intellectual);
 
             validSuccessDom(edit_error_id.studentNumber);
             validSuccessDom(edit_error_id.year);

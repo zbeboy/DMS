@@ -151,4 +151,11 @@ public class CreditDao extends DAOImpl<CreditRecord, top.zbeboy.dms.domain.dms.t
     public List<top.zbeboy.dms.domain.dms.tables.pojos.Credit> fetchByAchievement(Double... values) {
         return fetch(Credit.CREDIT.ACHIEVEMENT, values);
     }
+
+    /**
+     * Fetch records that have <code>INTELLECTUAL IN (values)</code>
+     */
+    public List<top.zbeboy.dms.domain.dms.tables.pojos.Credit> fetchByIntellectual(Double... values) {
+        return fetch(Credit.CREDIT.INTELLECTUAL, values);
+    }
 }

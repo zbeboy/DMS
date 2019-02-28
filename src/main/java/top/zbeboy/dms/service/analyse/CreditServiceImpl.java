@@ -341,6 +341,17 @@ public class CreditServiceImpl extends BootstrapTablesPlugin<CreditBean> impleme
                     sortField[1] = CREDIT.CREDIT_ID.desc();
                 }
             }
+
+            if ("intellectual".equalsIgnoreCase(orderColumnName)) {
+                sortField = new SortField[2];
+                if (isAsc) {
+                    sortField[0] = CREDIT.INTELLECTUAL.asc();
+                    sortField[1] = CREDIT.CREDIT_ID.asc();
+                } else {
+                    sortField[0] = CREDIT.INTELLECTUAL.desc();
+                    sortField[1] = CREDIT.CREDIT_ID.desc();
+                }
+            }
         }
         sortToFinish(selectConditionStep, selectJoinStep, type, sortField);
     }

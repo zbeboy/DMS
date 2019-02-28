@@ -14,6 +14,7 @@ import top.zbeboy.dms.domain.dms.tables.Authorities;
 import top.zbeboy.dms.domain.dms.tables.College;
 import top.zbeboy.dms.domain.dms.tables.Credit;
 import top.zbeboy.dms.domain.dms.tables.Department;
+import top.zbeboy.dms.domain.dms.tables.Evaluate;
 import top.zbeboy.dms.domain.dms.tables.Files;
 import top.zbeboy.dms.domain.dms.tables.Grade;
 import top.zbeboy.dms.domain.dms.tables.Organize;
@@ -53,6 +54,7 @@ public class Indexes {
     public static final Index PRIMARY_KEY_76 = Indexes0.PRIMARY_KEY_76;
     public static final Index CONSTRAINT_INDEX_4F = Indexes0.CONSTRAINT_INDEX_4F;
     public static final Index PRIMARY_KEY_4F = Indexes0.PRIMARY_KEY_4F;
+    public static final Index PRIMARY_KEY_38 = Indexes0.PRIMARY_KEY_38;
     public static final Index PRIMARY_KEY_3 = Indexes0.PRIMARY_KEY_3;
     public static final Index CONSTRAINT_INDEX_40 = Indexes0.CONSTRAINT_INDEX_40;
     public static final Index PRIMARY_KEY_40 = Indexes0.PRIMARY_KEY_40;
@@ -91,6 +93,7 @@ public class Indexes {
         public static Index PRIMARY_KEY_76 = Internal.createIndex("PRIMARY_KEY_76", Credit.CREDIT, new OrderField[] { Credit.CREDIT.CREDIT_ID }, true);
         public static Index CONSTRAINT_INDEX_4F = Internal.createIndex("CONSTRAINT_INDEX_4F", Department.DEPARTMENT, new OrderField[] { Department.DEPARTMENT.COLLEGE_ID }, false);
         public static Index PRIMARY_KEY_4F = Internal.createIndex("PRIMARY_KEY_4F", Department.DEPARTMENT, new OrderField[] { Department.DEPARTMENT.DEPARTMENT_ID }, true);
+        public static Index PRIMARY_KEY_38 = Internal.createIndex("PRIMARY_KEY_38", Evaluate.EVALUATE, new OrderField[] { Evaluate.EVALUATE.EVALUATE_ID }, true);
         public static Index PRIMARY_KEY_3 = Internal.createIndex("PRIMARY_KEY_3", Files.FILES, new OrderField[] { Files.FILES.FILE_ID }, true);
         public static Index CONSTRAINT_INDEX_40 = Internal.createIndex("CONSTRAINT_INDEX_40", Grade.GRADE, new OrderField[] { Grade.GRADE.SCIENCE_ID }, false);
         public static Index PRIMARY_KEY_40 = Internal.createIndex("PRIMARY_KEY_40", Grade.GRADE, new OrderField[] { Grade.GRADE.GRADE_ID }, true);

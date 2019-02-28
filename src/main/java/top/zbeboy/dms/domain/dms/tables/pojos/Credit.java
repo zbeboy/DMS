@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Credit implements Serializable {
 
-    private static final long serialVersionUID = 1891192274;
+    private static final long serialVersionUID = -1841921806;
 
     private Integer creditId;
     private String  studentNumber;
@@ -39,6 +39,7 @@ public class Credit implements Serializable {
     private Double  practical;
     private Double  work;
     private Double  achievement;
+    private Double  intellectual;
 
     public Credit() {}
 
@@ -56,6 +57,7 @@ public class Credit implements Serializable {
         this.practical = value.practical;
         this.work = value.work;
         this.achievement = value.achievement;
+        this.intellectual = value.intellectual;
     }
 
     public Credit(
@@ -71,7 +73,8 @@ public class Credit implements Serializable {
         Double  ideological,
         Double  practical,
         Double  work,
-        Double  achievement
+        Double  achievement,
+        Double  intellectual
     ) {
         this.creditId = creditId;
         this.studentNumber = studentNumber;
@@ -86,6 +89,7 @@ public class Credit implements Serializable {
         this.practical = practical;
         this.work = work;
         this.achievement = achievement;
+        this.intellectual = intellectual;
     }
 
     public Integer getCreditId() {
@@ -197,6 +201,14 @@ public class Credit implements Serializable {
         this.achievement = achievement;
     }
 
+    public Double getIntellectual() {
+        return this.intellectual;
+    }
+
+    public void setIntellectual(Double intellectual) {
+        this.intellectual = intellectual;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Credit (");
@@ -214,6 +226,7 @@ public class Credit implements Serializable {
         sb.append(", ").append(practical);
         sb.append(", ").append(work);
         sb.append(", ").append(achievement);
+        sb.append(", ").append(intellectual);
 
         sb.append(")");
         return sb.toString();

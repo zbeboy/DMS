@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import top.zbeboy.dms.config.Workbook;
 import top.zbeboy.dms.domain.dms.tables.pojos.Credit;
+import top.zbeboy.dms.domain.dms.tables.pojos.Evaluate;
 import top.zbeboy.dms.service.analyse.CreditService;
+import top.zbeboy.dms.service.analyse.EvaluateService;
 import top.zbeboy.dms.service.common.UploadService;
 import top.zbeboy.dms.service.entry.CreditReadExcel;
 import top.zbeboy.dms.service.export.CreditDataExport;
@@ -41,6 +43,9 @@ public class AnalyseRestController {
 
     @Resource
     private CreditService creditService;
+
+    @Resource
+    private EvaluateService evaluateService;
 
     @Resource
     private UploadService uploadService;
@@ -95,7 +100,20 @@ public class AnalyseRestController {
     public ResponseEntity<Map<String, Object>> credit(@RequestParam("creditId") int creditId) {
         AjaxUtils ajaxUtils = AjaxUtils.of();
         Credit credit = creditService.findByCreditId(creditId);
-        ajaxUtils.success().msg("获取数据成功").put("analyse", credit);
+        double[] credits = new double[]{credit.getSports(), credit.getSkills(), credit.getVoluntary(), credit.getTechnological(),
+                credit.getPost(), credit.getIdeological(), credit.getPractical(), credit.getWork(), credit.getAchievement(), credit.getIntellectual()};
+        int index = 0;
+        double score = credit.getSports();
+        for (int i = 0; i < credits.length; i++) {
+            if (credits[i] > score) {
+                score = credits[i];
+                index = i;
+            }
+        }
+        index++;
+        Evaluate evaluate = evaluateService.findByEvaluateId(index + "");
+
+        ajaxUtils.success().msg("获取数据成功").put("analyse", credit).put("evaluate", evaluate.getEvaluateContent());
         return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
     }
 
@@ -122,6 +140,7 @@ public class AnalyseRestController {
             credit.setPractical(creditAddVo.getPractical());
             credit.setWork(creditAddVo.getWork());
             credit.setAchievement(creditAddVo.getAchievement());
+            credit.setIntellectual(creditAddVo.getIntellectual());
             creditService.save(credit);
 
             ajaxUtils.success().msg("保存成功");
@@ -153,6 +172,7 @@ public class AnalyseRestController {
             credit.setPractical(creditEditVo.getPractical());
             credit.setWork(creditEditVo.getWork());
             credit.setAchievement(creditEditVo.getAchievement());
+            credit.setIntellectual(creditEditVo.getIntellectual());
             creditService.update(credit);
 
             ajaxUtils.success().msg("更新成功");
@@ -206,6 +226,7 @@ public class AnalyseRestController {
                         credit.setPractical(creditBean.getPractical());
                         credit.setWork(creditBean.getWork());
                         credit.setAchievement(creditBean.getAchievement());
+                        credit.setIntellectual(creditBean.getIntellectual());
                         creditService.save(credit);
                     });
                 }

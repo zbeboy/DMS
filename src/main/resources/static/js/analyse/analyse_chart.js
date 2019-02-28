@@ -48,7 +48,8 @@ $(document).ready(function () {
                 ['思想成长', data.analyse.ideological / 100],
                 ['实践实习', data.analyse.practical / 100],
                 ['工作履历', data.analyse.work / 100],
-                ['学习成绩', data.analyse.achievement / 100]
+                ['学习成绩', data.analyse.achievement / 100],
+                ['智育成绩', data.analyse.intellectual / 100]
             ]
         }];
 
@@ -59,6 +60,16 @@ $(document).ready(function () {
         json.plotOptions = plotOptions;
         json.series = series;
         $('#container').highcharts(json);
+
+        $('#comprehensive').text(data.analyse.ideological * 0.34 +
+            data.analyse.voluntary * 0.1179 + data.analyse.post * 0.0817 +
+            data.analyse.intellectual * 0.1055 * 0.1 +
+            data.analyse.skills * 0.1055 +
+            data.analyse.practical * 0.0332 +
+            data.analyse.sports * 0.1634
+        );
+
+        $('#evaluate').text(data.evaluate);
     });
 });
 

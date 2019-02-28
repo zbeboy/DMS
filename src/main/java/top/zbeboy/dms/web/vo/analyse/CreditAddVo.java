@@ -19,6 +19,7 @@ public class CreditAddVo {
     private Double practical;
     private Double work;
     private Double achievement;
+    private Double intellectual;
 
     public String getStudentNumber() {
         return studentNumber;
@@ -114,5 +115,13 @@ public class CreditAddVo {
 
     public void setAchievement(Double achievement) {
         this.achievement = achievement;
+    }
+
+    public Double getIntellectual() {
+        return intellectual;
+    }
+
+    public void setIntellectual(Double intellectual) {
+        this.intellectual = intellectual;
     }
 }
