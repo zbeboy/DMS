@@ -13,13 +13,16 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import top.zbeboy.dms.config.Workbook;
 import top.zbeboy.dms.domain.dms.tables.pojos.Credit;
 import top.zbeboy.dms.domain.dms.tables.pojos.Evaluate;
+import top.zbeboy.dms.domain.dms.tables.pojos.Student;
 import top.zbeboy.dms.service.analyse.CreditService;
 import top.zbeboy.dms.service.analyse.EvaluateService;
 import top.zbeboy.dms.service.common.UploadService;
+import top.zbeboy.dms.service.data.StudentService;
 import top.zbeboy.dms.service.entry.CreditReadExcel;
 import top.zbeboy.dms.service.export.CreditDataExport;
 import top.zbeboy.dms.service.util.RequestUtils;
 import top.zbeboy.dms.web.bean.analyse.CreditBean;
+import top.zbeboy.dms.web.bean.data.student.StudentBean;
 import top.zbeboy.dms.web.bean.file.FileBean;
 import top.zbeboy.dms.web.util.AjaxUtils;
 import top.zbeboy.dms.web.util.BootstrapTableUtils;
@@ -31,10 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @RestController
 public class AnalyseRestController {
@@ -46,6 +46,9 @@ public class AnalyseRestController {
 
     @Resource
     private EvaluateService evaluateService;
+
+    @Resource
+    private StudentService studentService;
 
     @Resource
     private UploadService uploadService;
@@ -113,7 +116,15 @@ public class AnalyseRestController {
         index++;
         Evaluate evaluate = evaluateService.findByEvaluateId(index + "");
 
-        ajaxUtils.success().msg("获取数据成功").put("analyse", credit).put("evaluate", evaluate.getEvaluateContent());
+        StudentBean student = new StudentBean();
+        Optional<Record> data = studentService.findByStudentNumberRelation(credit.getStudentNumber());
+        if(data.isPresent()){
+            student = data.get().into(StudentBean.class);
+        }
+
+        ajaxUtils.success().msg("获取数据成功").put("analyse", credit)
+                .put("evaluate", evaluate.getEvaluateContent())
+                .put("student", student);
         return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
     }
 

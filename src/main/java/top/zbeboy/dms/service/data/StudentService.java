@@ -37,6 +37,14 @@ public interface StudentService {
     Student findByStudentNumber(String studentNumber);
 
     /**
+     * 根据学号查询
+     *
+     * @param studentNumber 学号
+     * @return 数据
+     */
+    Optional<Record> findByStudentNumberRelation(String studentNumber);
+
+    /**
      * 根据账号查询
      *
      * @param username 账号

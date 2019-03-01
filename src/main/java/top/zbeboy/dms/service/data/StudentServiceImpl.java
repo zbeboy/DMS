@@ -87,6 +87,28 @@ public class StudentServiceImpl extends BootstrapTablesPlugin<StudentBean> imple
     }
 
     @Override
+    public Optional<Record> findByStudentNumberRelation(String studentNumber) {
+        return create.select()
+                .from(STUDENT)
+                .join(USERS)
+                .on(STUDENT.USERNAME.eq(USERS.USERNAME))
+                .join(POLITICAL_LANDSCAPE)
+                .on(STUDENT.POLITICAL_LANDSCAPE_ID.eq(POLITICAL_LANDSCAPE.POLITICAL_LANDSCAPE_ID))
+                .join(ORGANIZE)
+                .on(STUDENT.ORGANIZE_ID.eq(ORGANIZE.ORGANIZE_ID))
+                .join(GRADE)
+                .on(ORGANIZE.GRADE_ID.eq(GRADE.GRADE_ID))
+                .join(SCIENCE)
+                .on(GRADE.SCIENCE_ID.eq(SCIENCE.SCIENCE_ID))
+                .join(DEPARTMENT)
+                .on(SCIENCE.DEPARTMENT_ID.eq(DEPARTMENT.DEPARTMENT_ID))
+                .join(COLLEGE)
+                .on(DEPARTMENT.COLLEGE_ID.eq(COLLEGE.COLLEGE_ID))
+                .where(STUDENT.STUDENT_NUMBER.eq(studentNumber))
+                .fetchOptional();
+    }
+
+    @Override
     public List<Student> findByUsername(String username) {
         return studentDao.fetchByUsername(username);
     }

@@ -70,6 +70,9 @@ $(document).ready(function () {
         );
 
         $('#evaluate').text(data.evaluate);
+
+        $('#realName').text(data.student.realName);
+        $('#studentNumber').text(data.student.studentNumber);
     });
 });
 
