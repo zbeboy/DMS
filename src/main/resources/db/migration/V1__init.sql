@@ -93,6 +93,7 @@ CREATE TABLE organize (
     organize_name VARCHAR(200) NOT NULL,
     grade_id INT NOT NULL,
     organize_is_del BOOLEAN,
+    staff_id int,
     FOREIGN KEY (grade_id)
         REFERENCES grade (grade_id)
 );

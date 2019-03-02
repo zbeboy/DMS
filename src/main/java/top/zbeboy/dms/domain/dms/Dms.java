@@ -19,12 +19,15 @@ import top.zbeboy.dms.domain.dms.tables.Authorities;
 import top.zbeboy.dms.domain.dms.tables.College;
 import top.zbeboy.dms.domain.dms.tables.Credit;
 import top.zbeboy.dms.domain.dms.tables.Department;
+import top.zbeboy.dms.domain.dms.tables.Diploma;
 import top.zbeboy.dms.domain.dms.tables.Evaluate;
 import top.zbeboy.dms.domain.dms.tables.Files;
 import top.zbeboy.dms.domain.dms.tables.Grade;
 import top.zbeboy.dms.domain.dms.tables.Organize;
 import top.zbeboy.dms.domain.dms.tables.PersistentLogins;
 import top.zbeboy.dms.domain.dms.tables.PoliticalLandscape;
+import top.zbeboy.dms.domain.dms.tables.QualityApply;
+import top.zbeboy.dms.domain.dms.tables.QualityRelease;
 import top.zbeboy.dms.domain.dms.tables.School;
 import top.zbeboy.dms.domain.dms.tables.Science;
 import top.zbeboy.dms.domain.dms.tables.Staff;
@@ -33,6 +36,7 @@ import top.zbeboy.dms.domain.dms.tables.SystemConfigure;
 import top.zbeboy.dms.domain.dms.tables.SystemOperatorLog;
 import top.zbeboy.dms.domain.dms.tables.Users;
 import top.zbeboy.dms.domain.dms.tables.UsersType;
+import top.zbeboy.dms.domain.dms.tables.Wining;
 
 
 /**
@@ -48,7 +52,7 @@ import top.zbeboy.dms.domain.dms.tables.UsersType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Dms extends SchemaImpl {
 
-    private static final long serialVersionUID = 1408770255;
+    private static final long serialVersionUID = -2142702539;
 
     /**
      * The reference instance of <code>DMS</code>
@@ -74,6 +78,11 @@ public class Dms extends SchemaImpl {
      * The table <code>DMS.DEPARTMENT</code>.
      */
     public final Department DEPARTMENT = top.zbeboy.dms.domain.dms.tables.Department.DEPARTMENT;
+
+    /**
+     * The table <code>DMS.DIPLOMA</code>.
+     */
+    public final Diploma DIPLOMA = top.zbeboy.dms.domain.dms.tables.Diploma.DIPLOMA;
 
     /**
      * The table <code>DMS.EVALUATE</code>.
@@ -104,6 +113,16 @@ public class Dms extends SchemaImpl {
      * The table <code>DMS.POLITICAL_LANDSCAPE</code>.
      */
     public final PoliticalLandscape POLITICAL_LANDSCAPE = top.zbeboy.dms.domain.dms.tables.PoliticalLandscape.POLITICAL_LANDSCAPE;
+
+    /**
+     * The table <code>DMS.QUALITY_APPLY</code>.
+     */
+    public final QualityApply QUALITY_APPLY = top.zbeboy.dms.domain.dms.tables.QualityApply.QUALITY_APPLY;
+
+    /**
+     * The table <code>DMS.QUALITY_RELEASE</code>.
+     */
+    public final QualityRelease QUALITY_RELEASE = top.zbeboy.dms.domain.dms.tables.QualityRelease.QUALITY_RELEASE;
 
     /**
      * The table <code>DMS.SCHOOL</code>.
@@ -146,6 +165,11 @@ public class Dms extends SchemaImpl {
     public final UsersType USERS_TYPE = top.zbeboy.dms.domain.dms.tables.UsersType.USERS_TYPE;
 
     /**
+     * The table <code>DMS.WINING</code>.
+     */
+    public final Wining WINING = top.zbeboy.dms.domain.dms.tables.Wining.WINING;
+
+    /**
      * No further instances allowed
      */
     private Dms() {
@@ -174,12 +198,15 @@ public class Dms extends SchemaImpl {
             College.COLLEGE,
             Credit.CREDIT,
             Department.DEPARTMENT,
+            Diploma.DIPLOMA,
             Evaluate.EVALUATE,
             Files.FILES,
             Grade.GRADE,
             Organize.ORGANIZE,
             PersistentLogins.PERSISTENT_LOGINS,
             PoliticalLandscape.POLITICAL_LANDSCAPE,
+            QualityApply.QUALITY_APPLY,
+            QualityRelease.QUALITY_RELEASE,
             School.SCHOOL,
             Science.SCIENCE,
             Staff.STAFF,
@@ -187,6 +214,7 @@ public class Dms extends SchemaImpl {
             SystemConfigure.SYSTEM_CONFIGURE,
             SystemOperatorLog.SYSTEM_OPERATOR_LOG,
             Users.USERS,
-            UsersType.USERS_TYPE);
+            UsersType.USERS_TYPE,
+            Wining.WINING);
     }
 }

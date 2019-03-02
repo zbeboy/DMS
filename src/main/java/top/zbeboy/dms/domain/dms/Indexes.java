@@ -14,12 +14,15 @@ import top.zbeboy.dms.domain.dms.tables.Authorities;
 import top.zbeboy.dms.domain.dms.tables.College;
 import top.zbeboy.dms.domain.dms.tables.Credit;
 import top.zbeboy.dms.domain.dms.tables.Department;
+import top.zbeboy.dms.domain.dms.tables.Diploma;
 import top.zbeboy.dms.domain.dms.tables.Evaluate;
 import top.zbeboy.dms.domain.dms.tables.Files;
 import top.zbeboy.dms.domain.dms.tables.Grade;
 import top.zbeboy.dms.domain.dms.tables.Organize;
 import top.zbeboy.dms.domain.dms.tables.PersistentLogins;
 import top.zbeboy.dms.domain.dms.tables.PoliticalLandscape;
+import top.zbeboy.dms.domain.dms.tables.QualityApply;
+import top.zbeboy.dms.domain.dms.tables.QualityRelease;
 import top.zbeboy.dms.domain.dms.tables.School;
 import top.zbeboy.dms.domain.dms.tables.Science;
 import top.zbeboy.dms.domain.dms.tables.Staff;
@@ -28,6 +31,7 @@ import top.zbeboy.dms.domain.dms.tables.SystemConfigure;
 import top.zbeboy.dms.domain.dms.tables.SystemOperatorLog;
 import top.zbeboy.dms.domain.dms.tables.Users;
 import top.zbeboy.dms.domain.dms.tables.UsersType;
+import top.zbeboy.dms.domain.dms.tables.Wining;
 
 
 /**
@@ -54,6 +58,7 @@ public class Indexes {
     public static final Index PRIMARY_KEY_76 = Indexes0.PRIMARY_KEY_76;
     public static final Index CONSTRAINT_INDEX_4F = Indexes0.CONSTRAINT_INDEX_4F;
     public static final Index PRIMARY_KEY_4F = Indexes0.PRIMARY_KEY_4F;
+    public static final Index PRIMARY_KEY_8 = Indexes0.PRIMARY_KEY_8;
     public static final Index PRIMARY_KEY_38 = Indexes0.PRIMARY_KEY_38;
     public static final Index PRIMARY_KEY_3 = Indexes0.PRIMARY_KEY_3;
     public static final Index CONSTRAINT_INDEX_40 = Indexes0.CONSTRAINT_INDEX_40;
@@ -62,6 +67,10 @@ public class Indexes {
     public static final Index PRIMARY_KEY_7 = Indexes0.PRIMARY_KEY_7;
     public static final Index PRIMARY_KEY_A3 = Indexes0.PRIMARY_KEY_A3;
     public static final Index PRIMARY_KEY_4E = Indexes0.PRIMARY_KEY_4E;
+    public static final Index CONSTRAINT_INDEX_C = Indexes0.CONSTRAINT_INDEX_C;
+    public static final Index PRIMARY_KEY_C = Indexes0.PRIMARY_KEY_C;
+    public static final Index CONSTRAINT_INDEX_66 = Indexes0.CONSTRAINT_INDEX_66;
+    public static final Index PRIMARY_KEY_66 = Indexes0.PRIMARY_KEY_66;
     public static final Index PRIMARY_KEY_9 = Indexes0.PRIMARY_KEY_9;
     public static final Index CONSTRAINT_INDEX_9 = Indexes0.CONSTRAINT_INDEX_9;
     public static final Index PRIMARY_KEY_9D = Indexes0.PRIMARY_KEY_9D;
@@ -80,6 +89,7 @@ public class Indexes {
     public static final Index PRIMARY_KEY_4 = Indexes0.PRIMARY_KEY_4;
     public static final Index CONSTRAINT_INDEX_B = Indexes0.CONSTRAINT_INDEX_B;
     public static final Index PRIMARY_KEY_B = Indexes0.PRIMARY_KEY_B;
+    public static final Index PRIMARY_KEY_98 = Indexes0.PRIMARY_KEY_98;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
@@ -93,6 +103,7 @@ public class Indexes {
         public static Index PRIMARY_KEY_76 = Internal.createIndex("PRIMARY_KEY_76", Credit.CREDIT, new OrderField[] { Credit.CREDIT.CREDIT_ID }, true);
         public static Index CONSTRAINT_INDEX_4F = Internal.createIndex("CONSTRAINT_INDEX_4F", Department.DEPARTMENT, new OrderField[] { Department.DEPARTMENT.COLLEGE_ID }, false);
         public static Index PRIMARY_KEY_4F = Internal.createIndex("PRIMARY_KEY_4F", Department.DEPARTMENT, new OrderField[] { Department.DEPARTMENT.DEPARTMENT_ID }, true);
+        public static Index PRIMARY_KEY_8 = Internal.createIndex("PRIMARY_KEY_8", Diploma.DIPLOMA, new OrderField[] { Diploma.DIPLOMA.DIPLOMA_ID }, true);
         public static Index PRIMARY_KEY_38 = Internal.createIndex("PRIMARY_KEY_38", Evaluate.EVALUATE, new OrderField[] { Evaluate.EVALUATE.EVALUATE_ID }, true);
         public static Index PRIMARY_KEY_3 = Internal.createIndex("PRIMARY_KEY_3", Files.FILES, new OrderField[] { Files.FILES.FILE_ID }, true);
         public static Index CONSTRAINT_INDEX_40 = Internal.createIndex("CONSTRAINT_INDEX_40", Grade.GRADE, new OrderField[] { Grade.GRADE.SCIENCE_ID }, false);
@@ -101,6 +112,10 @@ public class Indexes {
         public static Index PRIMARY_KEY_7 = Internal.createIndex("PRIMARY_KEY_7", Organize.ORGANIZE, new OrderField[] { Organize.ORGANIZE.ORGANIZE_ID }, true);
         public static Index PRIMARY_KEY_A3 = Internal.createIndex("PRIMARY_KEY_A3", PersistentLogins.PERSISTENT_LOGINS, new OrderField[] { PersistentLogins.PERSISTENT_LOGINS.SERIES }, true);
         public static Index PRIMARY_KEY_4E = Internal.createIndex("PRIMARY_KEY_4E", PoliticalLandscape.POLITICAL_LANDSCAPE, new OrderField[] { PoliticalLandscape.POLITICAL_LANDSCAPE.POLITICAL_LANDSCAPE_ID }, true);
+        public static Index CONSTRAINT_INDEX_C = Internal.createIndex("CONSTRAINT_INDEX_C", QualityApply.QUALITY_APPLY, new OrderField[] { QualityApply.QUALITY_APPLY.STUDENT_ID }, false);
+        public static Index PRIMARY_KEY_C = Internal.createIndex("PRIMARY_KEY_C", QualityApply.QUALITY_APPLY, new OrderField[] { QualityApply.QUALITY_APPLY.QUALITY_APPLY_ID }, true);
+        public static Index CONSTRAINT_INDEX_66 = Internal.createIndex("CONSTRAINT_INDEX_66", QualityRelease.QUALITY_RELEASE, new OrderField[] { QualityRelease.QUALITY_RELEASE.USERNAME }, false);
+        public static Index PRIMARY_KEY_66 = Internal.createIndex("PRIMARY_KEY_66", QualityRelease.QUALITY_RELEASE, new OrderField[] { QualityRelease.QUALITY_RELEASE.QUALITY_RELEASE_ID }, true);
         public static Index PRIMARY_KEY_9 = Internal.createIndex("PRIMARY_KEY_9", School.SCHOOL, new OrderField[] { School.SCHOOL.SCHOOL_ID }, true);
         public static Index CONSTRAINT_INDEX_9 = Internal.createIndex("CONSTRAINT_INDEX_9", Science.SCIENCE, new OrderField[] { Science.SCIENCE.DEPARTMENT_ID }, false);
         public static Index PRIMARY_KEY_9D = Internal.createIndex("PRIMARY_KEY_9D", Science.SCIENCE, new OrderField[] { Science.SCIENCE.SCIENCE_ID }, true);
@@ -119,5 +134,6 @@ public class Indexes {
         public static Index PRIMARY_KEY_4 = Internal.createIndex("PRIMARY_KEY_4", Users.USERS, new OrderField[] { Users.USERS.USERNAME }, true);
         public static Index CONSTRAINT_INDEX_B = Internal.createIndex("CONSTRAINT_INDEX_B", UsersType.USERS_TYPE, new OrderField[] { UsersType.USERS_TYPE.USERS_TYPE_NAME }, true);
         public static Index PRIMARY_KEY_B = Internal.createIndex("PRIMARY_KEY_B", UsersType.USERS_TYPE, new OrderField[] { UsersType.USERS_TYPE.USERS_TYPE_ID }, true);
+        public static Index PRIMARY_KEY_98 = Internal.createIndex("PRIMARY_KEY_98", Wining.WINING, new OrderField[] { Wining.WINING.WINING_ID }, true);
     }
 }

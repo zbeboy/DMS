@@ -24,12 +24,13 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Organize implements Serializable {
 
-    private static final long serialVersionUID = -1935081497;
+    private static final long serialVersionUID = 769626832;
 
     private Integer organizeId;
     private String  organizeName;
     private Integer gradeId;
     private Boolean organizeIsDel;
+    private Integer staffId;
 
     public Organize() {}
 
@@ -38,18 +39,21 @@ public class Organize implements Serializable {
         this.organizeName = value.organizeName;
         this.gradeId = value.gradeId;
         this.organizeIsDel = value.organizeIsDel;
+        this.staffId = value.staffId;
     }
 
     public Organize(
         Integer organizeId,
         String  organizeName,
         Integer gradeId,
-        Boolean organizeIsDel
+        Boolean organizeIsDel,
+        Integer staffId
     ) {
         this.organizeId = organizeId;
         this.organizeName = organizeName;
         this.gradeId = gradeId;
         this.organizeIsDel = organizeIsDel;
+        this.staffId = staffId;
     }
 
     public Integer getOrganizeId() {
@@ -87,6 +91,14 @@ public class Organize implements Serializable {
         this.organizeIsDel = organizeIsDel;
     }
 
+    public Integer getStaffId() {
+        return this.staffId;
+    }
+
+    public void setStaffId(Integer staffId) {
+        this.staffId = staffId;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Organize (");
@@ -95,6 +107,7 @@ public class Organize implements Serializable {
         sb.append(", ").append(organizeName);
         sb.append(", ").append(gradeId);
         sb.append(", ").append(organizeIsDel);
+        sb.append(", ").append(staffId);
 
         sb.append(")");
         return sb.toString();

@@ -20,6 +20,42 @@ CREATE TABLE evaluate (
   evaluate_content   VARCHAR(200)
 );
 
+CREATE  TABLE wining(
+  wining_id     INT PRIMARY KEY AUTO_INCREMENT,
+  student_number   VARCHAR(20) NOT NULL,
+  year VARCHAR(5) NOT NULL,
+  term      INT         NOT NULL,
+  wining_content VARCHAR(500) NOT NULL,
+  wining_score DOUBLE
+);
+
+CREATE TABLE diploma(
+  diploma_id     INT PRIMARY KEY AUTO_INCREMENT,
+  student_number   VARCHAR(20) NOT NULL,
+  year VARCHAR(5) NOT NULL,
+  term      INT         NOT NULL,
+  diploma_name VARCHAR(500) NOT NULL
+);
+
+CREATE TABLE quality_release(
+  quality_release_id  VARCHAR(64) PRIMARY KEY,
+  release_title VARCHAR(100) NOT NULL,
+  year VARCHAR(5) NOT NULL,
+  term      INT         NOT NULL,
+  release_date DATETIME NOT NULL,
+  username VARCHAR(64) NOT NULL,
+  FOREIGN KEY(username) REFERENCES USERS(username)
+);
+
+CREATE TABLE quality_apply(
+  quality_apply_id VARCHAR(64) PRIMARY KEY,
+  student_id INT NOT NULL,
+  apply_content VARCHAR(100),
+  apply_state INT DEFAULT 0 NOT NULL,
+  apply_date DATETIME NOT NULL,
+  FOREIGN KEY(student_id) REFERENCES STUDENT(student_id)
+);
+
 INSERT INTO evaluate VALUES ('1','体育不错');
 INSERT INTO evaluate VALUES ('2','技能不错');
 INSERT INTO evaluate VALUES ('3','志愿公益不错');

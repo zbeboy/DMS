@@ -10,12 +10,15 @@ import top.zbeboy.dms.domain.dms.tables.Authorities;
 import top.zbeboy.dms.domain.dms.tables.College;
 import top.zbeboy.dms.domain.dms.tables.Credit;
 import top.zbeboy.dms.domain.dms.tables.Department;
+import top.zbeboy.dms.domain.dms.tables.Diploma;
 import top.zbeboy.dms.domain.dms.tables.Evaluate;
 import top.zbeboy.dms.domain.dms.tables.Files;
 import top.zbeboy.dms.domain.dms.tables.Grade;
 import top.zbeboy.dms.domain.dms.tables.Organize;
 import top.zbeboy.dms.domain.dms.tables.PersistentLogins;
 import top.zbeboy.dms.domain.dms.tables.PoliticalLandscape;
+import top.zbeboy.dms.domain.dms.tables.QualityApply;
+import top.zbeboy.dms.domain.dms.tables.QualityRelease;
 import top.zbeboy.dms.domain.dms.tables.School;
 import top.zbeboy.dms.domain.dms.tables.Science;
 import top.zbeboy.dms.domain.dms.tables.Staff;
@@ -24,6 +27,7 @@ import top.zbeboy.dms.domain.dms.tables.SystemConfigure;
 import top.zbeboy.dms.domain.dms.tables.SystemOperatorLog;
 import top.zbeboy.dms.domain.dms.tables.Users;
 import top.zbeboy.dms.domain.dms.tables.UsersType;
+import top.zbeboy.dms.domain.dms.tables.Wining;
 
 
 /**
@@ -60,6 +64,11 @@ public class Tables {
     public static final Department DEPARTMENT = top.zbeboy.dms.domain.dms.tables.Department.DEPARTMENT;
 
     /**
+     * The table <code>DMS.DIPLOMA</code>.
+     */
+    public static final Diploma DIPLOMA = top.zbeboy.dms.domain.dms.tables.Diploma.DIPLOMA;
+
+    /**
      * The table <code>DMS.EVALUATE</code>.
      */
     public static final Evaluate EVALUATE = top.zbeboy.dms.domain.dms.tables.Evaluate.EVALUATE;
@@ -88,6 +97,16 @@ public class Tables {
      * The table <code>DMS.POLITICAL_LANDSCAPE</code>.
      */
     public static final PoliticalLandscape POLITICAL_LANDSCAPE = top.zbeboy.dms.domain.dms.tables.PoliticalLandscape.POLITICAL_LANDSCAPE;
+
+    /**
+     * The table <code>DMS.QUALITY_APPLY</code>.
+     */
+    public static final QualityApply QUALITY_APPLY = top.zbeboy.dms.domain.dms.tables.QualityApply.QUALITY_APPLY;
+
+    /**
+     * The table <code>DMS.QUALITY_RELEASE</code>.
+     */
+    public static final QualityRelease QUALITY_RELEASE = top.zbeboy.dms.domain.dms.tables.QualityRelease.QUALITY_RELEASE;
 
     /**
      * The table <code>DMS.SCHOOL</code>.
@@ -128,4 +147,9 @@ public class Tables {
      * The table <code>DMS.USERS_TYPE</code>.
      */
     public static final UsersType USERS_TYPE = top.zbeboy.dms.domain.dms.tables.UsersType.USERS_TYPE;
+
+    /**
+     * The table <code>DMS.WINING</code>.
+     */
+    public static final Wining WINING = top.zbeboy.dms.domain.dms.tables.Wining.WINING;
 }
