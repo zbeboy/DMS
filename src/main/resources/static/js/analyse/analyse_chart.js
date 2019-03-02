@@ -1,8 +1,10 @@
-$(document).ready(function () {
-    var ajax_url = {
-        analyse: web_path + '/web/analyse/one'
-    };
+var ajax_url = {
+    analyse: web_path + '/web/analyse/one',
+    delWining: web_path + '/web/analyse/wining/delete',
+    delDiploma: web_path + '/web/analyse/diploma/delete'
+};
 
+function initData() {
     $.post(ajax_url.analyse, {creditId: init_page_param.creditId}, function (data) {
         var chart = {
             type: 'pie',
@@ -73,6 +75,57 @@ $(document).ready(function () {
 
         $('#realName').text(data.student.realName);
         $('#studentNumber').text(data.student.studentNumber);
+        $('#wining').empty();
+        $.each(data.winings, function (i, n) {
+            $('#wining').append($('<p>').append($('<span>').text(n.winingContent))
+                .append($('<span>').text("  得分:" + n.winingScore))
+                .append($('<a href="javascript:;" class="delWining" data-id="' + n.winingId + '">').text('  删除')));
+        });
+
+        $('#diploma').empty();
+        $.each(data.diplomas, function (i, n) {
+            $('#diploma').append($('<p>').append($('<span>').text(n.diplomaName))
+                .append($('<a href="javascript:;" class="delDiploma" data-id="' + n.diplomaId + '">').text('  删除')));
+        });
+
+    });
+}
+
+$(document).ready(function () {
+    /*
+    init message.
+    */
+    Messenger.options = {
+        extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right',
+        theme: 'air'
+    };
+
+    initData();
+
+    $('#wining').delegate('.delWining', "click", function () {
+        $.post(ajax_url.delWining, {winingId: $(this).attr('data-id')}, function (data) {
+            if(data.state){
+                initData();
+            }
+            Messenger().post({
+                message: data.msg,
+                type: data.state ? 'info' : 'error',
+                showCloseButton: true
+            });
+        });
+    });
+
+    $('#diploma').delegate('.delDiploma', "click", function () {
+        $.post(ajax_url.delDiploma, {diplomaId: $(this).attr('data-id')}, function (data) {
+            if(data.state){
+                initData();
+            }
+            Messenger().post({
+                message: data.msg,
+                type: data.state ? 'info' : 'error',
+                showCloseButton: true
+            });
+        });
     });
 });
 

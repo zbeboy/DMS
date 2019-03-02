@@ -133,9 +133,14 @@ public class AnalyseRestController {
             student = data.get().into(StudentBean.class);
         }
 
+        List<Wining> winings = winingService.findByCreditId(creditId);
+        List<Diploma> diplomas = diplomaService.findByCreditId(creditId);
+
         ajaxUtils.success().msg("获取数据成功").put("analyse", credit)
                 .put("evaluate", evaluate.getEvaluateContent())
-                .put("student", student);
+                .put("student", student)
+                .put("winings", winings)
+                .put("diplomas", diplomas);
         return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
     }
 
@@ -301,5 +306,31 @@ public class AnalyseRestController {
             ajaxUtils.fail().msg(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
         }
         return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
+    }
+
+    /**
+     * 删除
+     *
+     * @param winingId id
+     * @return true or false
+     */
+    @PostMapping(value = "/web/analyse/wining/delete")
+    public ResponseEntity<Map<String, Object>> winingDelete(@RequestParam("winingId") int winingId) {
+        AjaxUtils ajaxUtils = AjaxUtils.of();
+        winingService.deleteById(winingId);
+        return new ResponseEntity<>(ajaxUtils.success().msg("删除成功").send(), HttpStatus.OK);
+    }
+
+    /**
+     * 删除
+     *
+     * @param diplomaId id
+     * @return true or false
+     */
+    @PostMapping(value = "/web/analyse/diploma/delete")
+    public ResponseEntity<Map<String, Object>> diplomaDelete(@RequestParam("diplomaId") int diplomaId) {
+        AjaxUtils ajaxUtils = AjaxUtils.of();
+        diplomaService.deleteById(diplomaId);
+        return new ResponseEntity<>(ajaxUtils.success().msg("删除成功").send(), HttpStatus.OK);
     }
 }
