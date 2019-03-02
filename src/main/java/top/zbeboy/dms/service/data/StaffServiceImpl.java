@@ -55,6 +55,19 @@ public class StaffServiceImpl extends BootstrapTablesPlugin<StaffBean> implement
     }
 
     @Override
+    public Result<Record> findAllNormal() {
+        return create.select()
+                .from(STAFF)
+                .join(USERS)
+                .on(STAFF.USERNAME.eq(USERS.USERNAME))
+                .where(USERS.ENABLED.eq(true)
+                        .and(USERS.ACCOUNT_NON_EXPIRED.eq(true))
+                        .and(USERS.CREDENTIALS_NON_EXPIRED.eq(true))
+                        .and(USERS.ACCOUNT_NON_LOCKED.eq(true)))
+                .fetch();
+    }
+
+    @Override
     public Staff findByStaffId(int staffId) {
         return staffDao.findById(staffId);
     }

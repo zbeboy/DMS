@@ -12,10 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import top.zbeboy.dms.config.Workbook;
-import top.zbeboy.dms.domain.dms.tables.pojos.Authorities;
-import top.zbeboy.dms.domain.dms.tables.pojos.Staff;
-import top.zbeboy.dms.domain.dms.tables.pojos.Student;
-import top.zbeboy.dms.domain.dms.tables.pojos.Users;
+import top.zbeboy.dms.domain.dms.tables.pojos.*;
 import top.zbeboy.dms.domain.dms.tables.records.StaffRecord;
 import top.zbeboy.dms.domain.dms.tables.records.StudentRecord;
 import top.zbeboy.dms.service.common.UploadService;
@@ -91,6 +88,23 @@ public class StaffRestController {
         bootstrapTableUtils.setTotal(staffService.countByCondition(bootstrapTableUtils));
         bootstrapTableUtils.setRows(staffs);
         return bootstrapTableUtils;
+    }
+
+    /**
+     * 列表数据
+     *
+     * @return 数据
+     */
+    @GetMapping(value = "/web/data/staff/all")
+    public ResponseEntity<Map<String, Object>> staffAll() {
+        AjaxUtils ajaxUtils = AjaxUtils.of();
+        List<StaffBean> staffBeans = new ArrayList<>();
+        Result<Record>  records = staffService.findAllNormal();
+        if(records.isNotEmpty()){
+            staffBeans = records.into(StaffBean.class);
+        }
+        ajaxUtils.success().msg("获取数据成功").put("staffs", staffBeans);
+        return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
     }
 
     /**

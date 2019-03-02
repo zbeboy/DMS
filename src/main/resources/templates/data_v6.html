@@ -76,6 +76,7 @@
                     <th data-field="grade">年级</th>
                     <th data-field="organizeId">班级ID</th>
                     <th data-field="organizeName">班级</th>
+                    <th data-field="realName">班主任</th>
                     <th data-field="organizeIsDel" data-formatter="formatterOrganizeIsDel">状态</th>
                     <th data-formatter="operation">操作</th>
                 </tr>
@@ -125,6 +126,12 @@
                             <option value="">请选择年级</option>
                         </select>
                         <div class="text-danger" id="add_grade_id_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="addStaffId">
+                            <option value="0">请选择班主任</option>
+                        </select>
+                        <div class="text-danger" id="add_staff_id_error"></div>
                     </div>
                     <div class="form-group">
                         <label for="addOrganizeName">班级</label>
@@ -180,6 +187,12 @@
                             <option value="">请选择年级</option>
                         </select>
                         <div class="text-danger" id="edit_grade_id_error"></div>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="editStaffId">
+                            <option value="0">请选择班主任</option>
+                        </select>
+                        <div class="text-danger" id="edit_staff_id_error"></div>
                     </div>
                     <div class="form-group">
                         <label for="editOrganizeName">班级</label>

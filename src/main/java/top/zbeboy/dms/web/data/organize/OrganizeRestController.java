@@ -129,13 +129,14 @@ public class OrganizeRestController {
      * @return true or false
      */
     @PostMapping(value = "/web/data/organize/save")
-    public ResponseEntity<Map<String, Object>> save(@RequestParam("gradeId") int gradeId,
+    public ResponseEntity<Map<String, Object>> save(@RequestParam("gradeId") int gradeId, int staffId,
                                                     @RequestParam("organizeName") String organizeName) {
         AjaxUtils ajaxUtils = AjaxUtils.of();
         String name = StringUtils.trimWhitespace(organizeName);
         Organize organize = new Organize();
         organize.setGradeId(gradeId);
         organize.setOrganizeName(name);
+        organize.setStaffId(staffId);
         organize.setOrganizeIsDel(false);
         organizeService.save(organize);
         return new ResponseEntity<>(ajaxUtils.success().msg("保存成功").send(), HttpStatus.OK);
@@ -151,12 +152,13 @@ public class OrganizeRestController {
      */
     @PostMapping(value = "/web/data/organize/update")
     public ResponseEntity<Map<String, Object>> update(@RequestParam("organizeId") int organizeId,
-                                                      @RequestParam("gradeId") int gradeId,
+                                                      @RequestParam("gradeId") int gradeId,int staffId,
                                                       @RequestParam("organizeName") String organizeName) {
         AjaxUtils ajaxUtils = AjaxUtils.of();
         String name = StringUtils.trimWhitespace(organizeName);
         Organize organize = organizeService.findByOrganizeId(organizeId);
         organize.setGradeId(gradeId);
+        organize.setStaffId(staffId);
         organize.setOrganizeName(name);
         organizeService.update(organize);
         return new ResponseEntity<>(ajaxUtils.success().msg("更新成功").send(), HttpStatus.OK);

@@ -93,7 +93,11 @@ public class OrganizeServiceImpl extends BootstrapTablesPlugin<OrganizeBean> imp
                     .join(COLLEGE)
                     .on(DEPARTMENT.COLLEGE_ID.eq(COLLEGE.COLLEGE_ID))
                     .join(SCHOOL)
-                    .on(COLLEGE.SCHOOL_ID.eq(SCHOOL.SCHOOL_ID));
+                    .on(COLLEGE.SCHOOL_ID.eq(SCHOOL.SCHOOL_ID))
+                    .leftJoin(STAFF)
+                    .on(ORGANIZE.STAFF_ID.eq(STAFF.STAFF_ID))
+                    .leftJoin(USERS)
+                    .on(STAFF.USERNAME.eq(USERS.USERNAME));
             sortCondition(bootstrapTableUtils, null, selectJoinStep, JOIN_TYPE);
             pagination(bootstrapTableUtils, null, selectJoinStep, JOIN_TYPE);
             records = selectJoinStep.fetch();
@@ -110,6 +114,10 @@ public class OrganizeServiceImpl extends BootstrapTablesPlugin<OrganizeBean> imp
                     .on(DEPARTMENT.COLLEGE_ID.eq(COLLEGE.COLLEGE_ID))
                     .join(SCHOOL)
                     .on(COLLEGE.SCHOOL_ID.eq(SCHOOL.SCHOOL_ID))
+                    .leftJoin(STAFF)
+                    .on(ORGANIZE.STAFF_ID.eq(STAFF.STAFF_ID))
+                    .leftJoin(USERS)
+                    .on(STAFF.USERNAME.eq(USERS.USERNAME))
                     .where(a);
             sortCondition(bootstrapTableUtils, selectConditionStep, null, CONDITION_TYPE);
             pagination(bootstrapTableUtils, selectConditionStep, null, CONDITION_TYPE);
@@ -134,7 +142,11 @@ public class OrganizeServiceImpl extends BootstrapTablesPlugin<OrganizeBean> imp
                     .join(COLLEGE)
                     .on(DEPARTMENT.COLLEGE_ID.eq(COLLEGE.COLLEGE_ID))
                     .join(SCHOOL)
-                    .on(COLLEGE.COLLEGE_ID.eq(SCHOOL.SCHOOL_ID));
+                    .on(COLLEGE.COLLEGE_ID.eq(SCHOOL.SCHOOL_ID))
+                    .leftJoin(STAFF)
+                    .on(ORGANIZE.STAFF_ID.eq(STAFF.STAFF_ID))
+                    .leftJoin(USERS)
+                    .on(STAFF.USERNAME.eq(USERS.USERNAME));
             count = selectJoinStep.fetchOne();
         } else {
             SelectConditionStep<Record1<Integer>> selectConditionStep = create.selectCount()
@@ -149,6 +161,10 @@ public class OrganizeServiceImpl extends BootstrapTablesPlugin<OrganizeBean> imp
                     .on(DEPARTMENT.COLLEGE_ID.eq(COLLEGE.COLLEGE_ID))
                     .join(SCHOOL)
                     .on(COLLEGE.COLLEGE_ID.eq(SCHOOL.SCHOOL_ID))
+                    .leftJoin(STAFF)
+                    .on(ORGANIZE.STAFF_ID.eq(STAFF.STAFF_ID))
+                    .leftJoin(USERS)
+                    .on(STAFF.USERNAME.eq(USERS.USERNAME))
                     .where(a);
             count = selectConditionStep.fetchOne();
         }
@@ -316,6 +332,17 @@ public class OrganizeServiceImpl extends BootstrapTablesPlugin<OrganizeBean> imp
                     sortField[1] = ORGANIZE.ORGANIZE_ID.asc();
                 } else {
                     sortField[0] = ORGANIZE.ORGANIZE_IS_DEL.desc();
+                    sortField[1] = ORGANIZE.ORGANIZE_ID.desc();
+                }
+            }
+
+            if ("staffId".equalsIgnoreCase(orderColumnName)) {
+                sortField = new SortField[2];
+                if (isAsc) {
+                    sortField[0] = ORGANIZE.STAFF_ID.asc();
+                    sortField[1] = ORGANIZE.ORGANIZE_ID.asc();
+                } else {
+                    sortField[0] = ORGANIZE.STAFF_ID.desc();
                     sortField[1] = ORGANIZE.ORGANIZE_ID.desc();
                 }
             }

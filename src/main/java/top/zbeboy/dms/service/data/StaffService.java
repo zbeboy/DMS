@@ -13,6 +13,13 @@ import java.util.Optional;
 public interface StaffService {
 
     /**
+     * 查询所有正常教职工
+     *
+     * @return 数据
+     */
+    Result<Record> findAllNormal();
+
+    /**
      * 通过id查询
      *
      * @param staffId 教师id

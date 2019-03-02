@@ -22,6 +22,8 @@ public class OrganizeBean extends Organize {
 
     private String grade;
 
+    private String realName;
+
     public Integer getSchoolId() {
         return schoolId;
     }
@@ -92,5 +94,13 @@ public class OrganizeBean extends Organize {
 
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 }

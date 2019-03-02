@@ -13,6 +13,7 @@ function getAjaxUrl() {
         sciences: web_path + '/web/data/science/all',
         grades: web_path + '/web/data/grade/all',
         organizes: web_path + '/web/data/organize/data',
+        staffs: web_path + '/web/data/staff/all',
         organize: web_path + '/web/data/organize/one',
         check_add_organize: web_path + '/web/data/organize/check/add/name',
         check_update_organize: web_path + '/web/data/organize/check/update/name',
@@ -165,6 +166,7 @@ init();
 
 function init() {
     initSchools();
+    initStaffs();
 }
 
 function initSchools() {
@@ -173,10 +175,23 @@ function initSchools() {
     });
 }
 
+function initStaffs() {
+    $.get(getAjaxUrl().staffs, function (data) {
+        staffsData(data);
+    });
+}
+
 function schoolsData(data) {
     $.each(data.schools, function (i, n) {
         $(add_param_id.schoolId).append('<option value="' + n.schoolId + '">' + n.schoolName + '</option>');
         $(edit_param_id.schoolId).append('<option value="' + n.schoolId + '">' + n.schoolName + '</option>');
+    });
+}
+
+function staffsData(data) {
+    $.each(data.staffs, function (i, n) {
+        $(add_param_id.staffId).append('<option value="' + n.staffId + '">' + n.realName + '</option>');
+        $(edit_param_id.staffId).append('<option value="' + n.staffId + '">' + n.realName + '</option>');
     });
 }
 
@@ -279,6 +294,7 @@ var add_param_id = {
     departmentId: '#addDepartmentId',
     scienceId: '#addScienceId',
     gradeId: '#addGradeId',
+    staffId: '#addStaffId',
     organizeName: '#addOrganizeName'
 };
 
@@ -288,6 +304,7 @@ var add_param = {
     departmentId: '',
     scienceId: '',
     gradeId: '',
+    staffId: 0,
     organizeName: ''
 };
 
@@ -297,6 +314,7 @@ var add_error_id = {
     departmentId: '#add_department_id_error',
     scienceId: '#add_science_id_error',
     gradeId: '#add_grade_id_error',
+    staffId: '#add_staff_id_error',
     organizeName: '#add_organize_name_error'
 };
 
@@ -306,6 +324,7 @@ function initAddParam() {
     add_param.departmentId = $(add_param_id.departmentId).val();
     add_param.scienceId = $(add_param_id.scienceId).val();
     add_param.gradeId = $(add_param_id.gradeId).val();
+    add_param.staffId = $(add_param_id.staffId).val();
     add_param.organizeName = $(add_param_id.organizeName).val();
 }
 
@@ -429,6 +448,7 @@ var edit_param_id = {
     departmentId: '#editDepartmentId',
     scienceId: '#editScienceId',
     gradeId: '#editGradeId',
+    staffId: '#editStaffId',
     organizeName: '#editOrganizeName'
 };
 
@@ -439,6 +459,7 @@ var edit_param = {
     departmentId: '',
     scienceId: '',
     gradeId: '',
+    staffId: 0,
     organizeName: ''
 };
 
@@ -448,6 +469,7 @@ var edit_error_id = {
     departmentId: '#edit_department_id_error',
     scienceId: '#edit_science_id_error',
     gradeId: '#edit_grade_id_error',
+    staffId: 'edit_staff_id_error',
     organizeName: '#edit_organize_name_error'
 };
 
@@ -458,6 +480,7 @@ function initEditParam() {
     edit_param.departmentId = $(edit_param_id.departmentId).val();
     edit_param.scienceId = $(edit_param_id.scienceId).val();
     edit_param.gradeId = $(edit_param_id.gradeId).val();
+    edit_param.staffId = $(edit_param_id.staffId).val();
     edit_param.organizeName = $(edit_param_id.organizeName).val();
 }
 
@@ -638,6 +661,7 @@ $(document).ready(function () {
         $.post(getAjaxUrl().organize, {organizeId: organizeId}, function (data) {
             $(edit_param_id.organizeId).val(data.organize.organizeId);
             $(edit_param_id.schoolId).val(data.organize.schoolId);
+            $(edit_param_id.staffId).val(data.organize.staffId);
             initColleges(data.organize.schoolId, edit_param_id.collegeId, data.organize.collegeId);
             initDepartments(data.organize.collegeId, edit_param_id.departmentId, data.organize.departmentId);
             initSciences(data.organize.departmentId, edit_param_id.scienceId, data.organize.scienceId);
