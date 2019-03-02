@@ -22,19 +22,17 @@ CREATE TABLE evaluate (
 
 CREATE  TABLE wining(
   wining_id     INT PRIMARY KEY AUTO_INCREMENT,
-  student_number   VARCHAR(20) NOT NULL,
-  year VARCHAR(5) NOT NULL,
-  term      INT         NOT NULL,
+  credit_id      INT         NOT NULL,
   wining_content VARCHAR(500) NOT NULL,
-  wining_score DOUBLE
+  wining_score DOUBLE,
+  FOREIGN KEY(credit_id) REFERENCES credit(credit_id)
 );
 
 CREATE TABLE diploma(
   diploma_id     INT PRIMARY KEY AUTO_INCREMENT,
-  student_number   VARCHAR(20) NOT NULL,
-  year VARCHAR(5) NOT NULL,
-  term      INT         NOT NULL,
-  diploma_name VARCHAR(500) NOT NULL
+  credit_id      INT         NOT NULL,
+  diploma_name VARCHAR(500) NOT NULL,
+  FOREIGN KEY(credit_id) REFERENCES credit(credit_id)
 );
 
 CREATE TABLE quality_release(

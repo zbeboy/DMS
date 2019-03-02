@@ -24,35 +24,27 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Diploma implements Serializable {
 
-    private static final long serialVersionUID = 755272610;
+    private static final long serialVersionUID = -1751239218;
 
     private Integer diplomaId;
-    private String  studentNumber;
-    private String  year;
-    private Integer term;
+    private Integer creditId;
     private String  diplomaName;
 
     public Diploma() {}
 
     public Diploma(Diploma value) {
         this.diplomaId = value.diplomaId;
-        this.studentNumber = value.studentNumber;
-        this.year = value.year;
-        this.term = value.term;
+        this.creditId = value.creditId;
         this.diplomaName = value.diplomaName;
     }
 
     public Diploma(
         Integer diplomaId,
-        String  studentNumber,
-        String  year,
-        Integer term,
+        Integer creditId,
         String  diplomaName
     ) {
         this.diplomaId = diplomaId;
-        this.studentNumber = studentNumber;
-        this.year = year;
-        this.term = term;
+        this.creditId = creditId;
         this.diplomaName = diplomaName;
     }
 
@@ -65,32 +57,12 @@ public class Diploma implements Serializable {
     }
 
     @NotNull
-    @Size(max = 20)
-    public String getStudentNumber() {
-        return this.studentNumber;
+    public Integer getCreditId() {
+        return this.creditId;
     }
 
-    public void setStudentNumber(String studentNumber) {
-        this.studentNumber = studentNumber;
-    }
-
-    @NotNull
-    @Size(max = 5)
-    public String getYear() {
-        return this.year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    @NotNull
-    public Integer getTerm() {
-        return this.term;
-    }
-
-    public void setTerm(Integer term) {
-        this.term = term;
+    public void setCreditId(Integer creditId) {
+        this.creditId = creditId;
     }
 
     @NotNull
@@ -108,9 +80,7 @@ public class Diploma implements Serializable {
         StringBuilder sb = new StringBuilder("Diploma (");
 
         sb.append(diplomaId);
-        sb.append(", ").append(studentNumber);
-        sb.append(", ").append(year);
-        sb.append(", ").append(term);
+        sb.append(", ").append(creditId);
         sb.append(", ").append(diplomaName);
 
         sb.append(")");

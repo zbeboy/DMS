@@ -69,24 +69,10 @@ public class DiplomaDao extends DAOImpl<DiplomaRecord, top.zbeboy.dms.domain.dms
     }
 
     /**
-     * Fetch records that have <code>STUDENT_NUMBER IN (values)</code>
+     * Fetch records that have <code>CREDIT_ID IN (values)</code>
      */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Diploma> fetchByStudentNumber(String... values) {
-        return fetch(Diploma.DIPLOMA.STUDENT_NUMBER, values);
-    }
-
-    /**
-     * Fetch records that have <code>YEAR IN (values)</code>
-     */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Diploma> fetchByYear(String... values) {
-        return fetch(Diploma.DIPLOMA.YEAR, values);
-    }
-
-    /**
-     * Fetch records that have <code>TERM IN (values)</code>
-     */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Diploma> fetchByTerm(Integer... values) {
-        return fetch(Diploma.DIPLOMA.TERM, values);
+    public List<top.zbeboy.dms.domain.dms.tables.pojos.Diploma> fetchByCreditId(Integer... values) {
+        return fetch(Diploma.DIPLOMA.CREDIT_ID, values);
     }
 
     /**

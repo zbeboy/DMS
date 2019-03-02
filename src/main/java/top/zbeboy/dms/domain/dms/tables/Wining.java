@@ -10,6 +10,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
@@ -39,7 +40,7 @@ import top.zbeboy.dms.domain.dms.tables.records.WiningRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Wining extends TableImpl<WiningRecord> {
 
-    private static final long serialVersionUID = -964029307;
+    private static final long serialVersionUID = 839440080;
 
     /**
      * The reference instance of <code>DMS.WINING</code>
@@ -60,19 +61,9 @@ public class Wining extends TableImpl<WiningRecord> {
     public final TableField<WiningRecord, Integer> WINING_ID = createField("WINING_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>DMS.WINING.STUDENT_NUMBER</code>.
+     * The column <code>DMS.WINING.CREDIT_ID</code>.
      */
-    public final TableField<WiningRecord, String> STUDENT_NUMBER = createField("STUDENT_NUMBER", org.jooq.impl.SQLDataType.VARCHAR(20).nullable(false), this, "");
-
-    /**
-     * The column <code>DMS.WINING.YEAR</code>.
-     */
-    public final TableField<WiningRecord, String> YEAR = createField("YEAR", org.jooq.impl.SQLDataType.VARCHAR(5).nullable(false), this, "");
-
-    /**
-     * The column <code>DMS.WINING.TERM</code>.
-     */
-    public final TableField<WiningRecord, Integer> TERM = createField("TERM", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<WiningRecord, Integer> CREDIT_ID = createField("CREDIT_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>DMS.WINING.WINING_CONTENT</code>.
@@ -126,7 +117,7 @@ public class Wining extends TableImpl<WiningRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.PRIMARY_KEY_98);
+        return Arrays.<Index>asList(Indexes.CONSTRAINT_INDEX_98, Indexes.PRIMARY_KEY_98);
     }
 
     /**
@@ -151,6 +142,14 @@ public class Wining extends TableImpl<WiningRecord> {
     @Override
     public List<UniqueKey<WiningRecord>> getKeys() {
         return Arrays.<UniqueKey<WiningRecord>>asList(Keys.CONSTRAINT_98);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ForeignKey<WiningRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<WiningRecord, ?>>asList(Keys.CONSTRAINT_989);
     }
 
     /**

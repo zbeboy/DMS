@@ -24,12 +24,10 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Wining implements Serializable {
 
-    private static final long serialVersionUID = 1837299486;
+    private static final long serialVersionUID = 1523780134;
 
     private Integer winingId;
-    private String  studentNumber;
-    private String  year;
-    private Integer term;
+    private Integer creditId;
     private String  winingContent;
     private Double  winingScore;
 
@@ -37,25 +35,19 @@ public class Wining implements Serializable {
 
     public Wining(Wining value) {
         this.winingId = value.winingId;
-        this.studentNumber = value.studentNumber;
-        this.year = value.year;
-        this.term = value.term;
+        this.creditId = value.creditId;
         this.winingContent = value.winingContent;
         this.winingScore = value.winingScore;
     }
 
     public Wining(
         Integer winingId,
-        String  studentNumber,
-        String  year,
-        Integer term,
+        Integer creditId,
         String  winingContent,
         Double  winingScore
     ) {
         this.winingId = winingId;
-        this.studentNumber = studentNumber;
-        this.year = year;
-        this.term = term;
+        this.creditId = creditId;
         this.winingContent = winingContent;
         this.winingScore = winingScore;
     }
@@ -69,32 +61,12 @@ public class Wining implements Serializable {
     }
 
     @NotNull
-    @Size(max = 20)
-    public String getStudentNumber() {
-        return this.studentNumber;
+    public Integer getCreditId() {
+        return this.creditId;
     }
 
-    public void setStudentNumber(String studentNumber) {
-        this.studentNumber = studentNumber;
-    }
-
-    @NotNull
-    @Size(max = 5)
-    public String getYear() {
-        return this.year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    @NotNull
-    public Integer getTerm() {
-        return this.term;
-    }
-
-    public void setTerm(Integer term) {
-        this.term = term;
+    public void setCreditId(Integer creditId) {
+        this.creditId = creditId;
     }
 
     @NotNull
@@ -120,9 +92,7 @@ public class Wining implements Serializable {
         StringBuilder sb = new StringBuilder("Wining (");
 
         sb.append(winingId);
-        sb.append(", ").append(studentNumber);
-        sb.append(", ").append(year);
-        sb.append(", ").append(term);
+        sb.append(", ").append(creditId);
         sb.append(", ").append(winingContent);
         sb.append(", ").append(winingScore);
 

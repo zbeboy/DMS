@@ -126,6 +126,7 @@ public class Keys {
     public static final ForeignKey<AuthoritiesRecord, UsersRecord> CONSTRAINT_A = ForeignKeys0.CONSTRAINT_A;
     public static final ForeignKey<CollegeRecord, SchoolRecord> CONSTRAINT_63 = ForeignKeys0.CONSTRAINT_63;
     public static final ForeignKey<DepartmentRecord, CollegeRecord> CONSTRAINT_4F7 = ForeignKeys0.CONSTRAINT_4F7;
+    public static final ForeignKey<DiplomaRecord, CreditRecord> CONSTRAINT_8E = ForeignKeys0.CONSTRAINT_8E;
     public static final ForeignKey<GradeRecord, ScienceRecord> CONSTRAINT_40E = ForeignKeys0.CONSTRAINT_40E;
     public static final ForeignKey<OrganizeRecord, GradeRecord> CONSTRAINT_7D = ForeignKeys0.CONSTRAINT_7D;
     public static final ForeignKey<QualityApplyRecord, StudentRecord> CONSTRAINT_C0 = ForeignKeys0.CONSTRAINT_C0;
@@ -137,6 +138,7 @@ public class Keys {
     public static final ForeignKey<StudentRecord, UsersRecord> CONSTRAINT_BACA0 = ForeignKeys0.CONSTRAINT_BACA0;
     public static final ForeignKey<UsersRecord, UsersTypeRecord> CONSTRAINT_4D = ForeignKeys0.CONSTRAINT_4D;
     public static final ForeignKey<UsersRecord, FilesRecord> CONSTRAINT_4D4 = ForeignKeys0.CONSTRAINT_4D4;
+    public static final ForeignKey<WiningRecord, CreditRecord> CONSTRAINT_989 = ForeignKeys0.CONSTRAINT_989;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
@@ -190,6 +192,7 @@ public class Keys {
         public static final ForeignKey<AuthoritiesRecord, UsersRecord> CONSTRAINT_A = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_4, Authorities.AUTHORITIES, "CONSTRAINT_A", Authorities.AUTHORITIES.USERNAME);
         public static final ForeignKey<CollegeRecord, SchoolRecord> CONSTRAINT_63 = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_9, College.COLLEGE, "CONSTRAINT_63", College.COLLEGE.SCHOOL_ID);
         public static final ForeignKey<DepartmentRecord, CollegeRecord> CONSTRAINT_4F7 = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_6, Department.DEPARTMENT, "CONSTRAINT_4F7", Department.DEPARTMENT.COLLEGE_ID);
+        public static final ForeignKey<DiplomaRecord, CreditRecord> CONSTRAINT_8E = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_76, Diploma.DIPLOMA, "CONSTRAINT_8E", Diploma.DIPLOMA.CREDIT_ID);
         public static final ForeignKey<GradeRecord, ScienceRecord> CONSTRAINT_40E = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_9D, Grade.GRADE, "CONSTRAINT_40E", Grade.GRADE.SCIENCE_ID);
         public static final ForeignKey<OrganizeRecord, GradeRecord> CONSTRAINT_7D = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_40, Organize.ORGANIZE, "CONSTRAINT_7D", Organize.ORGANIZE.GRADE_ID);
         public static final ForeignKey<QualityApplyRecord, StudentRecord> CONSTRAINT_C0 = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_BA, QualityApply.QUALITY_APPLY, "CONSTRAINT_C0", QualityApply.QUALITY_APPLY.STUDENT_ID);
@@ -201,5 +204,6 @@ public class Keys {
         public static final ForeignKey<StudentRecord, UsersRecord> CONSTRAINT_BACA0 = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_4, Student.STUDENT, "CONSTRAINT_BACA0", Student.STUDENT.USERNAME);
         public static final ForeignKey<UsersRecord, UsersTypeRecord> CONSTRAINT_4D = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_B, Users.USERS, "CONSTRAINT_4D", Users.USERS.USERS_TYPE_ID);
         public static final ForeignKey<UsersRecord, FilesRecord> CONSTRAINT_4D4 = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_3, Users.USERS, "CONSTRAINT_4D4", Users.USERS.AVATAR);
+        public static final ForeignKey<WiningRecord, CreditRecord> CONSTRAINT_989 = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_76, Wining.WINING, "CONSTRAINT_989", Wining.WINING.CREDIT_ID);
     }
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
@@ -39,7 +40,7 @@ import top.zbeboy.dms.domain.dms.tables.records.DiplomaRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Diploma extends TableImpl<DiplomaRecord> {
 
-    private static final long serialVersionUID = -762666375;
+    private static final long serialVersionUID = -1276620002;
 
     /**
      * The reference instance of <code>DMS.DIPLOMA</code>
@@ -60,19 +61,9 @@ public class Diploma extends TableImpl<DiplomaRecord> {
     public final TableField<DiplomaRecord, Integer> DIPLOMA_ID = createField("DIPLOMA_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>DMS.DIPLOMA.STUDENT_NUMBER</code>.
+     * The column <code>DMS.DIPLOMA.CREDIT_ID</code>.
      */
-    public final TableField<DiplomaRecord, String> STUDENT_NUMBER = createField("STUDENT_NUMBER", org.jooq.impl.SQLDataType.VARCHAR(20).nullable(false), this, "");
-
-    /**
-     * The column <code>DMS.DIPLOMA.YEAR</code>.
-     */
-    public final TableField<DiplomaRecord, String> YEAR = createField("YEAR", org.jooq.impl.SQLDataType.VARCHAR(5).nullable(false), this, "");
-
-    /**
-     * The column <code>DMS.DIPLOMA.TERM</code>.
-     */
-    public final TableField<DiplomaRecord, Integer> TERM = createField("TERM", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<DiplomaRecord, Integer> CREDIT_ID = createField("CREDIT_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>DMS.DIPLOMA.DIPLOMA_NAME</code>.
@@ -121,7 +112,7 @@ public class Diploma extends TableImpl<DiplomaRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.PRIMARY_KEY_8);
+        return Arrays.<Index>asList(Indexes.CONSTRAINT_INDEX_8, Indexes.PRIMARY_KEY_8);
     }
 
     /**
@@ -146,6 +137,14 @@ public class Diploma extends TableImpl<DiplomaRecord> {
     @Override
     public List<UniqueKey<DiplomaRecord>> getKeys() {
         return Arrays.<UniqueKey<DiplomaRecord>>asList(Keys.CONSTRAINT_8);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ForeignKey<DiplomaRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<DiplomaRecord, ?>>asList(Keys.CONSTRAINT_8E);
     }
 
     /**

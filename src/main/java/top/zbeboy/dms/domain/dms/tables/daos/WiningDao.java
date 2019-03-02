@@ -69,24 +69,10 @@ public class WiningDao extends DAOImpl<WiningRecord, top.zbeboy.dms.domain.dms.t
     }
 
     /**
-     * Fetch records that have <code>STUDENT_NUMBER IN (values)</code>
+     * Fetch records that have <code>CREDIT_ID IN (values)</code>
      */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Wining> fetchByStudentNumber(String... values) {
-        return fetch(Wining.WINING.STUDENT_NUMBER, values);
-    }
-
-    /**
-     * Fetch records that have <code>YEAR IN (values)</code>
-     */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Wining> fetchByYear(String... values) {
-        return fetch(Wining.WINING.YEAR, values);
-    }
-
-    /**
-     * Fetch records that have <code>TERM IN (values)</code>
-     */
-    public List<top.zbeboy.dms.domain.dms.tables.pojos.Wining> fetchByTerm(Integer... values) {
-        return fetch(Wining.WINING.TERM, values);
+    public List<top.zbeboy.dms.domain.dms.tables.pojos.Wining> fetchByCreditId(Integer... values) {
+        return fetch(Wining.WINING.CREDIT_ID, values);
     }
 
     /**

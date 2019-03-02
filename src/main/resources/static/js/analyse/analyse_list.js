@@ -94,6 +94,20 @@ function operation(value, row, index, field) {
                 "type": "default",
                 "id": row.creditId,
                 "credit": row.realName
+            },
+            {
+                "name": "获奖情况",
+                "css": "wining",
+                "type": "default",
+                "id": row.creditId,
+                "credit": row.realName
+            },
+            {
+                "name": "证书",
+                "css": "diploma",
+                "type": "default",
+                "id": row.creditId,
+                "credit": row.realName
             }
         ]
     };
@@ -470,6 +484,14 @@ $(document).ready(function () {
     });
 
     dataTable.delegate('.chart', "click", function () {
+        window.location.href = getAjaxUrl().chart + "/" + $(this).attr('data-id');
+    });
+
+    dataTable.delegate('.wining', "click", function () {
+        window.location.href = getAjaxUrl().chart + "/" + $(this).attr('data-id');
+    });
+
+    dataTable.delegate('.diploma', "click", function () {
         window.location.href = getAjaxUrl().chart + "/" + $(this).attr('data-id');
     });
 
