@@ -11,7 +11,9 @@ function getAjaxUrl() {
         update: web_path + '/web/analyse/update',
         del: web_path + '/web/analyse/delete',
         file_upload_url: '/web/analyse/import',
-        chart: web_path + '/web/analyse/chart'
+        chart: web_path + '/web/analyse/chart',
+        wining: web_path + '/web/analyse/wining/save',
+        diploma: web_path + '/web/analyse/diploma/save'
     };
 }
 
@@ -479,6 +481,32 @@ $(document).ready(function () {
         editCredit();
     });
 
+    $('#winingSave').click(function () {
+        $.post(getAjaxUrl().wining, $('#winingForm').serialize(), function (data) {
+            if(data.state){
+                $('#winingModal').modal('hide');
+            }
+            Messenger().post({
+                message: data.msg,
+                type: data.state ? 'info' : 'error',
+                showCloseButton: true
+            });
+        });
+    });
+
+    $('#diplomaSave').click(function () {
+        $.post(getAjaxUrl().diploma, $('#diplomaForm').serialize(), function (data) {
+            if(data.state){
+                $('#diplomaModal').modal('hide');
+            }
+            Messenger().post({
+                message: data.msg,
+                type: data.state ? 'info' : 'error',
+                showCloseButton: true
+            });
+        });
+    });
+
     dataTable.delegate('.del', "click", function () {
         delOrRecover($(this).attr('data-id'), $(this).attr('data-credit'), '删除');
     });
@@ -488,11 +516,13 @@ $(document).ready(function () {
     });
 
     dataTable.delegate('.wining', "click", function () {
-        window.location.href = getAjaxUrl().chart + "/" + $(this).attr('data-id');
+        $('#winingCreditId').val($(this).attr('data-id'));
+        $('#winingModal').modal('show');
     });
 
     dataTable.delegate('.diploma', "click", function () {
-        window.location.href = getAjaxUrl().chart + "/" + $(this).attr('data-id');
+        $('#diplomaCreditId').val($(this).attr('data-id'));
+        $('#diplomaModal').modal('show');
     });
 
     // 上传组件

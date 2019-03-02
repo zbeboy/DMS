@@ -250,6 +250,60 @@
         </div>
     </div>
 </div>
+
+<!-- 获奖Modal -->
+<div class="modal fade" id="winingModal" tabindex="-1" role="dialog" aria-labelledby="winingModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="winingModalLabel">获奖</h4>
+            </div>
+            <div class="modal-body">
+                <form id="winingForm">
+                    <div class="form-group">
+                        <input class="form-control" name="winingContent" id="winingContent" placeholder="获奖内容">
+                        <div class="text-danger" id="wining_content_error"></div>
+                        <input type="hidden" name="creditId" id="winingCreditId" />
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="winingScore" id="winingScore" placeholder="分数">
+                        <div class="text-danger" id="wining_score_error"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="winingSave">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 证书Modal -->
+<div class="modal fade" id="diplomaModal" tabindex="-1" role="dialog" aria-labelledby="diplomaModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="diplomaModalLabel">证书</h4>
+            </div>
+            <div class="modal-body">
+                <form id="diplomaForm">
+                    <div class="form-group">
+                        <input class="form-control" name="diplomaName" id="diplomaName" placeholder="证书">
+                        <div class="text-danger" id="diploma_name_error"></div>
+                        <input type="hidden" name="creditId" id="diplomaCreditId" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="diplomaSave">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <!--定义操作列按钮模板-->
 <script id="operator_button" type="text/x-handlebars-template">

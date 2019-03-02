@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import top.zbeboy.dms.config.Workbook;
 import top.zbeboy.dms.domain.dms.tables.pojos.Credit;
+import top.zbeboy.dms.domain.dms.tables.pojos.Diploma;
 import top.zbeboy.dms.domain.dms.tables.pojos.Evaluate;
-import top.zbeboy.dms.domain.dms.tables.pojos.Student;
+import top.zbeboy.dms.domain.dms.tables.pojos.Wining;
 import top.zbeboy.dms.service.analyse.CreditService;
+import top.zbeboy.dms.service.analyse.DiplomaService;
 import top.zbeboy.dms.service.analyse.EvaluateService;
+import top.zbeboy.dms.service.analyse.WiningService;
 import top.zbeboy.dms.service.common.UploadService;
 import top.zbeboy.dms.service.data.StudentService;
 import top.zbeboy.dms.service.entry.CreditReadExcel;
@@ -28,6 +31,8 @@ import top.zbeboy.dms.web.util.AjaxUtils;
 import top.zbeboy.dms.web.util.BootstrapTableUtils;
 import top.zbeboy.dms.web.vo.analyse.CreditAddVo;
 import top.zbeboy.dms.web.vo.analyse.CreditEditVo;
+import top.zbeboy.dms.web.vo.analyse.DiplomaAddVo;
+import top.zbeboy.dms.web.vo.analyse.WiningAddVo;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +54,12 @@ public class AnalyseRestController {
 
     @Resource
     private StudentService studentService;
+
+    @Resource
+    private WiningService winingService;
+
+    @Resource
+    private DiplomaService diplomaService;
 
     @Resource
     private UploadService uploadService;
@@ -118,7 +129,7 @@ public class AnalyseRestController {
 
         StudentBean student = new StudentBean();
         Optional<Record> data = studentService.findByStudentNumberRelation(credit.getStudentNumber());
-        if(data.isPresent()){
+        if (data.isPresent()) {
             student = data.get().into(StudentBean.class);
         }
 
@@ -247,5 +258,48 @@ public class AnalyseRestController {
         }
 
         return new ResponseEntity<>(ajaxUtils.success().msg("导入成功").send(), HttpStatus.OK);
+    }
+
+    /**
+     * 保存获奖
+     *
+     * @param winingAddVo 获奖
+     * @return true or false
+     */
+    @PostMapping(value = "/web/analyse/wining/save")
+    public ResponseEntity<Map<String, Object>> winingSave(@Valid WiningAddVo winingAddVo, BindingResult bindingResult) {
+        AjaxUtils ajaxUtils = AjaxUtils.of();
+        if (!bindingResult.hasErrors()) {
+            Wining wining = new Wining();
+            wining.setCreditId(winingAddVo.getCreditId());
+            wining.setWiningContent(winingAddVo.getWiningContent());
+            wining.setWiningScore(winingAddVo.getWiningScore());
+            winingService.save(wining);
+            ajaxUtils.success().msg("保存成功");
+        } else {
+            ajaxUtils.fail().msg(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
+        }
+        return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
+    }
+
+    /**
+     * 保存证书
+     *
+     * @param diplomaAddVo 证书
+     * @return true or false
+     */
+    @PostMapping(value = "/web/analyse/diploma/save")
+    public ResponseEntity<Map<String, Object>> diplomaSave(@Valid DiplomaAddVo diplomaAddVo, BindingResult bindingResult) {
+        AjaxUtils ajaxUtils = AjaxUtils.of();
+        if (!bindingResult.hasErrors()) {
+            Diploma diploma = new Diploma();
+            diploma.setCreditId(diplomaAddVo.getCreditId());
+            diploma.setDiplomaName(diplomaAddVo.getDiplomaName());
+            diplomaService.save(diploma);
+            ajaxUtils.success().msg("保存成功");
+        } else {
+            ajaxUtils.fail().msg(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
+        }
+        return new ResponseEntity<>(ajaxUtils.send(), HttpStatus.OK);
     }
 }
