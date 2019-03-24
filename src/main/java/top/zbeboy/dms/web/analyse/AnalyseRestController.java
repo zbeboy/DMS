@@ -13,11 +13,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import top.zbeboy.dms.config.Workbook;
 import top.zbeboy.dms.domain.dms.tables.pojos.Credit;
 import top.zbeboy.dms.domain.dms.tables.pojos.Diploma;
-import top.zbeboy.dms.domain.dms.tables.pojos.Evaluate;
 import top.zbeboy.dms.domain.dms.tables.pojos.Wining;
 import top.zbeboy.dms.service.analyse.CreditService;
 import top.zbeboy.dms.service.analyse.DiplomaService;
-import top.zbeboy.dms.service.analyse.EvaluateService;
 import top.zbeboy.dms.service.analyse.WiningService;
 import top.zbeboy.dms.service.common.UploadService;
 import top.zbeboy.dms.service.data.StudentService;
@@ -48,9 +46,6 @@ public class AnalyseRestController {
 
     @Resource
     private CreditService creditService;
-
-    @Resource
-    private EvaluateService evaluateService;
 
     @Resource
     private StudentService studentService;
@@ -116,16 +111,7 @@ public class AnalyseRestController {
         Credit credit = creditService.findByCreditId(creditId);
         double[] credits = new double[]{credit.getSports(), credit.getSkills(), credit.getVoluntary(), credit.getTechnological(),
                 credit.getPost(), credit.getIdeological(), credit.getPractical(), credit.getWork(), credit.getAchievement(), credit.getIntellectual()};
-        int index = 0;
-        double score = credit.getSports();
-        for (int i = 0; i < credits.length; i++) {
-            if (credits[i] > score) {
-                score = credits[i];
-                index = i;
-            }
-        }
-        index++;
-        Evaluate evaluate = evaluateService.findByEvaluateId(index + "");
+
 
         StudentBean student = new StudentBean();
         Optional<Record> data = studentService.findByStudentNumberRelation(credit.getStudentNumber());
@@ -137,7 +123,7 @@ public class AnalyseRestController {
         List<Diploma> diplomas = diplomaService.findByCreditId(creditId);
 
         ajaxUtils.success().msg("获取数据成功").put("analyse", credit)
-                .put("evaluate", evaluate.getEvaluateContent())
+                .put("evaluate", evaluate(credits, diplomas))
                 .put("student", student)
                 .put("winings", winings)
                 .put("diplomas", diplomas);
@@ -332,5 +318,117 @@ public class AnalyseRestController {
         AjaxUtils ajaxUtils = AjaxUtils.of();
         diplomaService.deleteById(diplomaId);
         return new ResponseEntity<>(ajaxUtils.success().msg("删除成功").send(), HttpStatus.OK);
+    }
+
+    private String evaluate(double[] credits, List<Diploma> diplomas) {
+        int index = 0;
+        double finalScore = 0.0;
+        double score = 0.0;
+        for (int i = 0; i < credits.length; i++) {
+            if (credits[i] > score) {
+                score = credits[i];
+                index = i;
+                finalScore = score;
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        // 文体活动
+        if (index == 0) {
+            if (finalScore > 15) {
+                sb.append("积极参加各类校园文化艺术体育活动，");
+            } else if (finalScore >= 10) {
+                sb.append("积极参加各类活动，");
+            } else if (finalScore >= 5) {
+                sb.append("偶尔参加校园文化艺术体育活动，");
+            } else if (finalScore > 0) {
+                sb.append("很少参加校园文化艺术体育活动，");
+            } else {
+                sb.append("不参加校园文化艺术体育活动，");
+            }
+        } else if (index == 1) {
+            // 技能特长
+            if (finalScore > 0) {
+                sb.append("认真学习专业知识，努力提升技能水平，经过学习和努力获得了");
+                for (Diploma diploma : diplomas) {
+                    sb.append(diploma.getDiplomaName()).append(",");
+                }
+            }
+        } else if (index == 2) {
+            // 志愿公益
+            if (finalScore > 10) {
+                sb.append("有强烈的社会责任感，热心公益，积极参加各类志愿服务活动，为人友善，品德兼优，在同学之中起到了模范表率作用，");
+            } else if (finalScore >= 5) {
+                sb.append("积极参加社会志愿服务活动，为人友善，品德兼优；");
+            } else if (finalScore >= 0.5) {
+                sb.append("偶尔参加社会志愿服务活动，为人友善；");
+            } else {
+                sb.append("从未参加志愿服务活动，");
+            }
+        } else if (index == 3) {
+            // 科技创新
+            if (finalScore > 0) {
+                sb.append("具有一定的创新思维，");
+            }
+        } else if (index == 4) {
+            // 任职经历
+            sb.append("");
+        } else if (index == 5) {
+            // 思想成长
+            if (finalScore > 15) {
+                sb.append("团结同学，尊敬师长，热爱班级，为人友善，品德兼优，拥护党的领导，思想积极向上，");
+            } else if (finalScore >= 13) {
+                sb.append("思想端正，讲文明，懂礼貌，遵守校纪校规，");
+            } else if (finalScore >= 10) {
+                sb.append("品德优良，思想正派，严守校纪校规，");
+            } else {
+                sb.append("思想态度尚可，");
+            }
+        } else if (index == 6) {
+            // 实践实习
+            if (finalScore > 0) {
+                sb.append("具有一定的动手能力和社会经验，");
+            } else {
+                sb.append("欠缺动手能力和社会经验，");
+            }
+        } else if (index == 7) {
+            // 工作履历
+            sb.append("");
+        } else if (index == 8) {
+            // 学习成绩
+        } else if (index == 9) {
+            // 智育成绩
+            if (finalScore > 80) {
+                sb.append("学习刻苦认真，学习上一丝不苟，成绩名列前茅，");
+            } else if (finalScore >= 70) {
+                sb.append("学习刻苦，态度端正，学习成绩优异，");
+            } else if (finalScore >= 60) {
+                sb.append("学习较为认真，能掌握一定的学习方法，");
+            } else {
+                sb.append("学习不用心，成绩较为落后，");
+            }
+        }
+
+        if (credits[9] >= 75 && credits[4] >= 13 && credits[0] >= 10) {
+            sb.append("德、智、体、美、劳全面发展，深受老师信任。");
+        }
+
+        if (credits[9] >= 75 && credits[4] >= 13) {
+            sb.append("是一位品学兼优的学生。");
+        }
+
+        if (credits[9] >= 75 && credits[0] >= 10) {
+            sb.append("是一位注重专业学习及个人爱好培养的学生，建议多加强思想素质提升。");
+        }
+
+        if (credits[5] >= 13 && credits[0] >= 10) {
+            sb.append("是一位注重自身思想文化艺术均衡发展的学生，建议在专业知识学习上多下功夫。");
+        }
+
+        if (credits[9] < 75 && credits[5] < 13 && credits[0] < 10) {
+            sb.append("综合素质并不突出，希望进一步加强自身素质提升。");
+        }
+
+        return sb.toString();
     }
 }
