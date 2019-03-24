@@ -95,7 +95,7 @@
                         <li sec:authorize="hasAnyRole('ROLE_SYSTEM','ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE','ROLE_COLLEGE_WORK_DEPARTMENT','ROLE_DEPARTMENT_INSTRUCTOR','ROLE_HEADMASTER')">
                             <a class="J_menuItem" href="analyse_v1.html " th:href="@{/web/menu/quality/release}">发布</a>
                         </li>
-                        <li sec:authorize="hasAnyRole('ROLE_STUDENT')">
+                        <li sec:authorize="hasAnyRole('ROLE_SYSTEM','ROLE_STUDENT')">
                             <a class="J_menuItem" href="analyse_v1.html " th:href="@{/web/menu/quality/apply}">申请</a>
                         </li>
                         <li sec:authorize="hasAnyRole('ROLE_SYSTEM','ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE','ROLE_COLLEGE_WORK_DEPARTMENT','ROLE_DEPARTMENT_INSTRUCTOR','ROLE_HEADMASTER')">

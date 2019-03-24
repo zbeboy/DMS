@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header(~{::meta},~{::title},~{::link})">
+    <!-- csrf -->
+    <meta name="_csrf" content="" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
+    <title>综合素质拓展审核-决策系统</title>
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"
+          th:href="@{/css/plugins/bootstrap-table/bootstrap-table.min.css}">
+    <link href="plugin/messenger/css/messenger.css" rel="stylesheet" th:href="@{/plugin/messenger/css/messenger.css}"/>
+    <link href="plugin/messenger/css/messenger-theme-air.css" rel="stylesheet"
+          th:href="@{/plugin/messenger/css/messenger-theme-air.css}"/>
+
+</head>
+
+<body>
+<div class="col-sm-12">
+    <!-- Example Events -->
+    <div class="example-wrap">
+        <h3 class="example-title">审核</h3>
+        <hr/>
+        <div class="example">
+            <form class="form-inline text-center">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="applyContent"
+                           placeholder="标题">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="studentNumber"
+                           placeholder="学号">
+                </div>
+            </form>
+            <div class="text-center" style="padding: 10px;">
+                <button type="button" id="search" class="btn btn-default">搜索</button>
+                <button type="button" id="reset_search" class="btn btn-default">重置</button>
+            </div>
+            <div id="toolbar" class="btn-group">
+                <button id="add" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                </button>
+            </div>
+            <table data-mobile-responsive="true" data-toggle="table" data-show-refresh="true"
+                   data-show-columns="true" data-sort-name="applyDate" data-show-toggle="true"
+                   data-sort-order="asc"
+                   data-locale="zh-CN" id="dataTable" style="table-layout:fixed;">
+                <thead>
+                <tr>
+                    <th data-field="realName">姓名</th>
+                    <th data-field="studentNumber">学号</th>
+                    <th data-field="applyContent">内容</th>
+                    <th data-field="applyDateStr">时间</th>
+                    <th data-field="applyState" data-formatter="formatterApplyState">状态</th>
+                    <th data-formatter="operation">操作</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <!-- End Example Events -->
+</div>
+
+</body>
+<!--定义操作列按钮模板-->
+<script id="operator_button" type="text/x-handlebars-template">
+    <div class="btn-group" role="group">
+        {{#each func}}
+        <button type="button" class="btn btn-{{this.type}} btn-sm {{this.css}}" data-id="{{this.id}}">
+            {{this.name}}
+        </button>
+        {{/each}}
+    </div>
+</script>
+<script src="js/jquery/jquery.min.js?v=2.1.4" th:src="@{/js/jquery/jquery.min.js}"></script>
+<script src="js/bootstrap/bootstrap.min.js?v=3.3.6" th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+<script src="js/plugins/bootstrap-table/bootstrap-table.min.js"
+        th:src="@{/js/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
+<script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"
+        th:src="@{/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+<script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"
+        th:src="@{/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+<script src="plugin/messenger/js/messenger.js"
+        th:src="@{/plugin/messenger/js/messenger.js}"></script>
+<script src="plugin/handlebars/handlebars.js"
+        th:src="@{/plugin/handlebars/handlebars.js}"></script>
+<script th:inline="javascript">
+    var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+</script>
+<script src="js/util/csrf.js" th:src="@{/js/util/csrf.js}"></script>
+<script src="js/quality/examine/quality_examine_edit.js" th:src="@{/js/quality/examine/quality_examine_edit.js}"></script>
+</html>

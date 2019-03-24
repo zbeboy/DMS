@@ -44,4 +44,11 @@ public interface QualityApplyService {
      * @param id 主键
      */
     void deleteById(String id);
+
+    /**
+     * 更新
+     *
+     * @param qualityApply 数据
+     */
+    void update(QualityApply qualityApply);
 }
