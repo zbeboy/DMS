@@ -40,7 +40,7 @@ import top.zbeboy.dms.domain.dms.tables.records.QualityApplyRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class QualityApply extends TableImpl<QualityApplyRecord> {
 
-    private static final long serialVersionUID = 388116494;
+    private static final long serialVersionUID = 527574634;
 
     /**
      * The reference instance of <code>DMS.QUALITY_APPLY</code>
@@ -79,6 +79,11 @@ public class QualityApply extends TableImpl<QualityApplyRecord> {
      * The column <code>DMS.QUALITY_APPLY.APPLY_DATE</code>.
      */
     public final TableField<QualityApplyRecord, Timestamp> APPLY_DATE = createField("APPLY_DATE", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false), this, "");
+
+    /**
+     * The column <code>DMS.QUALITY_APPLY.QUALITY_RELEASE_ID</code>.
+     */
+    public final TableField<QualityApplyRecord, String> QUALITY_RELEASE_ID = createField("QUALITY_RELEASE_ID", org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * Create a <code>DMS.QUALITY_APPLY</code> table reference
@@ -122,7 +127,7 @@ public class QualityApply extends TableImpl<QualityApplyRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.CONSTRAINT_INDEX_C, Indexes.PRIMARY_KEY_C);
+        return Arrays.<Index>asList(Indexes.CONSTRAINT_INDEX_C, Indexes.CONSTRAINT_INDEX_C0, Indexes.PRIMARY_KEY_C);
     }
 
     /**
@@ -146,7 +151,7 @@ public class QualityApply extends TableImpl<QualityApplyRecord> {
      */
     @Override
     public List<ForeignKey<QualityApplyRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<QualityApplyRecord, ?>>asList(Keys.CONSTRAINT_C0);
+        return Arrays.<ForeignKey<QualityApplyRecord, ?>>asList(Keys.CONSTRAINT_C0, Keys.CONSTRAINT_C09);
     }
 
     /**

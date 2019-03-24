@@ -25,13 +25,14 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class QualityApply implements Serializable {
 
-    private static final long serialVersionUID = 1950446717;
+    private static final long serialVersionUID = -628169045;
 
     private String    qualityApplyId;
     private Integer   studentId;
     private String    applyContent;
     private Integer   applyState;
     private Timestamp applyDate;
+    private String    qualityReleaseId;
 
     public QualityApply() {}
 
@@ -41,6 +42,7 @@ public class QualityApply implements Serializable {
         this.applyContent = value.applyContent;
         this.applyState = value.applyState;
         this.applyDate = value.applyDate;
+        this.qualityReleaseId = value.qualityReleaseId;
     }
 
     public QualityApply(
@@ -48,13 +50,15 @@ public class QualityApply implements Serializable {
         Integer   studentId,
         String    applyContent,
         Integer   applyState,
-        Timestamp applyDate
+        Timestamp applyDate,
+        String    qualityReleaseId
     ) {
         this.qualityApplyId = qualityApplyId;
         this.studentId = studentId;
         this.applyContent = applyContent;
         this.applyState = applyState;
         this.applyDate = applyDate;
+        this.qualityReleaseId = qualityReleaseId;
     }
 
     @NotNull
@@ -102,6 +106,16 @@ public class QualityApply implements Serializable {
         this.applyDate = applyDate;
     }
 
+    @NotNull
+    @Size(max = 64)
+    public String getQualityReleaseId() {
+        return this.qualityReleaseId;
+    }
+
+    public void setQualityReleaseId(String qualityReleaseId) {
+        this.qualityReleaseId = qualityReleaseId;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("QualityApply (");
@@ -111,6 +125,7 @@ public class QualityApply implements Serializable {
         sb.append(", ").append(applyContent);
         sb.append(", ").append(applyState);
         sb.append(", ").append(applyDate);
+        sb.append(", ").append(qualityReleaseId);
 
         sb.append(")");
         return sb.toString();

@@ -69,6 +69,7 @@ public class Indexes {
     public static final Index PRIMARY_KEY_A3 = Indexes0.PRIMARY_KEY_A3;
     public static final Index PRIMARY_KEY_4E = Indexes0.PRIMARY_KEY_4E;
     public static final Index CONSTRAINT_INDEX_C = Indexes0.CONSTRAINT_INDEX_C;
+    public static final Index CONSTRAINT_INDEX_C0 = Indexes0.CONSTRAINT_INDEX_C0;
     public static final Index PRIMARY_KEY_C = Indexes0.PRIMARY_KEY_C;
     public static final Index CONSTRAINT_INDEX_66 = Indexes0.CONSTRAINT_INDEX_66;
     public static final Index PRIMARY_KEY_66 = Indexes0.PRIMARY_KEY_66;
@@ -116,6 +117,7 @@ public class Indexes {
         public static Index PRIMARY_KEY_A3 = Internal.createIndex("PRIMARY_KEY_A3", PersistentLogins.PERSISTENT_LOGINS, new OrderField[] { PersistentLogins.PERSISTENT_LOGINS.SERIES }, true);
         public static Index PRIMARY_KEY_4E = Internal.createIndex("PRIMARY_KEY_4E", PoliticalLandscape.POLITICAL_LANDSCAPE, new OrderField[] { PoliticalLandscape.POLITICAL_LANDSCAPE.POLITICAL_LANDSCAPE_ID }, true);
         public static Index CONSTRAINT_INDEX_C = Internal.createIndex("CONSTRAINT_INDEX_C", QualityApply.QUALITY_APPLY, new OrderField[] { QualityApply.QUALITY_APPLY.STUDENT_ID }, false);
+        public static Index CONSTRAINT_INDEX_C0 = Internal.createIndex("CONSTRAINT_INDEX_C0", QualityApply.QUALITY_APPLY, new OrderField[] { QualityApply.QUALITY_APPLY.QUALITY_RELEASE_ID }, false);
         public static Index PRIMARY_KEY_C = Internal.createIndex("PRIMARY_KEY_C", QualityApply.QUALITY_APPLY, new OrderField[] { QualityApply.QUALITY_APPLY.QUALITY_APPLY_ID }, true);
         public static Index CONSTRAINT_INDEX_66 = Internal.createIndex("CONSTRAINT_INDEX_66", QualityRelease.QUALITY_RELEASE, new OrderField[] { QualityRelease.QUALITY_RELEASE.USERNAME }, false);
         public static Index PRIMARY_KEY_66 = Internal.createIndex("PRIMARY_KEY_66", QualityRelease.QUALITY_RELEASE, new OrderField[] { QualityRelease.QUALITY_RELEASE.QUALITY_RELEASE_ID }, true);

@@ -96,4 +96,11 @@ public class QualityApplyDao extends DAOImpl<QualityApplyRecord, top.zbeboy.dms.
     public List<top.zbeboy.dms.domain.dms.tables.pojos.QualityApply> fetchByApplyDate(Timestamp... values) {
         return fetch(QualityApply.QUALITY_APPLY.APPLY_DATE, values);
     }
+
+    /**
+     * Fetch records that have <code>QUALITY_RELEASE_ID IN (values)</code>
+     */
+    public List<top.zbeboy.dms.domain.dms.tables.pojos.QualityApply> fetchByQualityReleaseId(String... values) {
+        return fetch(QualityApply.QUALITY_APPLY.QUALITY_RELEASE_ID, values);
+    }
 }

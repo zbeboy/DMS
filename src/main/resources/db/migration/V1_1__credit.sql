@@ -51,7 +51,9 @@ CREATE TABLE quality_apply(
   apply_content VARCHAR(100),
   apply_state INT DEFAULT 0 NOT NULL,
   apply_date DATETIME NOT NULL,
-  FOREIGN KEY(student_id) REFERENCES STUDENT(student_id)
+  quality_release_id VARCHAR(64) NOT NULL,
+  FOREIGN KEY(student_id) REFERENCES STUDENT(student_id),
+  FOREIGN KEY(quality_release_id) REFERENCES quality_release(quality_release_id)
 );
 
 INSERT INTO evaluate VALUES ('1','体育不错');

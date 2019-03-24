@@ -85,20 +85,20 @@
                     </ul>
                 </li>
 
-                <li sec:authorize="hasAnyRole('ROLE_SYSTEM','ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE','ROLE_COLLEGE_WORK_DEPARTMENT','ROLE_DEPARTMENT_INSTRUCTOR','ROLE_HEADMASTER')">
+                <li sec:authorize="hasAnyRole('ROLE_SYSTEM','ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE','ROLE_COLLEGE_WORK_DEPARTMENT','ROLE_DEPARTMENT_INSTRUCTOR','ROLE_HEADMASTER','ROLE_STUDENT')">
                     <a href="#">
                         <i class="fa fa fa-shield"></i>
                         <span class="nav-label">综合素质拓展</span>
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
-                        <li>
+                        <li sec:authorize="hasAnyRole('ROLE_SYSTEM','ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE','ROLE_COLLEGE_WORK_DEPARTMENT','ROLE_DEPARTMENT_INSTRUCTOR','ROLE_HEADMASTER')">
                             <a class="J_menuItem" href="analyse_v1.html " th:href="@{/web/menu/quality/release}">发布</a>
                         </li>
-                        <li>
+                        <li sec:authorize="hasAnyRole('ROLE_STUDENT')">
                             <a class="J_menuItem" href="analyse_v1.html " th:href="@{/web/menu/quality/apply}">申请</a>
                         </li>
-                        <li>
+                        <li sec:authorize="hasAnyRole('ROLE_SYSTEM','ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE','ROLE_COLLEGE_WORK_DEPARTMENT','ROLE_DEPARTMENT_INSTRUCTOR','ROLE_HEADMASTER')">
                             <a class="J_menuItem" href="analyse_v1.html " th:href="@{/web/menu/quality/examine}">审核</a>
                         </li>
                     </ul>

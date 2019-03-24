@@ -130,6 +130,7 @@ public class Keys {
     public static final ForeignKey<GradeRecord, ScienceRecord> CONSTRAINT_40E = ForeignKeys0.CONSTRAINT_40E;
     public static final ForeignKey<OrganizeRecord, GradeRecord> CONSTRAINT_7D = ForeignKeys0.CONSTRAINT_7D;
     public static final ForeignKey<QualityApplyRecord, StudentRecord> CONSTRAINT_C0 = ForeignKeys0.CONSTRAINT_C0;
+    public static final ForeignKey<QualityApplyRecord, QualityReleaseRecord> CONSTRAINT_C09 = ForeignKeys0.CONSTRAINT_C09;
     public static final ForeignKey<QualityReleaseRecord, UsersRecord> CONSTRAINT_668 = ForeignKeys0.CONSTRAINT_668;
     public static final ForeignKey<ScienceRecord, DepartmentRecord> CONSTRAINT_9D1 = ForeignKeys0.CONSTRAINT_9D1;
     public static final ForeignKey<StaffRecord, DepartmentRecord> CONSTRAINT_4B8C = ForeignKeys0.CONSTRAINT_4B8C;
@@ -196,6 +197,7 @@ public class Keys {
         public static final ForeignKey<GradeRecord, ScienceRecord> CONSTRAINT_40E = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_9D, Grade.GRADE, "CONSTRAINT_40E", Grade.GRADE.SCIENCE_ID);
         public static final ForeignKey<OrganizeRecord, GradeRecord> CONSTRAINT_7D = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_40, Organize.ORGANIZE, "CONSTRAINT_7D", Organize.ORGANIZE.GRADE_ID);
         public static final ForeignKey<QualityApplyRecord, StudentRecord> CONSTRAINT_C0 = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_BA, QualityApply.QUALITY_APPLY, "CONSTRAINT_C0", QualityApply.QUALITY_APPLY.STUDENT_ID);
+        public static final ForeignKey<QualityApplyRecord, QualityReleaseRecord> CONSTRAINT_C09 = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_66, QualityApply.QUALITY_APPLY, "CONSTRAINT_C09", QualityApply.QUALITY_APPLY.QUALITY_RELEASE_ID);
         public static final ForeignKey<QualityReleaseRecord, UsersRecord> CONSTRAINT_668 = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_4, QualityRelease.QUALITY_RELEASE, "CONSTRAINT_668", QualityRelease.QUALITY_RELEASE.USERNAME);
         public static final ForeignKey<ScienceRecord, DepartmentRecord> CONSTRAINT_9D1 = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_4F, Science.SCIENCE, "CONSTRAINT_9D1", Science.SCIENCE.DEPARTMENT_ID);
         public static final ForeignKey<StaffRecord, DepartmentRecord> CONSTRAINT_4B8C = Internal.createForeignKey(top.zbeboy.dms.domain.dms.Keys.CONSTRAINT_4F, Staff.STAFF, "CONSTRAINT_4B8C", Staff.STAFF.DEPARTMENT_ID);
