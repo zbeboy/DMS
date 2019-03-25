@@ -62,7 +62,7 @@ function operation(value, row, index, field) {
     var context = {
         func: [
             {
-                "name": "审核",
+                "name": "审核(" + row.applyCount + ")",
                 "css": "examine",
                 "type": "primary",
                 "id": row.qualityReleaseId,

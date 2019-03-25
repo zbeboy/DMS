@@ -9,10 +9,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.zbeboy.dms.config.Workbook;
 import top.zbeboy.dms.domain.dms.tables.pojos.QualityRelease;
 import top.zbeboy.dms.domain.dms.tables.pojos.Users;
 import top.zbeboy.dms.service.platform.UsersService;
+import top.zbeboy.dms.service.quality.QualityApplyService;
 import top.zbeboy.dms.service.quality.QualityReleaseService;
+import top.zbeboy.dms.service.system.AuthoritiesService;
 import top.zbeboy.dms.service.util.DateTimeUtils;
 import top.zbeboy.dms.service.util.UUIDUtil;
 import top.zbeboy.dms.web.bean.quality.QualityReleaseBean;
@@ -36,7 +39,13 @@ public class QualityReleaseRestController {
     private QualityReleaseService qualityReleaseService;
 
     @Resource
+    private QualityApplyService qualityApplyService;
+
+    @Resource
     private UsersService usersService;
+
+    @Resource
+    private AuthoritiesService authoritiesService;
 
     /**
      * 列表数据
@@ -48,9 +57,21 @@ public class QualityReleaseRestController {
         BootstrapTableUtils<QualityReleaseBean> bootstrapTableUtils = new BootstrapTableUtils<>(request);
         Result<Record> records = qualityReleaseService.findAllByPage(bootstrapTableUtils);
         List<QualityReleaseBean> qualityReleases = new ArrayList<>();
+        int applySate = 0;
+        if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE)) {
+            applySate = 2;
+        } else if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_COLLEGE_WORK_DEPARTMENT)) {
+            applySate = 2;
+        } else if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_DEPARTMENT_INSTRUCTOR)) {
+            applySate = 1;
+        }
         if (!ObjectUtils.isEmpty(records) && records.isNotEmpty()) {
             qualityReleases = records.into(QualityReleaseBean.class);
-            qualityReleases.forEach(i -> i.setReleaseDateStr(DateTimeUtils.defaultFormatSqlTimestamp(i.getReleaseDate())));
+            int finalApplySate = applySate;
+            qualityReleases.forEach(i -> {
+                i.setReleaseDateStr(DateTimeUtils.defaultFormatSqlTimestamp(i.getReleaseDate()));
+                i.setApplyCount(qualityApplyService.countByQualityReleaseIdAndApplyState(i.getQualityReleaseId(), finalApplySate));
+            });
         }
         bootstrapTableUtils.setTotal(qualityReleaseService.countByCondition(bootstrapTableUtils));
         bootstrapTableUtils.setRows(qualityReleases);

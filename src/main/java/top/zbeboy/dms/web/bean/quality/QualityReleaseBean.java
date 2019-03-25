@@ -7,6 +7,8 @@ public class QualityReleaseBean extends QualityRelease {
 
     private String realName;
 
+    private int applyCount;
+
     public String getReleaseDateStr() {
         return releaseDateStr;
     }
@@ -21,5 +23,13 @@ public class QualityReleaseBean extends QualityRelease {
 
     public void setRealName(String realName) {
         this.realName = realName;
+    }
+
+    public int getApplyCount() {
+        return applyCount;
+    }
+
+    public void setApplyCount(int applyCount) {
+        this.applyCount = applyCount;
     }
 }

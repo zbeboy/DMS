@@ -32,6 +32,15 @@ public interface QualityApplyService {
     int countByCondition(BootstrapTableUtils<QualityApplyBean> bootstrapTableUtils);
 
     /**
+     * 根据发布id和状态统计
+     *
+     * @param qualityReleaseId 发布id
+     * @param applyState       状态
+     * @return 数量
+     */
+    int countByQualityReleaseIdAndApplyState(String qualityReleaseId, int applyState);
+
+    /**
      * 保存
      *
      * @param qualityApply 数据

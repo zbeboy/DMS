@@ -151,6 +151,14 @@ public class QualityApplyServiceImpl extends BootstrapTablesPlugin<QualityApplyB
         return count.value1();
     }
 
+    @Override
+    public int countByQualityReleaseIdAndApplyState(String qualityReleaseId, int applyState) {
+        return create.selectCount()
+                .from(QUALITY_APPLY)
+                .where(QUALITY_APPLY.QUALITY_RELEASE_ID.eq(qualityReleaseId).and(QUALITY_APPLY.APPLY_STATE.eq(applyState)))
+                .fetchOne().value1();
+    }
+
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void save(QualityApply qualityApply) {
@@ -268,43 +276,54 @@ public class QualityApplyServiceImpl extends BootstrapTablesPlugin<QualityApplyB
 
     private Condition buildCondition(Condition condition) {
         Users users = usersService.getUserFromSession();
-        Optional<Record> staffData = staffService.findByUsernameRelation(users.getUsername());
-        if(staffData.isPresent()){
-            StaffBean staffBean = staffData.get().into(StaffBean.class);
-            if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE)) {
+
+        if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE)) {
+            Optional<Record> staffData = staffService.findByUsernameRelation(users.getUsername());
+            if (staffData.isPresent()) {
+                StaffBean staffBean = staffData.get().into(StaffBean.class);
                 if (Objects.nonNull(condition)) {
                     condition = condition.and(COLLEGE.COLLEGE_ID.eq(staffBean.getCollegeId())).and(QUALITY_APPLY.APPLY_STATE.eq(2));
                 } else {
                     condition = COLLEGE.COLLEGE_ID.eq(staffBean.getCollegeId()).and(QUALITY_APPLY.APPLY_STATE.eq(2));
                 }
-            } else if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_COLLEGE_WORK_DEPARTMENT)) {
+            }
+        } else if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_COLLEGE_WORK_DEPARTMENT)) {
+            Optional<Record> staffData = staffService.findByUsernameRelation(users.getUsername());
+            if (staffData.isPresent()) {
+                StaffBean staffBean = staffData.get().into(StaffBean.class);
                 if (Objects.nonNull(condition)) {
                     condition = condition.and(COLLEGE.COLLEGE_ID.eq(staffBean.getCollegeId())).and(QUALITY_APPLY.APPLY_STATE.eq(2));
                 } else {
                     condition = COLLEGE.COLLEGE_ID.eq(staffBean.getCollegeId()).and(QUALITY_APPLY.APPLY_STATE.eq(2));
                 }
-            } else if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_DEPARTMENT_INSTRUCTOR)) {
+            }
+        } else if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_DEPARTMENT_INSTRUCTOR)) {
+            Optional<Record> staffData = staffService.findByUsernameRelation(users.getUsername());
+            if (staffData.isPresent()) {
+                StaffBean staffBean = staffData.get().into(StaffBean.class);
                 if (Objects.nonNull(condition)) {
                     condition = condition.and(DEPARTMENT.DEPARTMENT_ID.eq(staffBean.getDepartmentId())).and(QUALITY_APPLY.APPLY_STATE.eq(1));
                 } else {
                     condition = DEPARTMENT.DEPARTMENT_ID.eq(staffBean.getDepartmentId()).and(QUALITY_APPLY.APPLY_STATE.eq(1));
                 }
-            } else if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_HEADMASTER)) {
+            }
+        } else if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_HEADMASTER)) {
+            Optional<Record> staffData = staffService.findByUsernameRelation(users.getUsername());
+            if (staffData.isPresent()) {
+                StaffBean staffBean = staffData.get().into(StaffBean.class);
                 if (Objects.nonNull(condition)) {
                     condition = condition.and(ORGANIZE.STAFF_ID.eq(staffBean.getStaffId())).and(QUALITY_APPLY.APPLY_STATE.eq(0));
                 } else {
                     condition = ORGANIZE.STAFF_ID.eq(staffBean.getStaffId()).and(QUALITY_APPLY.APPLY_STATE.eq(0));
                 }
-            } else if(authoritiesService.isCurrentUserInRole(Workbook.ROLE_STUDENT)){
-                if (Objects.nonNull(condition)) {
-                    condition = condition.and(STUDENT.USERNAME.eq(users.getUsername()));
-                } else {
-                    condition = STUDENT.USERNAME.eq(users.getUsername());
-                }
+            }
+        } else if (authoritiesService.isCurrentUserInRole(Workbook.ROLE_STUDENT)) {
+            if (Objects.nonNull(condition)) {
+                condition = condition.and(STUDENT.USERNAME.eq(users.getUsername()));
+            } else {
+                condition = STUDENT.USERNAME.eq(users.getUsername());
             }
         }
-
-
         return condition;
     }
 }
