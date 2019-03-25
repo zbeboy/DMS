@@ -409,19 +409,19 @@ public class AnalyseRestController {
             }
         }
 
-        if (credits[9] >= 75 && credits[4] >= 13 && credits[0] >= 10) {
+        if (credits[9] > 75 && credits[4] > 13 && credits[0] > 10) {
             sb.append("德、智、体、美、劳全面发展，深受老师信任。");
         }
 
-        if (credits[9] >= 75 && credits[4] >= 13) {
+        if (credits[9] > 75 && credits[4] > 13 && credits[0] <= 10) {
             sb.append("是一位品学兼优的学生。");
         }
 
-        if (credits[9] >= 75 && credits[0] >= 10) {
+        if (credits[9] > 75 && credits[4] <= 13 && credits[0] > 10) {
             sb.append("是一位注重专业学习及个人爱好培养的学生，建议多加强思想素质提升。");
         }
 
-        if (credits[5] >= 13 && credits[0] >= 10) {
+        if (credits[9] <= 75 && credits[5] > 13 && credits[0] > 10) {
             sb.append("是一位注重自身思想文化艺术均衡发展的学生，建议在专业知识学习上多下功夫。");
         }
 
