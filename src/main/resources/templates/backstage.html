@@ -92,7 +92,7 @@
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
-                        <li sec:authorize="hasAnyRole('ROLE_SYSTEM','ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE','ROLE_COLLEGE_WORK_DEPARTMENT','ROLE_DEPARTMENT_INSTRUCTOR','ROLE_HEADMASTER')">
+                        <li sec:authorize="hasAnyRole('ROLE_SYSTEM','ROLE_COLLEGE_YOUTH_LEAGUE_COMMITTEE','ROLE_COLLEGE_WORK_DEPARTMENT')">
                             <a class="J_menuItem" href="analyse_v1.html " th:href="@{/web/menu/quality/release}">发布</a>
                         </li>
                         <li sec:authorize="hasAnyRole('ROLE_SYSTEM','ROLE_STUDENT')">

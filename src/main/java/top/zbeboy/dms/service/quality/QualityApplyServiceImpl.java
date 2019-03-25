@@ -295,6 +295,12 @@ public class QualityApplyServiceImpl extends BootstrapTablesPlugin<QualityApplyB
                 } else {
                     condition = ORGANIZE.STAFF_ID.eq(staffBean.getStaffId()).and(QUALITY_APPLY.APPLY_STATE.eq(0));
                 }
+            } else if(authoritiesService.isCurrentUserInRole(Workbook.ROLE_STUDENT)){
+                if (Objects.nonNull(condition)) {
+                    condition = condition.and(STUDENT.USERNAME.eq(users.getUsername()));
+                } else {
+                    condition = STUDENT.USERNAME.eq(users.getUsername());
+                }
             }
         }
 
