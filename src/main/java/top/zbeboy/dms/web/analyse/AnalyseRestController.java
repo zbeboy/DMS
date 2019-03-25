@@ -398,34 +398,34 @@ public class AnalyseRestController {
             // 学习成绩
         } else if (index == 9) {
             // 智育成绩
-            if (finalScore > 80) {
+            if (finalScore > 8) {
                 sb.append("学习刻苦认真，学习上一丝不苟，成绩名列前茅，");
-            } else if (finalScore >= 70) {
+            } else if (finalScore >= 7) {
                 sb.append("学习刻苦，态度端正，学习成绩优异，");
-            } else if (finalScore >= 60) {
+            } else if (finalScore >= 6) {
                 sb.append("学习较为认真，能掌握一定的学习方法，");
             } else {
                 sb.append("学习不用心，成绩较为落后，");
             }
         }
 
-        if (credits[9] > 75 && credits[4] > 13 && credits[0] > 10) {
+        if (credits[9] > 7.5 && credits[4] > 13 && credits[0] > 10) {
             sb.append("德、智、体、美、劳全面发展，深受老师信任。");
         }
 
-        if (credits[9] > 75 && credits[4] > 13 && credits[0] <= 10) {
+        if (credits[9] > 7.5 && credits[4] > 13 && credits[0] <= 10) {
             sb.append("是一位品学兼优的学生。");
         }
 
-        if (credits[9] > 75 && credits[4] <= 13 && credits[0] > 10) {
+        if (credits[9] > 7.5 && credits[4] <= 13 && credits[0] > 10) {
             sb.append("是一位注重专业学习及个人爱好培养的学生，建议多加强思想素质提升。");
         }
 
-        if (credits[9] <= 75 && credits[5] > 13 && credits[0] > 10) {
+        if (credits[9] <= 7.5 && credits[5] > 13 && credits[0] > 10) {
             sb.append("是一位注重自身思想文化艺术均衡发展的学生，建议在专业知识学习上多下功夫。");
         }
 
-        if (credits[9] < 75 && credits[5] < 13 && credits[0] < 10) {
+        if (credits[9] < 7.5 && credits[5] < 13 && credits[0] < 10) {
             sb.append("综合素质并不突出，希望进一步加强自身素质提升。");
         }
 
