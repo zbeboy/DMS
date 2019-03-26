@@ -44,8 +44,9 @@ public class MainController {
         Users users = usersService.getUserFromSession();
         Files files = filesService.findByFileId(users.getAvatar());
         modelMap.addAttribute("avatar", Workbook.DIRECTORY_SPLIT + files.getRelativePath());
-        StringBuilder authorities = authoritiesService.getAuthorities();
-        modelMap.addAttribute("auth", authorities);
+        /*StringBuilder authorities = authoritiesService.getAuthorities();
+        modelMap.addAttribute("auth", authorities);*/
+        modelMap.addAttribute("realName", users.getRealName());
         return "backstage";
     }
 
