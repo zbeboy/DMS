@@ -39,7 +39,7 @@
         <fastJson.version>1.2.51</fastJson.version>
 
         <commons-lang3.version>3.7</commons-lang3.version>
-        <commons-io.verson>2.6</commons-io.verson>
+        <commons-io.verson>2.7</commons-io.verson>
         <vavr.version>0.9.2</vavr.version>
     </properties>
 
