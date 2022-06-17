@@ -36,7 +36,7 @@
         <xmlbeans.version>3.0.2</xmlbeans.version>
 
         <javax.inject.version>1</javax.inject.version>
-        <fastJson.version>1.2.51</fastJson.version>
+        <fastJson.version>1.2.83</fastJson.version>
 
         <commons-lang3.version>3.7</commons-lang3.version>
         <commons-io.verson>2.6</commons-io.verson>
