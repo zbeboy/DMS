@@ -30,7 +30,7 @@
     </parent>
 
     <properties>
-        <org.apache.poi.version>4.0.0</org.apache.poi.version>
+        <org.apache.poi.version>4.1.1</org.apache.poi.version>
         <ooxml-schemas.version>1.4</ooxml-schemas.version>
         <org.dom4j.version>2.1.1</org.dom4j.version>
         <xmlbeans.version>3.0.2</xmlbeans.version>
